@@ -1,0 +1,11 @@
+# First, ignore everything
+*
+
+# Whitelist the gitignore, pom, readme, and license files
+# as well as the source directory
+!.gitignore
+!pom.xml
+!README.md
+!LICENSE
+!src/
+!src/**
