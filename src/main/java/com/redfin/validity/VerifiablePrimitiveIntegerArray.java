@@ -36,59 +36,63 @@ public final class VerifiablePrimitiveIntegerArray<X extends Throwable> extends 
     }
 
     public int[] isEmpty() throws X {
-        if (null != actual && actual.length == 0) {
-            return actual;
+        if (null == actual || actual.length != 0) {
+            fail("t -> t.length == 0");
         }
-        throw fail("t -> t.length == 0");
+        return actual;
     }
 
     public int[] isNotEmpty() throws X {
-        if (null != actual && actual.length > 0) {
-            return actual;
+        if (null == actual || actual.length <= 0) {
+            fail("t -> t.length > 0");
         }
-        throw fail("t -> t.length > 0");
+        return actual;
     }
 
     public int[] hasLengthOf(int length) throws X {
-        if (null != actual && actual.length == length) {
-            return actual;
+        if (null == actual || actual.length != length) {
+            fail("t -> t.length == " + Messages.describe(length));
         }
-        throw fail("t -> t.length == " + Messages.describe(length));
+        return actual;
     }
 
     public int[] hasLengthOfAtLeast(int length) throws X {
-        if (null != actual && actual.length >= length) {
-            return actual;
+        if (null == actual || actual.length < length) {
+            fail("t -> t.length >= " + Messages.describe(length));
         }
-        throw fail("t -> t.length >= " + Messages.describe(length));
+        return actual;
     }
 
     public int[] hasLengthOfAtMost(int length) throws X {
-        if (null != actual && actual.length <= length) {
-            return actual;
+        if (null == actual || actual.length > length) {
+            fail("t -> t.length <= " + Messages.describe(length));
         }
-        throw fail("t -> t.length <= " + Messages.describe(length));
+        return actual;
     }
 
     public int[] contains(int value) throws X {
-        if (null != actual) {
-            for (int next : actual) {
-                if (next == value) {
-                    return actual;
-                }
-            }
+        if (!containsHelper(value)) {
+            fail("t -> t.contains(" + Messages.describe(value) + ")");
         }
-        throw fail("t -> t.contains(" + Messages.describe(value) + ")");
+        return actual;
     }
 
     public int[] doesNotContain(int value) throws X {
-        if (null != actual) {
-            for (int next : actual) {
-                if (next == value) {
-                    throw fail("t -> t.contains(" + Messages.describe(value) + ")");
-                }
-            }
+        if (containsHelper(value)) {
+            fail("t -> !t.contains(" + Messages.describe(value) + ")");
         }
         return actual;
+    }
+
+    private boolean containsHelper(int value) {
+        if (null == actual) {
+            return false;
+        }
+        for (int next : actual) {
+            if (next == value) {
+                return true;
+            }
+        }
+        return false;
     }
 }

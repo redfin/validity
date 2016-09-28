@@ -17,9 +17,10 @@
 package com.redfin.validity;
 
 /**
- * todo
+ * Contract to be implemented by tests for classes inheriting from
+ * the {@link AbstractVerifiablePrimitive} class.
  *
- * @param <T>
+ * @param <T> the type being tested.
  */
 interface ContractAbstractVerifiablePrimitive<T> {
 

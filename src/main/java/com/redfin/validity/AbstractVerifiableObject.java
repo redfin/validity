@@ -47,50 +47,50 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
         return Messages.describe(t);
     }
 
-    protected X fail(String expected) {
+    protected final void fail(String expected) throws X {
         X throwable = failedValidationHandler.buildThrowable(description, expected, describeType(actual));
         if (null == throwable) {
             throw new NullPointerException("A null throwable was returned from the FailedValidationHandler");
         }
-        return throwable;
+        throw throwable;
     }
 
     public T isNull() throws X {
-        if (null == actual) {
-            return null;
+        if (null != actual) {
+            fail("t -> null == t");
         }
-        throw fail("t -> null == t");
+        return null;
     }
 
     public T isNotNull() throws X {
-        if (null != actual) {
-            return actual;
+        if (null == actual) {
+            fail("t -> null != t");
         }
-        throw fail("t -> null != t");
+        return actual;
     }
 
     public T isEqualTo(T other) throws X {
-        if (null != actual && !actual.equals(other)) {
-            return actual;
+        if (null == actual || !actual.equals(other)) {
+            fail("t -> t.equals(" + Messages.describe(other) + ")");
         }
-        throw fail("t -> t.equals(" + Messages.describe(other) + ")");
+        return actual;
     }
 
     public T isNotEqualTo(T other) throws X {
-        if (null != actual && actual.equals(other)) {
-            return actual;
+        if (null == actual || actual.equals(other)) {
+            fail("t -> !t.equals(" + Messages.describe(other) + ")");
         }
-        throw fail("t -> !t.equals(" + Messages.describe(other) + ")");
+        return actual;
     }
 
     public T satisfies(Predicate<T> expected) throws X {
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.describePredicate(expected));
         }
-        throw fail(Messages.buildFailSatisfiesMessage(expected));
+        return actual;
     }
 
     /**

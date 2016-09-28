@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * Contract to be implemented by tests for classes inheriting from
  * the {@link AbstractDescriptivePredicate} class.
  *
- * @param <T> the instance type that is being tested.
+ * @param <T> the type that is being tested.
  */
 interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePredicate> {
 

@@ -41,17 +41,17 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
     }
 
     public float isEqualTo(float value) throws X {
-        if (Float.compare(actual, value) == 0) {
-            return actual;
+        if (Float.compare(actual, value) != 0) {
+            fail("t -> t == " + Messages.describe(value));
         }
-        throw fail("t -> t == " + Messages.describe(value));
+        return actual;
     }
 
     public float isNotEqualTo(float value) throws X {
-        if (Float.compare(actual, value) != 0) {
-            return actual;
+        if (Float.compare(actual, value) == 0) {
+            fail("t -> t != " + Messages.describe(value));
         }
-        throw fail("t -> t != " + Messages.describe(value));
+        return actual;
     }
 
     public float isStrictlyPositive() throws X {
@@ -63,17 +63,17 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
     }
 
     public float isGreaterThan(float value) throws X {
-        if (Float.compare(actual, value) > 0) {
-            return actual;
+        if (Float.compare(actual, value) <= 0) {
+            fail("t -> t > " + Messages.describe(value));
         }
-        throw fail("t -> t > " + Messages.describe(value));
+        return actual;
     }
 
     public float isGreaterThanOrEqualTo(float value) throws X {
-        if (Float.compare(actual, value) >= 0) {
-            return actual;
+        if (Float.compare(actual, value) < 0) {
+            fail("t -> t >= " + Messages.describe(value));
         }
-        throw fail("t -> t >= " + Messages.describe(value));
+        return actual;
     }
 
     public float isAtLeast(float value) throws X {
@@ -81,17 +81,17 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
     }
 
     public float isLessThan(float value) throws X {
-        if (Float.compare(actual, value) < 0) {
-            return actual;
+        if (Float.compare(actual, value) >= 0) {
+            fail("t -> t < " + Messages.describe(value));
         }
-        throw fail("t -> t < " + Messages.describe(value));
+        return actual;
     }
 
     public float isLessThanOrEqualTo(float value) throws X {
-        if (Float.compare(actual, value) <= 0) {
-            return actual;
+        if (Float.compare(actual, value) > 0) {
+            fail("t -> t <= " + Messages.describe(value));
         }
-        throw fail("t -> t <= " + Messages.describe(value));
+        return actual;
     }
 
     public float isAtMost(float value) throws X {
@@ -102,13 +102,13 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.buildFailSatisfiesMessage(expected));
         }
-        throw fail(Messages.buildFailSatisfiesMessage(expected));
+        return actual;
     }
 
-    private X fail(String expected) {
-        return fail(expected, Messages.describe(actual));
+    private void fail(String expected) throws X {
+        fail(expected, Messages.describe(actual));
     }
 }

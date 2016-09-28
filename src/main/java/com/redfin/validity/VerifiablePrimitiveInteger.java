@@ -41,17 +41,17 @@ public final class VerifiablePrimitiveInteger<X extends Throwable> extends Abstr
     }
 
     public int isEqualTo(int value) throws X {
-        if (actual == value) {
-            return actual;
+        if (actual != value) {
+            fail("t -> t == " + Messages.describe(value));
         }
-        throw fail("t -> t == " + Messages.describe(value));
+        return actual;
     }
 
     public int isNotEqualTo(int value) throws X {
-        if (actual != value) {
-            return actual;
+        if (actual == value) {
+            fail("t -> t != " + Messages.describe(value));
         }
-        throw fail("t -> t != " + Messages.describe(value));
+        return actual;
     }
 
     public int isStrictlyPositive() throws X {
@@ -63,17 +63,17 @@ public final class VerifiablePrimitiveInteger<X extends Throwable> extends Abstr
     }
 
     public int isGreaterThan(int value) throws X {
-        if (actual > value) {
-            return actual;
+        if (actual <= value) {
+            fail("t -> t > " + Messages.describe(value));
         }
-        throw fail("t -> t > " + Messages.describe(value));
+        return actual;
     }
 
     public int isGreaterThanOrEqualTo(int value) throws X {
-        if (actual >= value) {
-            return actual;
+        if (actual < value) {
+            fail("t -> t >= " + Messages.describe(value));
         }
-        throw fail("t -> t >= " + Messages.describe(value));
+        return actual;
     }
 
     public int isAtLeast(int value) throws X {
@@ -81,17 +81,17 @@ public final class VerifiablePrimitiveInteger<X extends Throwable> extends Abstr
     }
 
     public int isLessThan(int value) throws X {
-        if (actual < value) {
-            return actual;
+        if (actual >= value) {
+            fail("t -> t < " + Messages.describe(value));
         }
-        throw fail("t -> t < " + Messages.describe(value));
+        return actual;
     }
 
     public int isLessThanOrEqualTo(int value) throws X {
-        if (actual <= value) {
-            return actual;
+        if (actual > value) {
+            fail("t -> t <= " + Messages.describe(value));
         }
-        throw fail("t -> t <= " + Messages.describe(value));
+        return actual;
     }
 
     public int isAtMost(int value) throws X {
@@ -102,13 +102,13 @@ public final class VerifiablePrimitiveInteger<X extends Throwable> extends Abstr
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.describePredicate(expected));
         }
-        throw fail(Messages.buildFailSatisfiesMessage(expected));
+        return actual;
     }
 
-    private X fail(String expected) {
-        return fail(expected, Messages.describe(actual));
+    private void fail(String expected) throws X {
+        fail(expected, Messages.describe(actual));
     }
 }

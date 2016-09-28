@@ -41,17 +41,17 @@ public final class VerifiablePrimitiveLong<X extends Throwable> extends Abstract
     }
 
     public long isEqualTo(long value) throws X {
-        if (actual == value) {
-            return actual;
+        if (actual != value) {
+            fail("t -> t == " + Messages.describe(value));
         }
-        throw fail("t -> t == " + Messages.describe(value));
+        return actual;
     }
 
     public long isNotEqualTo(long value) throws X {
-        if (actual != value) {
-            return actual;
+        if (actual == value) {
+            fail("t -> t != " + Messages.describe(value));
         }
-        throw fail("t -> t != " + Messages.describe(value));
+        return actual;
     }
 
     public long isStrictlyPositive() throws X {
@@ -63,17 +63,17 @@ public final class VerifiablePrimitiveLong<X extends Throwable> extends Abstract
     }
 
     public long isGreaterThan(long value) throws X {
-        if (actual > value) {
-            return actual;
+        if (actual <= value) {
+            fail("t -> t > " + Messages.describe(value));
         }
-        throw fail("t -> t > " + Messages.describe(value));
+        return actual;
     }
 
     public long isGreaterThanOrEqualTo(long value) throws X {
-        if (actual >= value) {
-            return actual;
+        if (actual < value) {
+            fail("t -> t >= " + Messages.describe(value));
         }
-        throw fail("t -> t >= " + Messages.describe(value));
+        return actual;
     }
 
     public long isAtLeast(long value) throws X {
@@ -81,17 +81,17 @@ public final class VerifiablePrimitiveLong<X extends Throwable> extends Abstract
     }
 
     public long isLessThan(long value) throws X {
-        if (actual < value) {
-            return actual;
+        if (actual >= value) {
+            fail("t -> t < " + Messages.describe(value));
         }
-        throw fail("t -> t < " + Messages.describe(value));
+        return actual;
     }
 
     public long isLessThanOrEqualTo(long value) throws X {
-        if (actual <= value) {
-            return actual;
+        if (actual > value) {
+            fail("t -> t <= " + Messages.describe(value));
         }
-        throw fail("t -> t <= " + Messages.describe(value));
+        return actual;
     }
 
     public long isAtMost(long value) throws X {
@@ -102,13 +102,13 @@ public final class VerifiablePrimitiveLong<X extends Throwable> extends Abstract
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.describePredicate(expected));
         }
-        throw fail(Messages.buildFailSatisfiesMessage(expected));
+        return actual;
     }
 
-    private X fail(String expected) {
-        return fail(expected, Messages.describe(actual));
+    private void fail(String expected) throws X {
+        fail(expected, Messages.describe(actual));
     }
 }

@@ -29,65 +29,65 @@ public final class VerifiableString<X extends Throwable> extends AbstractVerifia
 
     public String isEmpty() throws X {
         String actual = getActual();
-        if (null != actual && actual.isEmpty()) {
-            return actual;
+        if (null == actual || !actual.isEmpty()) {
+            fail("t -> t.isEmpty()");
         }
-        throw fail("t -> t.isEmpty()");
+        return actual;
     }
 
     public String isNotEmpty() throws X {
         String actual = getActual();
-        if (null != actual && !actual.isEmpty()) {
-            return actual;
+        if (null == actual || actual.isEmpty()) {
+            fail("t -> !t.isEmpty()");
         }
-        throw fail("t -> !t.isEmpty()");
+        return actual;
     }
 
     public String startsWith(String prefix) throws X {
         String actual = getActual();
-        if (null != actual && actual.startsWith(prefix)) {
-            return actual;
+        if (null == actual || !actual.startsWith(prefix)) {
+            fail("t -> t.startsWith(" + Messages.describe(prefix) + ")");
         }
-        throw fail("t -> t.startsWith(" + Messages.describe(prefix) + ")");
+        return actual;
     }
 
     public String doesNotStartWith(String prefix) throws X {
         String actual = getActual();
-        if (null != actual && !actual.startsWith(prefix)) {
-            return actual;
+        if (null == actual || actual.startsWith(prefix)) {
+            fail("t -> !t.startsWith(" + Messages.describe(prefix) + ")");
         }
-        throw fail("t -> !t.startsWith(" + Messages.describe(prefix) + ")");
+        return actual;
     }
 
     public String endsWith(String suffix) throws X {
         String actual = getActual();
-        if (null != actual && actual.endsWith(suffix)) {
-            return actual;
+        if (null == actual || !actual.endsWith(suffix)) {
+            fail("t -> t.endsWith(" + Messages.describe(suffix) + ")");
         }
-        throw fail("t -> t.endsWith(" + Messages.describe(suffix) + ")");
+        return actual;
     }
 
     public String doesNotEndWith(String suffix) throws X {
         String actual = getActual();
-        if (null != actual && !actual.endsWith(suffix)) {
-            return actual;
+        if (null == actual || actual.endsWith(suffix)) {
+            fail("t -> !t.endsWith(" + Messages.describe(suffix) + ")");
         }
-        throw fail("t -> !t.endsWith(" + Messages.describe(suffix) + ")");
+        return actual;
     }
 
     public String matches(String regex) throws X {
         String actual = getActual();
-        if (null != actual && actual.matches(regex)) {
-            return actual;
+        if (null == actual || !actual.matches(regex)) {
+            fail("t -> t.matches(" + Messages.describe(regex) + ")");
         }
-        throw fail("t -> t.matches(" + Messages.describe(regex) + ")");
+        return actual;
     }
 
     public String doesNotMatch(String regex) throws X {
         String actual = getActual();
-        if (null != actual && !actual.matches(regex)) {
-            return actual;
+        if (null == actual || actual.matches(regex)) {
+            fail("t -> !t.matches(" + Messages.describe(regex) + ")");
         }
-        throw fail("t -> !t.matches(" + Messages.describe(regex) + ")");
+        return actual;
     }
 }

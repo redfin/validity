@@ -41,17 +41,17 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
     }
 
     public double isEqualTo(double value) throws X {
-        if (Double.compare(actual, value) == 0) {
-            return actual;
+        if (Double.compare(actual, value) != 0) {
+            fail("t -> t == " + Messages.describe(value));
         }
-        throw fail("t -> t == " + Messages.describe(value));
+        return actual;
     }
 
     public double isNotEqualTo(double value) throws X {
-        if (Double.compare(actual, value) != 0) {
-            return actual;
+        if (Double.compare(actual, value) == 0) {
+            fail("t -> t != " + Messages.describe(value));
         }
-        throw fail("t -> t != " + Messages.describe(value));
+        return actual;
     }
 
     public double isStrictlyPositive() throws X {
@@ -63,17 +63,17 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
     }
 
     public double isGreaterThan(double value) throws X {
-        if (Double.compare(actual, value) > 0) {
-            return actual;
+        if (Double.compare(actual, value) <= 0) {
+            fail("t -> t > " + Messages.describe(value));
         }
-        throw fail("t -> t > " + Messages.describe(value));
+        return actual;
     }
 
     public double isGreaterThanOrEqualTo(double value) throws X {
-        if (Double.compare(actual, value) >= 0) {
-            return actual;
+        if (Double.compare(actual, value) < 0) {
+            fail("t -> t >= " + Messages.describe(value));
         }
-        throw fail("t -> t >= " + Messages.describe(value));
+        return actual;
     }
 
     public double isAtLeast(double value) throws X {
@@ -81,17 +81,17 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
     }
 
     public double isLessThan(double value) throws X {
-        if (Double.compare(actual, value) < 0) {
-            return actual;
+        if (Double.compare(actual, value) >= 0) {
+            fail("t -> t < " + Messages.describe(value));
         }
-        throw fail("t -> t < " + Messages.describe(value));
+        return actual;
     }
 
     public double isLessThanOrEqualTo(double value) throws X {
-        if (Double.compare(actual, value) <= 0) {
-            return actual;
+        if (Double.compare(actual, value) > 0) {
+            fail("t -> t <= " + Messages.describe(value));
         }
-        throw fail("t -> t <= " + Messages.describe(value));
+        return actual;
     }
 
     public double isAtMost(double value) throws X {
@@ -102,13 +102,13 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.describePredicate(expected));
         }
-        throw fail(Messages.buildFailSatisfiesMessage(expected));
+        return actual;
     }
 
-    private X fail(String expected) {
-        return fail(expected, Messages.describe(actual));
+    private void fail(String expected) throws X {
+        fail(expected, Messages.describe(actual));
     }
 }

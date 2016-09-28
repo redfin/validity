@@ -40,18 +40,18 @@ public abstract class AbstractVerifiableNumber<T extends Number & Comparable<T>,
 
     public T isComparableTo(T value) throws X {
         T actual = getActual();
-        if (null != actual && actual.compareTo(value) == 0) {
-            return actual;
+        if (null == actual || actual.compareTo(value) != 0) {
+            fail("t -> t.compareTo(" + describeType(value) + ") == 0");
         }
-        throw fail("t -> t.compareTo(" + describeType(value) + ") == 0");
+        return actual;
     }
 
     public T isNotComparableTo(T value) throws X {
         T actual = getActual();
-        if (null != actual && actual.compareTo(value) != 0) {
-            return actual;
+        if (null == actual || actual.compareTo(value) == 0) {
+            fail("t -> t.compareTo(" + describeType(value) + ") != 0");
         }
-        throw fail("t -> t.compareTo(" + describeType(value) + ") != 0");
+        return actual;
     }
 
     public T isStrictlyPositive() throws X {
@@ -64,18 +64,18 @@ public abstract class AbstractVerifiableNumber<T extends Number & Comparable<T>,
 
     public T isGreaterThan(T value) throws X {
         T actual = getActual();
-        if (null != actual && actual.compareTo(value) > 0) {
-            return actual;
+        if (null == actual || actual.compareTo(value) <= 0) {
+            fail("t -> t.compareTo(" + describeType(value) + ") > 0");
         }
-        throw fail("t -> t.compareTo(" + describeType(value) + ") > 0");
+        return actual;
     }
 
     public T isGreaterThanOrEqualTo(T value) throws X {
         T actual = getActual();
-        if (null != actual && actual.compareTo(value) >= 0) {
-            return actual;
+        if (null == actual || actual.compareTo(value) < 0) {
+            fail("t -> t.compareTo(" + describeType(value) + ") >= 0");
         }
-        throw fail("t -> t.compareTo(" + describeType(value) + ") >= 0");
+        return actual;
     }
 
     public T isAtLeast(T value) throws X {
@@ -84,18 +84,18 @@ public abstract class AbstractVerifiableNumber<T extends Number & Comparable<T>,
 
     public T isLessThan(T value) throws X {
         T actual = getActual();
-        if (null != actual && actual.compareTo(value) < 0) {
-            return actual;
+        if (null == actual || actual.compareTo(value) >= 0) {
+            fail("t -> t.compareTo(" + describeType(value) + ") < 0");
         }
-        throw fail("t -> t.compareTo(" + describeType(value) + ") < 0");
+        return actual;
     }
 
     public T isLessThanOrEqualTo(T value) throws X {
         T actual = getActual();
-        if (null != actual && actual.compareTo(value) <= 0) {
-            return actual;
+        if (null == actual || actual.compareTo(value) > 0) {
+            fail("t -> t.compareTo(" + describeType(value) + ") <= 0");
         }
-        throw fail("t -> t.compareTo(" + describeType(value) + ") <= 0");
+        return actual;
     }
 
     public T isAtMost(T value) throws X {

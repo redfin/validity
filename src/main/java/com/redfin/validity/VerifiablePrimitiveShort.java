@@ -41,17 +41,17 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
     }
 
     public short isEqualTo(short value) throws X {
-        if (actual == value) {
-            return actual;
+        if (actual != value) {
+            fail("t -> t == " + Messages.describe(value));
         }
-        throw fail("t -> t == " + Messages.describe(value));
+        return actual;
     }
 
     public short isNotEqualTo(short value) throws X {
-        if (actual != value) {
-            return actual;
+        if (actual == value) {
+            fail("t -> t != " + Messages.describe(value));
         }
-        throw fail("t -> t != " + Messages.describe(value));
+        return actual;
     }
 
     public short isStrictlyPositive() throws X {
@@ -63,17 +63,17 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
     }
 
     public short isGreaterThan(short value) throws X {
-        if (actual > value) {
-            return actual;
+        if (actual <= value) {
+            fail("t -> t > " + Messages.describe(value));
         }
-        throw fail("t -> t > " + Messages.describe(value));
+        return actual;
     }
 
     public short isGreaterThanOrEqualTo(short value) throws X {
-        if (actual >= value) {
-            return actual;
+        if (actual < value) {
+            fail("t -> t >= " + Messages.describe(value));
         }
-        throw fail("t -> t >= " + Messages.describe(value));
+        return actual;
     }
 
     public short isAtLeast(short value) throws X {
@@ -81,17 +81,17 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
     }
 
     public short isLessThan(short value) throws X {
-        if (actual < value) {
-            return actual;
+        if (actual >= value) {
+            fail("t -> t < " + Messages.describe(value));
         }
-        throw fail("t -> t < " + Messages.describe(value));
+        return actual;
     }
 
     public short isLessThanOrEqualTo(short value) throws X {
-        if (actual <= value) {
-            return actual;
+        if (actual > value) {
+            fail("t -> t <= " + Messages.describe(value));
         }
-        throw fail("t -> t <= " + Messages.describe(value));
+        return actual;
     }
 
     public short isAtMost(short value) throws X {
@@ -102,13 +102,13 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.describePredicate(expected));
         }
-        throw fail(Messages.buildFailSatisfiesMessage(expected));
+        return actual;
     }
 
-    private X fail(String expected) {
-        return fail(expected, Messages.describe(actual));
+    private void fail(String expected) throws X {
+        fail(expected, Messages.describe(actual));
     }
 }

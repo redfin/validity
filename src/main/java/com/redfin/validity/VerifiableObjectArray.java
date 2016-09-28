@@ -30,41 +30,41 @@ public final class VerifiableObjectArray<E, X extends Throwable> extends Abstrac
 
     public E[] isEmpty() throws X {
         E[] actual = getActual();
-        if (null != actual && actual.length == 0) {
-            return actual;
+        if (null == actual || actual.length != 0) {
+            fail("t -> t.length == 0");
         }
-        throw fail("t -> t.length == 0");
+        return actual;
     }
 
     public E[] isNotEmpty() throws X {
         E[] actual = getActual();
-        if (null != actual && actual.length > 0) {
-            return actual;
+        if (null == actual || actual.length <= 0) {
+            fail("t -> t.length > 0");
         }
-        throw fail("t -> t.length > 0");
+        return actual;
     }
 
     public E[] hasLengthOf(int length) throws X {
         E[] actual = getActual();
-        if (null != actual && actual.length == length) {
-            return actual;
+        if (null == actual || actual.length != length) {
+            fail("t -> t.length == " + length);
         }
-        throw fail("t -> t.length == " + length);
+        return actual;
     }
 
     public E[] hasLengthOfAtLeast(int length) throws X {
         E[] actual = getActual();
-        if (null != actual && actual.length >= length) {
-            return actual;
+        if (null == actual || actual.length < length) {
+            fail("t -> t.length >= " + length);
         }
-        throw fail("t -> t.length >= " + length);
+        return actual;
     }
 
     public E[] hasLengthOfAtMost(int length) throws X {
         E[] actual = getActual();
-        if (null != actual && actual.length <= length) {
-            return actual;
+        if (null == actual || actual.length > length) {
+            fail("t -> t.length <= " + length);
         }
-        throw fail("t -> t.length <= " + length);
+        return actual;
     }
 }

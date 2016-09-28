@@ -36,59 +36,63 @@ public final class VerifiablePrimitiveFloatArray<X extends Throwable> extends Ab
     }
 
     public float[] isEmpty() throws X {
-        if (null != actual && actual.length == 0) {
-            return actual;
+        if (null == actual || actual.length != 0) {
+            fail("t -> t.length == 0");
         }
-        throw fail("t -> t.length == 0");
+        return actual;
     }
 
     public float[] isNotEmpty() throws X {
-        if (null != actual && actual.length > 0) {
-            return actual;
+        if (null == actual || actual.length <= 0) {
+            fail("t -> t.length > 0");
         }
-        throw fail("t -> t.length > 0");
+        return actual;
     }
 
     public float[] hasLengthOf(int length) throws X {
-        if (null != actual && actual.length == length) {
-            return actual;
+        if (null == actual || actual.length != length) {
+            fail("t -> t.length == " + Messages.describe(length));
         }
-        throw fail("t -> t.length == " + Messages.describe(length));
+        return actual;
     }
 
     public float[] hasLengthOfAtLeast(int length) throws X {
-        if (null != actual && actual.length >= length) {
-            return actual;
+        if (null == actual || actual.length < length) {
+            fail("t -> t.length >= " + Messages.describe(length));
         }
-        throw fail("t -> t.length >= " + Messages.describe(length));
+        return actual;
     }
 
     public float[] hasLengthOfAtMost(int length) throws X {
-        if (null != actual && actual.length <= length) {
-            return actual;
+        if (null == actual || actual.length > length) {
+            fail("t -> t.length <= " + Messages.describe(length));
         }
-        throw fail("t -> t.length <= " + Messages.describe(length));
+        return actual;
     }
 
     public float[] contains(float value) throws X {
-        if (null != actual) {
-            for (float next : actual) {
-                if (Float.compare(next, value) == 0) {
-                    return actual;
-                }
-            }
+        if (!containsHelper(value)) {
+            fail("t -> t.contains(" + Messages.describe(value) + ")");
         }
-        throw fail("t -> t.contains(" + Messages.describe(value) + ")");
+        return actual;
     }
 
     public float[] doesNotContain(float value) throws X {
-        if (null != actual) {
-            for (float next : actual) {
-                if (Float.compare(next, value) == 0) {
-                    throw fail("t -> t.contains(" + Messages.describe(value) + ")");
-                }
-            }
+        if (containsHelper(value)) {
+            fail("t -> !t.contains(" + Messages.describe(value) + ")");
         }
         return actual;
+    }
+
+    private boolean containsHelper(float value) {
+        if (null == actual) {
+            return false;
+        }
+        for (float next : actual) {
+            if (Float.compare(next, value) == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

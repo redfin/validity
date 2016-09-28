@@ -36,59 +36,63 @@ public final class VerifiablePrimitiveByteArray<X extends Throwable> extends Abs
     }
 
     public byte[] isEmpty() throws X {
-        if (null != actual && actual.length == 0) {
-            return actual;
+        if (null == actual || actual.length != 0) {
+            fail("t -> t.length == 0");
         }
-        throw fail("t -> t.length == 0");
+        return actual;
     }
 
     public byte[] isNotEmpty() throws X {
-        if (null != actual && actual.length > 0) {
-            return actual;
+        if (null == actual || actual.length <= 0) {
+            fail("t -> t.length > 0");
         }
-        throw fail("t -> t.length > 0");
+        return actual;
     }
 
     public byte[] hasLengthOf(int length) throws X {
-        if (null != actual && actual.length == length) {
-            return actual;
+        if (null == actual || actual.length != length) {
+            fail("t -> t.length == " + Messages.describe(length));
         }
-        throw fail("t -> t.length == " + Messages.describe(length));
+        return actual;
     }
 
     public byte[] hasLengthOfAtLeast(int length) throws X {
-        if (null != actual && actual.length >= length) {
-            return actual;
+        if (null == actual || actual.length < length) {
+            fail("t -> t.length >= " + Messages.describe(length));
         }
-        throw fail("t -> t.length >= " + Messages.describe(length));
+        return actual;
     }
 
     public byte[] hasLengthOfAtMost(int length) throws X {
-        if (null != actual && actual.length <= length) {
-            return actual;
+        if (null == actual || actual.length > length) {
+            fail("t -> t.length <= " + Messages.describe(length));
         }
-        throw fail("t -> t.length <= " + Messages.describe(length));
+        return actual;
     }
 
     public byte[] contains(byte value) throws X {
-        if (null != actual) {
-            for (byte next : actual) {
-                if (Byte.compare(next, value) == 0) {
-                    return actual;
-                }
-            }
+        if (!containsHelper(value)) {
+            fail("t -> t.contains(" + Messages.describe(value) + ")");
         }
-        throw fail("t -> t.contains(" + Messages.describe(value) + ")");
+        return actual;
     }
 
     public byte[] doesNotContain(byte value) throws X {
-        if (null != actual) {
-            for (byte next : actual) {
-                if (Byte.compare(next, value) == 0) {
-                    throw fail("t -> t.contains(" + Messages.describe(value) + ")");
-                }
-            }
+        if (containsHelper(value)) {
+            fail("t -> !t.contains(" + Messages.describe(value) + ")");
         }
         return actual;
+    }
+
+    private boolean containsHelper(byte value) {
+        if (null == actual) {
+            return false;
+        }
+        for (byte next : actual) {
+            if (Byte.compare(next, value) == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }

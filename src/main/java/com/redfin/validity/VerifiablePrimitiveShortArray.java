@@ -36,59 +36,63 @@ public final class VerifiablePrimitiveShortArray<X extends Throwable> extends Ab
     }
 
     public short[] isEmpty() throws X {
-        if (null != actual && actual.length == 0) {
-            return actual;
+        if (null == actual || actual.length != 0) {
+            fail("t -> t.length == 0");
         }
-        throw fail("t -> t.length == 0");
+        return actual;
     }
 
     public short[] isNotEmpty() throws X {
-        if (null != actual && actual.length > 0) {
-            return actual;
+        if (null == actual || actual.length <= 0) {
+            fail("t -> t.length > 0");
         }
-        throw fail("t -> t.length > 0");
+        return actual;
     }
 
     public short[] hasLengthOf(int length) throws X {
-        if (null != actual && actual.length == length) {
-            return actual;
+        if (null == actual || actual.length != length) {
+            fail("t -> t.length == " + Messages.describe(length));
         }
-        throw fail("t -> t.length == " + Messages.describe(length));
+        return actual;
     }
 
     public short[] hasLengthOfAtLeast(int length) throws X {
-        if (null != actual && actual.length >= length) {
-            return actual;
+        if (null == actual || actual.length < length) {
+            fail("t -> t.length >= " + Messages.describe(length));
         }
-        throw fail("t -> t.length >= " + Messages.describe(length));
+        return actual;
     }
 
     public short[] hasLengthOfAtMost(int length) throws X {
-        if (null != actual && actual.length <= length) {
-            return actual;
+        if (null == actual || actual.length > length) {
+            fail("t -> t.length <= " + Messages.describe(length));
         }
-        throw fail("t -> t.length <= " + Messages.describe(length));
+        return actual;
     }
 
     public short[] contains(short value) throws X {
-        if (null != actual) {
-            for (short next : actual) {
-                if (next == value) {
-                    return actual;
-                }
-            }
+        if (!containsHelper(value)) {
+            fail("t -> t.contains(" + Messages.describe(value) + ")");
         }
-        throw fail("t -> t.contains(" + Messages.describe(value) + ")");
+        return actual;
     }
 
     public short[] doesNotContain(short value) throws X {
-        if (null != actual) {
-            for (short next : actual) {
-                if (next == value) {
-                    throw fail("t -> t.contains(" + Messages.describe(value) + ")");
-                }
-            }
+        if (containsHelper(value)) {
+            fail("t -> !t.contains(" + Messages.describe(value) + ")");
         }
         return actual;
+    }
+
+    private boolean containsHelper(short value) {
+        if (null == actual) {
+            return false;
+        }
+        for (short next : actual) {
+            if (next == value) {
+                return true;
+            }
+        }
+        return false;
     }
 }

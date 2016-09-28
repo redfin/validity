@@ -33,58 +33,58 @@ public final class VerifiablePrimitiveChar<X extends Throwable> extends Abstract
     }
 
     public char isEqualTo(char c) throws X {
-        if (actual == c) {
-            return actual;
+        if (actual != c) {
+            fail("t -> t == " + Messages.describe(c));
         }
-        throw fail("t -> t == " + Messages.describe(c));
+        return actual;
     }
 
     public char isNotEqualTo(char c) throws X {
-        if (actual != c) {
-            return actual;
+        if (actual == c) {
+            fail("t -> t != " + Messages.describe(c));
         }
-        throw fail("t -> t != " + Messages.describe(c));
+        return actual;
     }
 
     public char isUpperCase() throws X {
-        if (Character.isUpperCase(actual)) {
-            return actual;
+        if (!Character.isUpperCase(actual)) {
+            fail("t -> Character.isUpperCase(t)");
         }
-        throw fail("t -> Character.isUpperCase(t)");
+        return actual;
     }
 
     public char isLowerCase() throws X {
-        if (Character.isLowerCase(actual)) {
-            return actual;
+        if (!Character.isLowerCase(actual)) {
+            fail("t -> Character.isLowerCase(t)");
         }
-        throw fail("t -> Character.isLowerCase(t)");
+        return actual;
     }
 
     public char isAlphabetic() throws X {
-        if (Character.isAlphabetic(actual)) {
-            return actual;
+        if (!Character.isAlphabetic(actual)) {
+            fail("t -> Character.isAlphabetic(t)");
         }
-        throw fail("t -> Character.isAlphabetic(t)");
+        return actual;
     }
 
     public char isDigit() throws X {
-        if (Character.isDigit(actual)) {
-            return actual;
+        if (!Character.isDigit(actual)) {
+            fail("t -> Character.isDigit(t)");
         }
-        throw fail("t -> Character.isDigit(t)");
+        return actual;
     }
 
     public char satisfies(Predicate<Character> expected) throws X {
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.describePredicate(expected));
         }
-        throw fail(Messages.buildFailSatisfiesMessage(expected));
+        return actual;
     }
 
-    private X fail(String expected) {
-        return fail(expected, Messages.describe(actual));
+    private void fail(String expected) throws X {
+        fail(expected, Messages.describe(actual));
     }
 }

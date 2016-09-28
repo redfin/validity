@@ -17,15 +17,34 @@
 package com.redfin.validity;
 
 /**
- * todo
+ * Base class for the verifiable objects for primitive types.
  *
- * @param <X>
+ * @param <X> the type of throwable this instance will throw on validation failure.
  */
 public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Fields
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private final String description;
     private final FailedValidationHandler<X> failedValidationHandler;
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Instance Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * Create a new {@link AbstractVerifiablePrimitive} instance with the given description and
+     * {@link FailedValidationHandler}.
+     *
+     * @param description             the String description that will be given to the failedValidationHandler
+     *                                on validation failure.
+     *                                May be null.
+     * @param failedValidationHandler the {@link FailedValidationHandler} to be called on validation failure.
+     *                                May not be null.
+     * @throws NullPointerException if failedValidationHandler is null.
+     */
     public AbstractVerifiablePrimitive(String description, FailedValidationHandler<X> failedValidationHandler) {
         if (null == failedValidationHandler) {
             throw new NullPointerException(Messages.nullArgumentMessage("failedValidationHandler"));
@@ -34,17 +53,26 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
         this.failedValidationHandler = failedValidationHandler;
     }
 
-    protected final X fail(String expected, String actual) {
+    /**
+     * Creates the desired throwable instance from the {@link FailedValidationHandler} and
+     * then throws it.
+     *
+     * @param expected the String description of the expected state.
+     * @param actual   the String description of the actual object being tested.
+     * @throws X always.
+     */
+    protected final void fail(String expected, String actual) throws X {
         X throwable = failedValidationHandler.buildThrowable(description, expected, actual);
         if (null == throwable) {
             throw new NullPointerException("A null throwable was returned from the FailedValidationHandler");
         }
-        return throwable;
+        throw throwable;
     }
 
     /**
      * @throws UnsupportedOperationException always
-     * @deprecated {@link Object#equals(Object)} is not supported for verifiable primitive objects.
+     * @deprecated {@link Object#equals(Object)} is not supported for verifiable primitive objects. Check
+     * if the verifiable primitive has an isEqualTo method.
      */
     @Deprecated
     @Override

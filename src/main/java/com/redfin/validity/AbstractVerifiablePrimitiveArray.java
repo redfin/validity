@@ -19,52 +19,96 @@ package com.redfin.validity;
 import java.util.function.Predicate;
 
 /**
- * todo
+ * Base class for the verifiable objects for arrays of primitive types.
  *
- * @param <T>
- * @param <X>
+ * @param <T> the type of primitive array for this verifiable instance.
+ * @param <X> the type of throwable this instance will throw on validation failure.
  */
 public abstract class AbstractVerifiablePrimitiveArray<T, X extends Throwable> extends AbstractVerifiablePrimitive<X> {
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Instance Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * Create a new {@link AbstractVerifiablePrimitiveArray} instance with the given description and
+     * {@link FailedValidationHandler}.
+     *
+     * @param description             the String description that will be given to the failedValidationHandler
+     *                                on validation failure.
+     *                                May be null.
+     * @param failedValidationHandler the {@link FailedValidationHandler} to be called on validation failure.
+     *                                May not be null.
+     * @throws NullPointerException if failedValidationHandler is null.
+     */
     public AbstractVerifiablePrimitiveArray(String description, FailedValidationHandler<X> failedValidationHandler) {
         super(description, failedValidationHandler);
     }
 
+    /**
+     * @return the actual array test subject that is being verified.
+     */
     protected abstract T getActual();
 
+    /**
+     * Verify the test subject is null. This method will
+     * always either return null or throw X.
+     *
+     * @return null if the test subject is null.
+     * @throws X if the test subject is not null.
+     */
     public T isNull() throws X {
         T actual = getActual();
-        if (null == actual) {
-            return null;
+        if (null != actual) {
+            fail("t -> null == t", Messages.describe(actual));
         }
-        throw fail("t -> null == t", Messages.describe(actual));
+        return null;
     }
 
+    /**
+     * Verify the actual instance is not null. This method will
+     * either return the given object or throw X.
+     *
+     * @return the test subject is not null.
+     * @throws X if the test subject is null.
+     */
     public T isNotNull() throws X {
         T actual = getActual();
-        if (null != actual) {
-            return actual;
+        if (null == actual) {
+            fail("t -> null != t", Messages.describe((T) null));
         }
-        throw fail("t -> null != t", Messages.describe(actual));
+        return actual;
     }
 
+    /**
+     * Verify the test subject satisfies the given predicate. Note that if the
+     * predicate test itself throws an exception, that will not be handled and the
+     * validation library will not throw it's usual throwable.
+     *
+     * @param expected the {@link Predicate} to apply to the test subject.
+     *                 May not be null.
+     * @return the test subject if it satisfies the given predicate.
+     * @throws X if the test subject does not satisfy the predicate.
+     */
     public T satisfies(Predicate<T> expected) throws X {
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
         T actual = getActual();
-        if (expected.test(actual)) {
-            return actual;
+        if (!expected.test(actual)) {
+            fail(Messages.describePredicate(expected));
         }
-        String expectedString = Messages.describe(expected);
-        if (expected instanceof AbstractDescriptivePredicate) {
-            throw fail(expectedString);
-        } else {
-            throw fail("Unknown predicate: " + expectedString);
-        }
+        return actual;
     }
 
-    protected X fail(String expected) {
-        return fail(expected, Messages.describe(getActual()));
+    /**
+     * Creates the desired throwable instance from the {@link FailedValidationHandler} and
+     * then throws it.
+     *
+     * @param expected the String description of the expected state.
+     * @throws X always.
+     */
+    protected final void fail(String expected) throws X {
+        fail(expected, Messages.describe(getActual()));
     }
 }

@@ -33,57 +33,57 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
 
     public T isEmpty() throws X {
         T actual = getActual();
-        if (null != actual && actual.isEmpty()) {
-            return actual;
+        if (null == actual || !actual.isEmpty()) {
+            fail("t -> t.isEmpty()");
         }
-        throw fail("t -> t.isEmpty()");
+        return actual;
     }
 
     public T isNotEmpty() throws X {
         T actual = getActual();
-        if (null != actual && !actual.isEmpty()) {
-            return actual;
+        if (null == actual || actual.isEmpty()) {
+            fail("t -> !t.isEmpty()");
         }
-        throw fail("t -> !t.isEmpty()");
+        return actual;
     }
 
     public T hasSizeOf(int length) throws X {
         T actual = getActual();
-        if (null != actual && actual.size() == length) {
-            return actual;
+        if (null == actual || actual.size() != length) {
+            fail("t -> t.size() == " + length);
         }
-        throw fail("t -> t.size() == " + length);
+        return actual;
     }
 
     public T hasSizeOfAtLeast(int length) throws X {
         T actual = getActual();
-        if (null != actual && actual.size() >= length) {
-            return actual;
+        if (null == actual || actual.size() < length) {
+            fail("t -> t.size() >= " + length);
         }
-        throw fail("t -> t.size() >= " + length);
+        return actual;
     }
 
     public T hasSizeOfAtMost(int length) throws X {
         T actual = getActual();
-        if (null != actual && actual.size() <= length) {
-            return actual;
+        if (null == actual || actual.size() > length) {
+            fail("t -> t.size() <= " + length);
         }
-        throw fail("t -> t.size() <= " + length);
+        return actual;
     }
 
     public T contains(E e) throws X {
         T actual = getActual();
-        if (null != actual && actual.contains(e)) {
-            return actual;
+        if (null == actual && !actual.contains(e)) {
+            fail("t -> t.contains(" + Messages.describe(e) + ")");
         }
-        throw fail("t -> t.contains(" + Messages.describe(e) + ")");
+        return actual;
     }
 
     public T doesNotContain(E e) throws X {
         T actual = getActual();
-        if (null != actual && !actual.contains(e)) {
-            return actual;
+        if (null == actual || actual.contains(e)) {
+            fail("t -> !t.contains(" + Messages.describe(e) + ")");
         }
-        throw fail("t -> !t.contains(" + Messages.describe(e) + ")");
+        return actual;
     }
 }

@@ -31,20 +31,20 @@ public final class VerifiablePrimitiveBoolean<X extends Throwable> extends Abstr
     }
 
     public boolean isTrue() throws X {
-        if (actual) {
-            return true;
+        if (!actual) {
+            fail("t -> t == true");
         }
-        throw fail("t -> t == true");
+        return true;
     }
 
     public boolean isFalse() throws X {
-        if (!actual) {
-            return false;
+        if (actual) {
+            fail("t -> t == false");
         }
-        throw fail("t -> t == false");
+        return false;
     }
 
-    private X fail(String expected) {
-        return fail(expected, Messages.describe(actual));
+    private void fail(String expected) throws X {
+        fail(expected, Messages.describe(actual));
     }
 }
