@@ -73,6 +73,13 @@ public abstract class AbstractDescriptivePredicate {
     }
 
     /**
+     * @return the given String description for this instance.
+     */
+    protected String getDescription() {
+        return description;
+    }
+
+    /**
      * @return a new String description that represents the negated version of the
      * current predicate.
      */
@@ -81,42 +88,21 @@ public abstract class AbstractDescriptivePredicate {
     }
 
     /**
-     * @param other the object to use as the other predicate in an "AND" composition.
-     *              May not be null.
+     * @param otherDescription the String description of the other predicate to use in an "AND" composition.
      * @return a new String description that represents an "AND" composition between
-     * this predicate and the other object (interpreted as a predicate).
-     * @throws NullPointerException if t is null.
+     * this predicate and the other.
      */
-    protected String getDescriptionForAnd(Object other) {
-        return String.format(AND_FORMAT, description, describePredicate(other));
+    protected String getDescriptionForAnd(String otherDescription) {
+        return String.format(AND_FORMAT, description, otherDescription);
     }
 
     /**
-     * @param other the object to use as the other predicate in an "OR" composition.
-     *              May not be null.
+     * @param otherDescription the String description of the other predicate to use in an "OR" composition.
      * @return a new String description that represents an "OR" composition between
-     * this predicate and the other object (interpreted as a predicate).
-     * @throws NullPointerException if t is null.
+     * this predicate and the other.
      */
-    protected String getDescriptionForOr(Object other) {
-        return String.format(OR_FORMAT, description, describePredicate(other));
-    }
-
-    /**
-     * @param other the object to describe as a predicate.
-     *              May not be null.
-     * @return a String description of t.
-     * @throws NullPointerException if t is null.
-     */
-    protected static String describePredicate(Object other) {
-        if (null == other) {
-            throw new NullPointerException(Messages.nullArgumentMessage("other"));
-        }
-        if (other instanceof AbstractDescriptivePredicate) {
-            return ((AbstractDescriptivePredicate) other).description;
-        } else {
-            return UNKNOWN_PREDICATE_PREFIX + other.toString();
-        }
+    protected String getDescriptionForOr(String otherDescription) {
+        return String.format(OR_FORMAT, description, otherDescription);
     }
 
     /**

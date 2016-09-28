@@ -68,11 +68,11 @@ public final class DescriptiveDoublePredicate extends AbstractDescriptivePredica
 
     @Override
     public DescriptiveDoublePredicate and(DoublePredicate other) {
-        return new DescriptiveDoublePredicate(getDescriptionForAnd(other), predicate.and(other));
+        return new DescriptiveDoublePredicate(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
     }
 
     @Override
     public DescriptiveDoublePredicate or(DoublePredicate other) {
-        return new DescriptiveDoublePredicate(getDescriptionForOr(other), predicate.or(other));
+        return new DescriptiveDoublePredicate(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
     }
 }

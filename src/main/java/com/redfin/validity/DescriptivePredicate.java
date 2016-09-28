@@ -70,11 +70,11 @@ public final class DescriptivePredicate<T> extends AbstractDescriptivePredicate 
 
     @Override
     public DescriptivePredicate<T> and(Predicate<? super T> other) {
-        return new DescriptivePredicate<>(getDescriptionForAnd(other), predicate.and(other));
+        return new DescriptivePredicate<>(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
     }
 
     @Override
     public DescriptivePredicate<T> or(Predicate<? super T> other) {
-        return new DescriptivePredicate<>(getDescriptionForOr(other), predicate.or(other));
+        return new DescriptivePredicate<>(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
     }
 }

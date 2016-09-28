@@ -68,11 +68,11 @@ public final class DescriptiveIntPredicate extends AbstractDescriptivePredicate 
 
     @Override
     public DescriptiveIntPredicate and(IntPredicate other) {
-        return new DescriptiveIntPredicate(getDescriptionForAnd(other), predicate.and(other));
+        return new DescriptiveIntPredicate(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
     }
 
     @Override
     public DescriptiveIntPredicate or(IntPredicate other) {
-        return new DescriptiveIntPredicate(getDescriptionForOr(other), predicate.or(other));
+        return new DescriptiveIntPredicate(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
     }
 }

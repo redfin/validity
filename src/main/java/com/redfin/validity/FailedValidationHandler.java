@@ -17,12 +17,26 @@
 package com.redfin.validity;
 
 /**
- * todo
+ * A functional interface that defines the creation of a throwable from
+ * the input of failed validation.
  *
- * @param <X>
+ * @param <X> the type of {@link Throwable} that should be returned from
+ *            the {@link #buildThrowable(String, String, String)} method.
  */
 @FunctionalInterface
 public interface FailedValidationHandler<X extends Throwable> {
 
+    /**
+     * Create and return a {@link Throwable} of the type for this handler instance.
+     *
+     * @param description         the String use supplied description of what is
+     *                            being tested. May be null.
+     * @param expectedDescription the String description of the expected state.
+     *                            May not be null.
+     * @param actualDescription   the String description of the actual state.
+     *                            May not be null.
+     * @return a {@link Throwable} created from the given input.
+     * @throws NullPointerException if expectedDescription or actualDescription are null.
+     */
     X buildThrowable(String description, String expectedDescription, String actualDescription);
 }

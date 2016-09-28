@@ -68,11 +68,11 @@ public final class DescriptiveLongPredicate extends AbstractDescriptivePredicate
 
     @Override
     public DescriptiveLongPredicate and(LongPredicate other) {
-        return new DescriptiveLongPredicate(getDescriptionForAnd(other), predicate.and(other));
+        return new DescriptiveLongPredicate(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
     }
 
     @Override
     public DescriptiveLongPredicate or(LongPredicate other) {
-        return new DescriptiveLongPredicate(getDescriptionForOr(other), predicate.or(other));
+        return new DescriptiveLongPredicate(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
     }
 }

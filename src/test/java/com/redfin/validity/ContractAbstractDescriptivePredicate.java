@@ -18,7 +18,6 @@ package com.redfin.validity;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.util.function.Predicate;
 
 /**
  * Contract to be implemented by tests for classes inheriting from
@@ -35,6 +34,12 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
     String DESCRIPTION = "null != " + AbstractDescriptivePredicate.TOKEN;
     String OTHER_DESCRIPTION = "!" + AbstractDescriptivePredicate.TOKEN + ".isEmpty()";
 
+    /**
+     * Method for implementing class to allow for inheriting tests.
+     *
+     * @param description the String description for the abstract descriptive predicate.
+     * @return the abstract descriptive predicate with the given description.
+     */
     T getInstance(String description);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,6 +69,13 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
     }
 
     @Test
+    default void testAbstractDescriptivePredicateReturnsGivenDescription() {
+        Assertions.assertEquals(DESCRIPTION,
+                                getInstance(DESCRIPTION).getDescription(),
+                                "AbstractDescriptivePredicate should return the given description.");
+    }
+
+    @Test
     default void testAbstractDescriptiveToStringReturnsExpectedResult() {
         Assertions.assertEquals("t -> " + DESCRIPTION.replace(AbstractDescriptivePredicate.TOKEN, "t"),
                                 getInstance(DESCRIPTION).toString(),
@@ -80,37 +92,14 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
     @Test
     default void testAbstractDescriptivePredicateReturnsExpectedAndString() {
         Assertions.assertEquals(String.format("(%s) && (%s)", DESCRIPTION, OTHER_DESCRIPTION),
-                                getInstance(DESCRIPTION).getDescriptionForAnd(getInstance(OTHER_DESCRIPTION)),
+                                getInstance(DESCRIPTION).getDescriptionForAnd(OTHER_DESCRIPTION),
                                 "AbstractDescriptivePredicate should return the expected and description.");
     }
 
     @Test
     default void testAbstractDescriptivePredicateReturnsExpectedOrString() {
         Assertions.assertEquals(String.format("(%s) || (%s)", DESCRIPTION, OTHER_DESCRIPTION),
-                                getInstance(DESCRIPTION).getDescriptionForOr(getInstance(OTHER_DESCRIPTION)),
-                                "AbstractDescriptivePredicate should return the expected or description.");
-    }
-
-    @Test
-    default void testAbstractDescriptivePredicateGetOtherDescriptionThrowsExpectedExceptionForNull() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> AbstractDescriptivePredicate.describePredicate(null));
-        Assertions.assertEquals(Messages.nullArgumentMessage("other"),
-                                exception.getMessage(),
-                                "AbstractDescriptivePredicate should throw an exception for a null describePredicate argument.");
-    }
-
-    @Test
-    default void testAbstractDescriptivePredicateGetOtherDescriptionReturnsExpectedValueForDescriptive() {
-        Assertions.assertEquals(DESCRIPTION,
-                                AbstractDescriptivePredicate.describePredicate(getInstance(DESCRIPTION)),
-                                "AbstractDescriptivePredicate should return the expected description for descriptive predicate.");
-    }
-
-    @Test
-    default void testAbstractDescriptivePredicateGetOtherDescriptionReturnsExpectedValueForJavaPredicate() {
-        Predicate<String> predicate = t -> null != t;
-        Assertions.assertEquals("unknown predicate: " + predicate,
-                                AbstractDescriptivePredicate.describePredicate(predicate),
-                                "AbstractDescriptivePredicate should return the expected description for plain Java predicate.");
+                                getInstance(DESCRIPTION).getDescriptionForOr(OTHER_DESCRIPTION),
+                                "AbstractDescriptivePredicate should return the expected and description.");
     }
 }

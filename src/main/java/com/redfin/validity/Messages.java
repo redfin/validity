@@ -17,6 +17,10 @@
 package com.redfin.validity;
 
 import java.util.Arrays;
+import java.util.function.DoublePredicate;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -107,6 +111,37 @@ final class Messages {
 
     static String describe(String value) {
         return (null == value) ? NULL : "\"" + value + "\"";
+    }
+
+    static String describePredicate(DoublePredicate value) {
+        return describePredicateHelper(value);
+    }
+
+    static String describePredicate(IntPredicate value) {
+        return describePredicateHelper(value);
+    }
+
+    static String describePredicate(LongPredicate value) {
+        return describePredicateHelper(value);
+    }
+
+    static String describePredicate(Predicate<?> value) {
+        return describePredicateHelper(value);
+    }
+
+    static String describePredicate(AbstractDescriptivePredicate value) {
+        return describePredicateHelper(value);
+    }
+
+    private static String describePredicateHelper(Object value) {
+        if (null == value) {
+            throw new NullPointerException(Messages.nullArgumentMessage("value"));
+        }
+        if (value instanceof AbstractDescriptivePredicate) {
+            return ((AbstractDescriptivePredicate) value).getDescription();
+        } else {
+            return UNKNOWN_PREDICATE_PREFIX + value.toString();
+        }
     }
 
     static <T> String describe(T value) {

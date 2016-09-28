@@ -16,12 +16,59 @@
 
 package com.redfin.validity;
 
-/**
- * todo
- *
- * @param <T>
- */
-interface ContractFailedValidationHandler<T> {
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-    // todo
+/**
+ * A contract to be implemented by test classes for testing failed validation handler
+ * instances.
+ */
+interface ContractFailedValidationHandler {
+
+    String VALID_DESCRIPTION = "Hello, world";
+    String VALID_EXPECTED = "t -> null != t";
+    String VALID_ACTUAL = "\"happy\"";
+
+    /**
+     * Method for implementing class to allow for inheriting tests.
+     *
+     * @return the FailedValidationHandler to be tested.
+     */
+    FailedValidationHandler<?> getFailedValidationHandler();
+
+    @Test
+    default void testFailedValidationHandlerReturnsNonNullThrowableForValidInputs() {
+        Assertions.assertNotNull(getFailedValidationHandler().buildThrowable(VALID_DESCRIPTION, VALID_EXPECTED, VALID_ACTUAL),
+                                 "A failed validation handler should not return null for non-null arguments.");
+    }
+
+    @Test
+    default void testFailedValidationHandlerReturnsNonNullThrowableForNullDescription() {
+        Assertions.assertNotNull(getFailedValidationHandler().buildThrowable(null, VALID_EXPECTED, VALID_ACTUAL),
+                                 "A failed validation handler should not return null for non-null arguments.");
+    }
+
+    @Test
+    default void testFailedValidationHandlerThrowsExceptionForNullExpected() {
+        NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getFailedValidationHandler().buildThrowable(VALID_DESCRIPTION, null, VALID_ACTUAL));
+        Assertions.assertEquals(Messages.nullArgumentMessage("expected"),
+                                exception.getMessage(),
+                                "A failed validation handler should throw the expected null pointer exception for a null expected.");
+    }
+
+    @Test
+    default void testFailedValidationHandlerThrowsExceptionForNullActual() {
+        NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getFailedValidationHandler().buildThrowable(VALID_DESCRIPTION, VALID_EXPECTED, null));
+        Assertions.assertEquals(Messages.nullArgumentMessage("actual"),
+                                exception.getMessage(),
+                                "A failed validation handler should throw the expected null pointer exception for a null actual.");
+    }
+
+    @Test
+    default void testFailedValidationHandlerThrowsExceptionForNullActualAndExpected() {
+        NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getFailedValidationHandler().buildThrowable(VALID_DESCRIPTION, null, null));
+        Assertions.assertEquals(Messages.nullArgumentMessage("expected"),
+                                exception.getMessage(),
+                                "A failed validation handler should throw the expected null pointer exception for a null actual and expected.");
+    }
 }

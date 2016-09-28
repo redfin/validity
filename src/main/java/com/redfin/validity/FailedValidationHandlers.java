@@ -20,35 +20,59 @@ import java.util.Arrays;
 import java.util.function.Function;
 
 /**
- * todo
+ * A static class containing methods to create the built-in
+ * {@link FailedValidationHandler} implementations.
  */
-final class FailedValidationHandlers {
+public final class FailedValidationHandlers {
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Constants
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private static final String DEFAULT_DESCRIPTION = "Failed validation";
-    private static final String DEFAULT_MESSAGE_FORMAT = "%s\n\texpected : %s\n\t  actual : <%s>";
-    private static final String PACKAGE_NAME = FailedValidationHandlers.class.getPackage()
-                                                                             .getName() + ".";
+    private static final String MESSAGE_FORMAT = "%s\n\texpected : %s\n\t  actual : <%s>";
+    private static final String PACKAGE_NAME = FailedValidationHandlers.class.getPackage().getName() + ".";
 
-    private static String buildMessage(String description, String expected, String actual) {
-        // Validate the inputs
-        if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
-        }
-        if (null == actual) {
-            throw new NullPointerException(Messages.nullArgumentMessage("actual"));
-        }
-        if (null == description) {
-            description = DEFAULT_DESCRIPTION;
-        }
-        // Build and return the validation message
-        return String.format(DEFAULT_MESSAGE_FORMAT, description, expected, actual);
-    }
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Static Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    static FailedValidationHandler<IllegalArgumentException> getDefaultValidationHandler() {
+    /**
+     * Create a new {@link FailedValidationHandler} that, when given valid input, creates
+     * an {@link IllegalArgumentException} with the default message format of the Validity
+     * framework. The exception will have the initial stack trace elements removed from
+     * it's stack trace so that the first line in the call stack is the caller of the validation.<br>
+     * <br>
+     * Note that it does the stack trace removal via package name, so if the caller were from
+     * a package that starts with "com.redfin.validity." then that would be considered part of
+     * the Validity library and be removed as well.
+     *
+     * @return a new {@link FailedValidationHandler} instance.
+     */
+    public static FailedValidationHandler<IllegalArgumentException> getDefaultValidationHandler() {
         return getDefaultValidationHandler(IllegalArgumentException::new);
     }
 
-    static <X extends Throwable> FailedValidationHandler<X> getDefaultValidationHandler(Function<String, X> throwableFunction) {
+    /**
+     * Create a new {@link FailedValidationHandler} that, when given valid input, creates
+     * a {@link Throwable} with the default message format of the Validity
+     * framework. The exception will have the initial stack trace elements removed from
+     * it's stack trace so that the first line in the call stack is the caller of the validation.<br>
+     * <br>
+     * Note that it does the stack trace removal via package name, so if the caller were from
+     * a package that starts with "com.redfin.validity." then that would be considered part of
+     * the Validity library and be removed as well.<br>
+     * <br>
+     * If the given throwableFunction ever returns a null throwable object, the Validity library
+     * will throw a NullPointerException when it detects that.
+     *
+     * @param throwableFunction the {@link Function} that takes in a String message and constructs
+     *                          a {@link Throwable} of type X.
+     * @param <X>               the type of the Throwable created by throwableFunction.
+     * @return a new {@link FailedValidationHandler} instance.
+     * @throws NullPointerException if throwableFunction is null.
+     */
+    public static <X extends Throwable> FailedValidationHandler<X> getDefaultValidationHandler(Function<String, X> throwableFunction) {
         if (null == throwableFunction) {
             throw new NullPointerException(Messages.nullArgumentMessage("throwableFunction"));
         }
@@ -71,11 +95,39 @@ final class FailedValidationHandlers {
         };
     }
 
-    static FailedValidationHandler<AssertionError> getStackTrimmingValidationHandler() {
+    /**
+     * Create a new {@link FailedValidationHandler} that, when given valid input, creates
+     * an {@link AssertionError} with the default message format of the Validity
+     * framework. The handler will look through the created throwable's stack trace and find the
+     * first frame that does not start with the library package name ("com.redfin.validity.").
+     * That element will be set as the entirety of the stack trace and all others will be removed.
+     * <br>
+     * If the given throwableFunction ever returns a null throwable object, the Validity library
+     * will throw a NullPointerException when it detects that.
+     *
+     * @return a new {@link FailedValidationHandler} instance.
+     */
+    public static FailedValidationHandler<AssertionError> getStackTrimmingValidationHandler() {
         return getStackTrimmingValidationHandler(AssertionError::new);
     }
 
-    static <X extends Throwable> FailedValidationHandler<X> getStackTrimmingValidationHandler(Function<String, X> throwableFunction) {
+    /**
+     * Create a new {@link FailedValidationHandler} that, when given valid input, creates
+     * a {@link Throwable} with the default message format of the Validity
+     * framework. The handler will look through the created throwable's stack trace and find the
+     * first frame that does not start with the library package name ("com.redfin.validity.").
+     * That element will be set as the entirety of the stack trace and all others will be removed.
+     * <br>
+     * If the given throwableFunction ever returns a null throwable object, the Validity library
+     * will throw a NullPointerException when it detects that.
+     *
+     * @param throwableFunction the {@link Function} that takes in a String message and constructs
+     *                          a {@link Throwable} of type X.
+     * @param <X>               the type of the Throwable created by throwableFunction.
+     * @return a new {@link FailedValidationHandler} instance.
+     * @throws NullPointerException if throwableFunction is null.
+     */
+    public static <X extends Throwable> FailedValidationHandler<X> getStackTrimmingValidationHandler(Function<String, X> throwableFunction) {
         if (null == throwableFunction) {
             throw new NullPointerException(Messages.nullArgumentMessage("throwableFunction"));
         }
@@ -106,6 +158,29 @@ final class FailedValidationHandlers {
             return throwable;
         };
     }
+
+    // --------------------------------------------------------------
+    // Private Methods
+    // --------------------------------------------------------------
+
+    private static String buildMessage(String description, String expected, String actual) {
+        // Validate the inputs
+        if (null == expected) {
+            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+        }
+        if (null == actual) {
+            throw new NullPointerException(Messages.nullArgumentMessage("actual"));
+        }
+        if (null == description) {
+            description = DEFAULT_DESCRIPTION;
+        }
+        // Build and return the validation message
+        return String.format(MESSAGE_FORMAT, description, expected, actual);
+    }
+
+    /*
+     * Force the class to be non-instantiable
+     */
 
     private FailedValidationHandlers() {
         throw new AssertionError(Messages.nonInstantiableMessage());
