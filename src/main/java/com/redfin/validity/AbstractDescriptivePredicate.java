@@ -35,8 +35,6 @@ public abstract class AbstractDescriptivePredicate {
     public static final String TOKEN = "{}";
 
     private static final String TO_STRING_PREFIX = "t -> ";
-    private static final String UNKNOWN_PREDICATE_PREFIX = "unknown predicate: ";
-
     private static final String NEGATE_FORMAT = "!(%s)";
     private static final String AND_FORMAT = "(%s) && (%s)";
     private static final String OR_FORMAT = "(%s) || (%s)";
@@ -124,5 +122,25 @@ public abstract class AbstractDescriptivePredicate {
     @Override
     public String toString() {
         return TO_STRING_PREFIX + description.replace(TOKEN, "t");
+    }
+
+    /**
+     * @throws UnsupportedOperationException always
+     * @deprecated {@link Object#equals(Object)} is not supported for descriptive predicates.
+     */
+    @Deprecated
+    @Override
+    public final boolean equals(Object obj) {
+        throw new UnsupportedOperationException("A descriptive predicate instance does not support equality.");
+    }
+
+    /**
+     * @throws UnsupportedOperationException always
+     * @deprecated {@link Object#hashCode()} is not supported for verifiable objects.
+     */
+    @Deprecated
+    @Override
+    public final int hashCode() {
+        throw new UnsupportedOperationException("A descriptive predicate instance does not support hash code creation.");
     }
 }

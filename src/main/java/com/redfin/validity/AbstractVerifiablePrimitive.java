@@ -41,4 +41,24 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
         }
         return throwable;
     }
+
+    /**
+     * @throws UnsupportedOperationException always
+     * @deprecated {@link Object#equals(Object)} is not supported for verifiable primitive objects.
+     */
+    @Deprecated
+    @Override
+    public final boolean equals(Object obj) {
+        throw new UnsupportedOperationException("A verifiable instance does not support equality.");
+    }
+
+    /**
+     * @throws UnsupportedOperationException always
+     * @deprecated {@link Object#hashCode()} is not supported for verifiable primitive objects.
+     */
+    @Deprecated
+    @Override
+    public final int hashCode() {
+        throw new UnsupportedOperationException("A verifiable instance does not support hash code creation.");
+    }
 }

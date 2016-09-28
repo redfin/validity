@@ -102,4 +102,22 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
                                 getInstance(DESCRIPTION).getDescriptionForOr(OTHER_DESCRIPTION),
                                 "AbstractDescriptivePredicate should return the expected and description.");
     }
+
+    @Test
+    default void testAbstractDescriptivePredicateThrowsExceptionForEquals() {
+        T first = getInstance(DESCRIPTION);
+        T second = first;
+        UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, () -> first.equals(second));
+        Assertions.assertEquals("A descriptive predicate instance does not support equality.",
+                                exception.getMessage(),
+                                "Calling equals on a descriptive predicate should throw an exception with the expected message.");
+    }
+
+    @Test
+    default void testAbstractDescriptivePredicateThrowsExceptionForHashCode() {
+        UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, getInstance(DESCRIPTION)::hashCode);
+        Assertions.assertEquals("A descriptive predicate instance does not support hash code creation.",
+                                exception.getMessage(),
+                                "Calling hashCode on a descriptive predicate should throw an exception with the expected message.");
+    }
 }
