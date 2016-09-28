@@ -57,7 +57,7 @@ public abstract class AbstractVerifiablePrimitiveArray<T, X extends Throwable> e
             return actual;
         }
         String expectedString = Messages.describe(expected);
-        if (expected instanceof AbstractDescriptive) {
+        if (expected instanceof AbstractDescriptivePredicate) {
             throw fail(expectedString);
         } else {
             throw fail("Unknown predicate: " + expectedString);

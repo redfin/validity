@@ -26,7 +26,7 @@ final class Messages {
 
     private static final String NON_INSTANTIABLE_MESSAGE = "Cannot instantiate this class";
     private static final String NULL_ARGUMENT_MESSAGE = "May not have null as the value for the argument: ";
-    private static final String NULL_PREDICATE_PREFIX = "unknown predicate: ";
+    private static final String UNKNOWN_PREDICATE_PREFIX = "unknown predicate: ";
 
     static String nonInstantiableMessage() {
         return NON_INSTANTIABLE_MESSAGE;
@@ -123,10 +123,10 @@ final class Messages {
         if (null == expected) {
             throw new NullPointerException(Messages.nullArgumentMessage("expected"));
         }
-        if (expected instanceof AbstractDescriptive) {
-            return NULL_PREDICATE_PREFIX + expected;
+        if (expected instanceof AbstractDescriptivePredicate) {
+            return expected.toString();
         } else {
-            return Messages.describe(expected);
+            return UNKNOWN_PREDICATE_PREFIX + expected.toString();
         }
     }
 

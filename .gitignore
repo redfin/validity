@@ -1,11 +1,12 @@
 # First, ignore everything
 *
 
-# Whitelist the gitignore, pom, readme, and license files
+# Whitelist the gitignore, pom, readme, contributing, and license files
 # as well as the source directory
 !.gitignore
 !pom.xml
 !README.md
+!CONTRIBUTING.md
 !LICENSE
 !src/
 !src/**

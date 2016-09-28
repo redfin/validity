@@ -19,12 +19,35 @@ package com.redfin.validity;
 import java.util.function.IntPredicate;
 
 /**
- * todo
+ * A class implementing the {@link IntPredicate} interface and extending the {@link AbstractDescriptivePredicate}.
+ * This allows for the {@link IntPredicate} behavior but with a nice, human-readable toString output.
  */
-public final class DescriptiveIntPredicate extends AbstractDescriptive implements IntPredicate {
+public final class DescriptiveIntPredicate extends AbstractDescriptivePredicate implements IntPredicate {
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Fields
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private final IntPredicate predicate;
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Instance Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * Create a new {@link DescriptiveIntPredicate} instance with the given description
+     * and predicate.
+     *
+     * @param description the String token-ized description for this instance.
+     *                    May not be null and must contain the token {@literal "{}"}.
+     *                    Note including a single {@literal "t"} in the description as a variable
+     *                    may lead to confusion as that is the name of the argument used in the toString
+     *                    method.
+     * @param predicate   the {@link IntPredicate} that this {@link DescriptiveIntPredicate} wraps.
+     *                    May not be null.
+     * @throws NullPointerException     if description or predicate are null.
+     * @throws IllegalArgumentException if description does not contain {@literal "{}"}.
+     */
     public DescriptiveIntPredicate(String description, IntPredicate predicate) {
         super(description);
         if (null == predicate) {
@@ -40,16 +63,16 @@ public final class DescriptiveIntPredicate extends AbstractDescriptive implement
 
     @Override
     public DescriptiveIntPredicate negate() {
-        return new DescriptiveIntPredicate(getNegateDescription(), predicate.negate());
+        return new DescriptiveIntPredicate(getDescriptionForNegate(), predicate.negate());
     }
 
     @Override
     public DescriptiveIntPredicate and(IntPredicate other) {
-        return new DescriptiveIntPredicate(getAndDescription(other), predicate.and(other));
+        return new DescriptiveIntPredicate(getDescriptionForAnd(other), predicate.and(other));
     }
 
     @Override
     public DescriptiveIntPredicate or(IntPredicate other) {
-        return new DescriptiveIntPredicate(getOrDescription(other), predicate.or(other));
+        return new DescriptiveIntPredicate(getDescriptionForOr(other), predicate.or(other));
     }
 }

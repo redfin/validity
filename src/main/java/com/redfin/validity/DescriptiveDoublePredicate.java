@@ -19,12 +19,35 @@ package com.redfin.validity;
 import java.util.function.DoublePredicate;
 
 /**
- * todo
+ * A class implementing the {@link DoublePredicate} interface and extending the {@link AbstractDescriptivePredicate}.
+ * This allows for the {@link DoublePredicate} behavior but with a nice, human-readable toString output.
  */
-public final class DescriptiveDoublePredicate extends AbstractDescriptive implements DoublePredicate {
+public final class DescriptiveDoublePredicate extends AbstractDescriptivePredicate implements DoublePredicate {
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Fields
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private final DoublePredicate predicate;
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Instance Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * Create a new {@link DescriptiveDoublePredicate} instance with the given description
+     * and predicate.
+     *
+     * @param description the String token-ized description for this instance.
+     *                    May not be null and must contain the token {@literal "{}"}.
+     *                    Note including a single {@literal "t"} in the description as a variable
+     *                    may lead to confusion as that is the name of the argument used in the toString
+     *                    method.
+     * @param predicate   the {@link DoublePredicate} that this {@link DescriptiveDoublePredicate} wraps.
+     *                    May not be null.
+     * @throws NullPointerException     if description or predicate are null.
+     * @throws IllegalArgumentException if description does not contain {@literal "{}"}.
+     */
     public DescriptiveDoublePredicate(String description, DoublePredicate predicate) {
         super(description);
         if (null == predicate) {
@@ -40,16 +63,16 @@ public final class DescriptiveDoublePredicate extends AbstractDescriptive implem
 
     @Override
     public DescriptiveDoublePredicate negate() {
-        return new DescriptiveDoublePredicate(getNegateDescription(), predicate.negate());
+        return new DescriptiveDoublePredicate(getDescriptionForNegate(), predicate.negate());
     }
 
     @Override
     public DescriptiveDoublePredicate and(DoublePredicate other) {
-        return new DescriptiveDoublePredicate(getAndDescription(other), predicate.and(other));
+        return new DescriptiveDoublePredicate(getDescriptionForAnd(other), predicate.and(other));
     }
 
     @Override
     public DescriptiveDoublePredicate or(DoublePredicate other) {
-        return new DescriptiveDoublePredicate(getOrDescription(other), predicate.or(other));
+        return new DescriptiveDoublePredicate(getDescriptionForOr(other), predicate.or(other));
     }
 }

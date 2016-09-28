@@ -16,17 +16,19 @@
     <description>A fluent, opinionated, strongly-typed validation library for Java.</description>
     <inceptionYear>2016</inceptionYear>
 
-    <!-- todo : add these values when we have them
-
-    <url>todo</url>
+    <url>https://github.com/redfin/validity</url>
     <scm>
-        <connection>todo</connection>
-        <url>todo</url>
+        <connection>scm:git:git@github.com:redfin/validity.git</connection>
+        <url>https://github.com/redfin/validity</url>
+        <tag>HEAD</tag>
     </scm>
     <issueManagement>
-        <system>Github</system>
-        <url>todo</url>
+        <system>github</system>
+        <url>https://github.com/redfin/validity/issues</url>
     </issueManagement>
+
+    <!-- todo : add these values when we have them
+
     <ciManagement>
         <system>Travis</system>
         <url>todo</url>
@@ -89,7 +91,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>[${min.java.version},)</version>
+                                    <version>[3.0,)</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
