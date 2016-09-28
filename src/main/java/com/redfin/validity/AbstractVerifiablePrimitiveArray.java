@@ -60,7 +60,7 @@ public abstract class AbstractVerifiablePrimitiveArray<T, X extends Throwable> e
     public T isNull() throws X {
         T actual = getActual();
         if (null != actual) {
-            fail("t -> null == t", Messages.describe(actual));
+            fail("t -> null == t", Descriptions.describe(actual));
         }
         return null;
     }
@@ -75,7 +75,7 @@ public abstract class AbstractVerifiablePrimitiveArray<T, X extends Throwable> e
     public T isNotNull() throws X {
         T actual = getActual();
         if (null == actual) {
-            fail("t -> null != t", Messages.describe((T) null));
+            fail("t -> null != t", Descriptions.describe((T) null));
         }
         return actual;
     }
@@ -92,11 +92,11 @@ public abstract class AbstractVerifiablePrimitiveArray<T, X extends Throwable> e
      */
     public T satisfies(Predicate<T> expected) throws X {
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         T actual = getActual();
         if (!expected.test(actual)) {
-            fail(Messages.describePredicate(expected));
+            fail(Descriptions.describe(expected));
         }
         return actual;
     }
@@ -109,6 +109,6 @@ public abstract class AbstractVerifiablePrimitiveArray<T, X extends Throwable> e
      * @throws X always.
      */
     protected final void fail(String expected) throws X {
-        fail(expected, Messages.describe(getActual()));
+        fail(expected, Descriptions.describe(getActual()));
     }
 }

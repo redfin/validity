@@ -30,7 +30,7 @@ public class ValidityFactory<X extends Throwable> {
 
     public ValidityFactory(FailedValidationHandler<X> failedValidationHandler, String description) {
         if (null == failedValidationHandler) {
-            throw new NullPointerException(Messages.nullArgumentMessage("failedValidationHandler"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("failedValidationHandler"));
         }
         this.failedValidationHandler = failedValidationHandler;
         this.description = description;

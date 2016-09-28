@@ -34,14 +34,14 @@ public final class VerifiablePrimitiveChar<X extends Throwable> extends Abstract
 
     public char isEqualTo(char c) throws X {
         if (actual != c) {
-            fail("t -> t == " + Messages.describe(c));
+            fail("t -> t == " + Descriptions.describe(c));
         }
         return actual;
     }
 
     public char isNotEqualTo(char c) throws X {
         if (actual == c) {
-            fail("t -> t != " + Messages.describe(c));
+            fail("t -> t != " + Descriptions.describe(c));
         }
         return actual;
     }
@@ -76,15 +76,15 @@ public final class VerifiablePrimitiveChar<X extends Throwable> extends Abstract
 
     public char satisfies(Predicate<Character> expected) throws X {
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         if (!expected.test(actual)) {
-            fail(Messages.describePredicate(expected));
+            fail(Descriptions.describe(expected));
         }
         return actual;
     }
 
     private void fail(String expected) throws X {
-        fail(expected, Messages.describe(actual));
+        fail(expected, Descriptions.describe(actual));
     }
 }

@@ -43,7 +43,16 @@ public final class Validity {
         return new ValidityFactory<>(FailedValidationHandlers.getStackTrimmingValidationHandler(), description);
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Private Constructor
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * Force the class to be non-instantiable
+     *
+     * @throws AssertionError always.
+     */
     private Validity() {
-        throw new AssertionError(Messages.nonInstantiableMessage());
+        throw new AssertionError(Descriptions.nonInstantiableMessage());
     }
 }

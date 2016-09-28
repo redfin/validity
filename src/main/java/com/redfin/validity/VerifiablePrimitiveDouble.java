@@ -42,14 +42,14 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
 
     public double isEqualTo(double value) throws X {
         if (Double.compare(actual, value) != 0) {
-            fail("t -> t == " + Messages.describe(value));
+            fail("t -> t == " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public double isNotEqualTo(double value) throws X {
         if (Double.compare(actual, value) == 0) {
-            fail("t -> t != " + Messages.describe(value));
+            fail("t -> t != " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -64,14 +64,14 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
 
     public double isGreaterThan(double value) throws X {
         if (Double.compare(actual, value) <= 0) {
-            fail("t -> t > " + Messages.describe(value));
+            fail("t -> t > " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public double isGreaterThanOrEqualTo(double value) throws X {
         if (Double.compare(actual, value) < 0) {
-            fail("t -> t >= " + Messages.describe(value));
+            fail("t -> t >= " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -82,14 +82,14 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
 
     public double isLessThan(double value) throws X {
         if (Double.compare(actual, value) >= 0) {
-            fail("t -> t < " + Messages.describe(value));
+            fail("t -> t < " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public double isLessThanOrEqualTo(double value) throws X {
         if (Double.compare(actual, value) > 0) {
-            fail("t -> t <= " + Messages.describe(value));
+            fail("t -> t <= " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -100,15 +100,15 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
 
     public double satisfies(DoublePredicate expected) throws X {
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         if (!expected.test(actual)) {
-            fail(Messages.describePredicate(expected));
+            fail(Descriptions.describe(expected));
         }
         return actual;
     }
 
     private void fail(String expected) throws X {
-        fail(expected, Messages.describe(actual));
+        fail(expected, Descriptions.describe(actual));
     }
 }

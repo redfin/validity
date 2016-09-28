@@ -46,7 +46,7 @@ public final class VerifiableString<X extends Throwable> extends AbstractVerifia
     public String startsWith(String prefix) throws X {
         String actual = getActual();
         if (null == actual || !actual.startsWith(prefix)) {
-            fail("t -> t.startsWith(" + Messages.describe(prefix) + ")");
+            fail("t -> t.startsWith(" + Descriptions.describe(prefix) + ")");
         }
         return actual;
     }
@@ -54,7 +54,7 @@ public final class VerifiableString<X extends Throwable> extends AbstractVerifia
     public String doesNotStartWith(String prefix) throws X {
         String actual = getActual();
         if (null == actual || actual.startsWith(prefix)) {
-            fail("t -> !t.startsWith(" + Messages.describe(prefix) + ")");
+            fail("t -> !t.startsWith(" + Descriptions.describe(prefix) + ")");
         }
         return actual;
     }
@@ -62,7 +62,7 @@ public final class VerifiableString<X extends Throwable> extends AbstractVerifia
     public String endsWith(String suffix) throws X {
         String actual = getActual();
         if (null == actual || !actual.endsWith(suffix)) {
-            fail("t -> t.endsWith(" + Messages.describe(suffix) + ")");
+            fail("t -> t.endsWith(" + Descriptions.describe(suffix) + ")");
         }
         return actual;
     }
@@ -70,7 +70,7 @@ public final class VerifiableString<X extends Throwable> extends AbstractVerifia
     public String doesNotEndWith(String suffix) throws X {
         String actual = getActual();
         if (null == actual || actual.endsWith(suffix)) {
-            fail("t -> !t.endsWith(" + Messages.describe(suffix) + ")");
+            fail("t -> !t.endsWith(" + Descriptions.describe(suffix) + ")");
         }
         return actual;
     }
@@ -78,7 +78,7 @@ public final class VerifiableString<X extends Throwable> extends AbstractVerifia
     public String matches(String regex) throws X {
         String actual = getActual();
         if (null == actual || !actual.matches(regex)) {
-            fail("t -> t.matches(" + Messages.describe(regex) + ")");
+            fail("t -> t.matches(" + Descriptions.describe(regex) + ")");
         }
         return actual;
     }
@@ -86,7 +86,7 @@ public final class VerifiableString<X extends Throwable> extends AbstractVerifia
     public String doesNotMatch(String regex) throws X {
         String actual = getActual();
         if (null == actual || actual.matches(regex)) {
-            fail("t -> !t.matches(" + Messages.describe(regex) + ")");
+            fail("t -> !t.matches(" + Descriptions.describe(regex) + ")");
         }
         return actual;
     }

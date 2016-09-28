@@ -51,35 +51,35 @@ public final class VerifiablePrimitiveDoubleArray<X extends Throwable> extends A
 
     public double[] hasLengthOf(int length) throws X {
         if (null == actual || actual.length != length) {
-            fail("t -> t.length == " + Messages.describe(length));
+            fail("t -> t.length == " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public double[] hasLengthOfAtLeast(int length) throws X {
         if (null == actual || actual.length < length) {
-            fail("t -> t.length >= " + Messages.describe(length));
+            fail("t -> t.length >= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public double[] hasLengthOfAtMost(int length) throws X {
         if (null == actual || actual.length > length) {
-            fail("t -> t.length <= " + Messages.describe(length));
+            fail("t -> t.length <= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public double[] contains(double value) throws X {
         if (!containsHelper(value)) {
-            fail("t -> t.contains(" + Messages.describe(value) + ")");
+            fail("t -> t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }
 
     public double[] doesNotContain(double value) throws X {
         if (containsHelper(value)) {
-            fail("t -> !t.contains(" + Messages.describe(value) + ")");
+            fail("t -> !t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }

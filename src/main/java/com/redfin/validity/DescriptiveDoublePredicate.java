@@ -51,7 +51,7 @@ public final class DescriptiveDoublePredicate extends AbstractDescriptivePredica
     public DescriptiveDoublePredicate(String description, DoublePredicate predicate) {
         super(description);
         if (null == predicate) {
-            throw new NullPointerException(Messages.nullArgumentMessage("predicate"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("predicate"));
         }
         this.predicate = predicate;
     }
@@ -68,11 +68,11 @@ public final class DescriptiveDoublePredicate extends AbstractDescriptivePredica
 
     @Override
     public DescriptiveDoublePredicate and(DoublePredicate other) {
-        return new DescriptiveDoublePredicate(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
+        return new DescriptiveDoublePredicate(getDescriptionForAnd(getDescription(other)), predicate.and(other));
     }
 
     @Override
     public DescriptiveDoublePredicate or(DoublePredicate other) {
-        return new DescriptiveDoublePredicate(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
+        return new DescriptiveDoublePredicate(getDescriptionForOr(getDescription(other)), predicate.or(other));
     }
 }

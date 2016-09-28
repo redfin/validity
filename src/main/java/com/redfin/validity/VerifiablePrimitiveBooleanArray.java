@@ -51,35 +51,35 @@ public class VerifiablePrimitiveBooleanArray<X extends Throwable> extends Abstra
 
     public boolean[] hasLengthOf(int length) throws X {
         if (null == actual || actual.length != length) {
-            fail("t -> t.length == " + Messages.describe(length));
+            fail("t -> t.length == " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public boolean[] hasLengthOfAtLeast(int length) throws X {
         if (null == actual || actual.length < length) {
-            fail("t -> t.length >= " + Messages.describe(length));
+            fail("t -> t.length >= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public boolean[] hasLengthOfAtMost(int length) throws X {
         if (null == actual || actual.length > length) {
-            fail("t -> t.length <= " + Messages.describe(length));
+            fail("t -> t.length <= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public boolean[] contains(boolean value) throws X {
         if (!containsHelper(value)) {
-            fail("t -> t.contains(" + Messages.describe(value) + ")");
+            fail("t -> t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }
 
     public boolean[] doesNotContain(boolean value) throws X {
         if (containsHelper(value)) {
-            fail("t -> !t.contains(" + Messages.describe(value) + ")");
+            fail("t -> !t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }

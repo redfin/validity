@@ -51,7 +51,7 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
     default void testAbstractDescriptivePredicateConstructorWithNullArgumentThrowsExpectedException() {
         NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getAbstractDescriptivePredicateInstance(null));
         Assertions.assertEquals(exception.getMessage(),
-                                Messages.nullArgumentMessage("description"),
+                                Descriptions.nullArgumentMessage("description"),
                                 "Exception for a null description should have the expected message.");
     }
 

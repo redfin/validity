@@ -51,35 +51,35 @@ public final class VerifiablePrimitiveCharArray<X extends Throwable> extends Abs
 
     public char[] hasLengthOf(int length) throws X {
         if (null == actual || actual.length != length) {
-            fail("t -> t.length == " + Messages.describe(length));
+            fail("t -> t.length == " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public char[] hasLengthOfAtLeast(int length) throws X {
         if (null == actual || actual.length < length) {
-            fail("t -> t.length >= " + Messages.describe(length));
+            fail("t -> t.length >= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public char[] hasLengthOfAtMost(int length) throws X {
         if (null == actual || actual.length > length) {
-            fail("t -> t.length <= " + Messages.describe(length));
+            fail("t -> t.length <= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public char[] contains(char value) throws X {
         if (!containsHelper(value)) {
-            fail("t -> t.contains(" + Messages.describe(value) + ")");
+            fail("t -> t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }
 
     public char[] doesNotContain(char value) throws X {
         if (containsHelper(value)) {
-            fail("t -> !t.contains(" + Messages.describe(value) + ")");
+            fail("t -> !t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }

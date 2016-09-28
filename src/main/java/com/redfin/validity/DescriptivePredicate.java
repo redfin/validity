@@ -53,7 +53,7 @@ public final class DescriptivePredicate<T> extends AbstractDescriptivePredicate 
     public DescriptivePredicate(String description, Predicate<T> predicate) {
         super(description);
         if (null == predicate) {
-            throw new NullPointerException(Messages.nullArgumentMessage("predicate"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("predicate"));
         }
         this.predicate = predicate;
     }
@@ -70,11 +70,11 @@ public final class DescriptivePredicate<T> extends AbstractDescriptivePredicate 
 
     @Override
     public DescriptivePredicate<T> and(Predicate<? super T> other) {
-        return new DescriptivePredicate<>(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
+        return new DescriptivePredicate<>(getDescriptionForAnd(getDescription(other)), predicate.and(other));
     }
 
     @Override
     public DescriptivePredicate<T> or(Predicate<? super T> other) {
-        return new DescriptivePredicate<>(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
+        return new DescriptivePredicate<>(getDescriptionForOr(getDescription(other)), predicate.or(other));
     }
 }

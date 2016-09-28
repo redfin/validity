@@ -51,35 +51,35 @@ public final class VerifiablePrimitiveLongArray<X extends Throwable> extends Abs
 
     public long[] hasLengthOf(int length) throws X {
         if (null == actual || actual.length != length) {
-            fail("t -> t.length == " + Messages.describe(length));
+            fail("t -> t.length == " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public long[] hasLengthOfAtLeast(int length) throws X {
         if (null == actual || actual.length < length) {
-            fail("t -> t.length >= " + Messages.describe(length));
+            fail("t -> t.length >= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public long[] hasLengthOfAtMost(int length) throws X {
         if (null == actual || actual.length > length) {
-            fail("t -> t.length <= " + Messages.describe(length));
+            fail("t -> t.length <= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public long[] contains(long value) throws X {
         if (!containsHelper(value)) {
-            fail("t -> t.contains(" + Messages.describe(value) + ")");
+            fail("t -> t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }
 
     public long[] doesNotContain(long value) throws X {
         if (containsHelper(value)) {
-            fail("t -> !t.contains(" + Messages.describe(value) + ")");
+            fail("t -> !t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }

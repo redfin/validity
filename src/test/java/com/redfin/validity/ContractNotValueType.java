@@ -23,7 +23,7 @@ interface ContractNotValueType<T> {
     default void testNotValueTypeThrowsExpectedExceptionForEquals() {
         T instance = getNotValueTypeInstance();
         UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, () -> instance.equals(instance));
-        Assertions.assertEquals(Messages.unsupportedEqualsMessage(),
+        Assertions.assertEquals(Descriptions.unsupportedEqualsMessage(),
                                 exception.getMessage(),
                                 "A non-value type class should throw an exception for equals with the expected message.");
     }
@@ -32,7 +32,7 @@ interface ContractNotValueType<T> {
     default void testNotValueTypeThrowsExpectedExceptionForHashCode() {
         T instance = getNotValueTypeInstance();
         UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, instance::hashCode);
-        Assertions.assertEquals(Messages.unsupportedHashCodeMessage(),
+        Assertions.assertEquals(Descriptions.unsupportedHashCodeMessage(),
                                 exception.getMessage(),
                                 "A non-value type class should throw an exception for hashCode with the expected message.");
     }

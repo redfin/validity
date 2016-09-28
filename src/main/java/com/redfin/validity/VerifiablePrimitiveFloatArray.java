@@ -51,35 +51,35 @@ public final class VerifiablePrimitiveFloatArray<X extends Throwable> extends Ab
 
     public float[] hasLengthOf(int length) throws X {
         if (null == actual || actual.length != length) {
-            fail("t -> t.length == " + Messages.describe(length));
+            fail("t -> t.length == " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public float[] hasLengthOfAtLeast(int length) throws X {
         if (null == actual || actual.length < length) {
-            fail("t -> t.length >= " + Messages.describe(length));
+            fail("t -> t.length >= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public float[] hasLengthOfAtMost(int length) throws X {
         if (null == actual || actual.length > length) {
-            fail("t -> t.length <= " + Messages.describe(length));
+            fail("t -> t.length <= " + Descriptions.describe(length));
         }
         return actual;
     }
 
     public float[] contains(float value) throws X {
         if (!containsHelper(value)) {
-            fail("t -> t.contains(" + Messages.describe(value) + ")");
+            fail("t -> t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }
 
     public float[] doesNotContain(float value) throws X {
         if (containsHelper(value)) {
-            fail("t -> !t.contains(" + Messages.describe(value) + ")");
+            fail("t -> !t.contains(" + Descriptions.describe(value) + ")");
         }
         return actual;
     }

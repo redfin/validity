@@ -42,14 +42,14 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
 
     public float isEqualTo(float value) throws X {
         if (Float.compare(actual, value) != 0) {
-            fail("t -> t == " + Messages.describe(value));
+            fail("t -> t == " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public float isNotEqualTo(float value) throws X {
         if (Float.compare(actual, value) == 0) {
-            fail("t -> t != " + Messages.describe(value));
+            fail("t -> t != " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -64,14 +64,14 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
 
     public float isGreaterThan(float value) throws X {
         if (Float.compare(actual, value) <= 0) {
-            fail("t -> t > " + Messages.describe(value));
+            fail("t -> t > " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public float isGreaterThanOrEqualTo(float value) throws X {
         if (Float.compare(actual, value) < 0) {
-            fail("t -> t >= " + Messages.describe(value));
+            fail("t -> t >= " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -82,14 +82,14 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
 
     public float isLessThan(float value) throws X {
         if (Float.compare(actual, value) >= 0) {
-            fail("t -> t < " + Messages.describe(value));
+            fail("t -> t < " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public float isLessThanOrEqualTo(float value) throws X {
         if (Float.compare(actual, value) > 0) {
-            fail("t -> t <= " + Messages.describe(value));
+            fail("t -> t <= " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -100,15 +100,15 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
 
     public float satisfies(DoublePredicate expected) throws X {
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         if (!expected.test(actual)) {
-            fail(Messages.buildFailSatisfiesMessage(expected));
+            fail(Descriptions.describe(expected));
         }
         return actual;
     }
 
     private void fail(String expected) throws X {
-        fail(expected, Messages.describe(actual));
+        fail(expected, Descriptions.describe(actual));
     }
 }

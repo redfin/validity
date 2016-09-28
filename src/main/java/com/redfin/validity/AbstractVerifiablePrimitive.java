@@ -47,7 +47,7 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
      */
     public AbstractVerifiablePrimitive(String description, FailedValidationHandler<X> failedValidationHandler) {
         if (null == failedValidationHandler) {
-            throw new NullPointerException(Messages.nullArgumentMessage("failedValidationHandler"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("failedValidationHandler"));
         }
         this.description = description;
         this.failedValidationHandler = failedValidationHandler;
@@ -77,7 +77,7 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
     @Deprecated
     @Override
     public final boolean equals(Object obj) {
-        throw new UnsupportedOperationException(Messages.unsupportedEqualsMessage());
+        throw new UnsupportedOperationException(Descriptions.unsupportedEqualsMessage());
     }
 
     /**
@@ -87,6 +87,6 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
     @Deprecated
     @Override
     public final int hashCode() {
-        throw new UnsupportedOperationException(Messages.unsupportedHashCodeMessage());
+        throw new UnsupportedOperationException(Descriptions.unsupportedHashCodeMessage());
     }
 }

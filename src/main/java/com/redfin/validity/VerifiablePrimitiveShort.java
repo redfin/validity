@@ -42,14 +42,14 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
 
     public short isEqualTo(short value) throws X {
         if (actual != value) {
-            fail("t -> t == " + Messages.describe(value));
+            fail("t -> t == " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public short isNotEqualTo(short value) throws X {
         if (actual == value) {
-            fail("t -> t != " + Messages.describe(value));
+            fail("t -> t != " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -64,14 +64,14 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
 
     public short isGreaterThan(short value) throws X {
         if (actual <= value) {
-            fail("t -> t > " + Messages.describe(value));
+            fail("t -> t > " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public short isGreaterThanOrEqualTo(short value) throws X {
         if (actual < value) {
-            fail("t -> t >= " + Messages.describe(value));
+            fail("t -> t >= " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -82,14 +82,14 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
 
     public short isLessThan(short value) throws X {
         if (actual >= value) {
-            fail("t -> t < " + Messages.describe(value));
+            fail("t -> t < " + Descriptions.describe(value));
         }
         return actual;
     }
 
     public short isLessThanOrEqualTo(short value) throws X {
         if (actual > value) {
-            fail("t -> t <= " + Messages.describe(value));
+            fail("t -> t <= " + Descriptions.describe(value));
         }
         return actual;
     }
@@ -100,15 +100,15 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
 
     public short satisfies(IntPredicate expected) throws X {
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         if (!expected.test(actual)) {
-            fail(Messages.describePredicate(expected));
+            fail(Descriptions.describe(expected));
         }
         return actual;
     }
 
     private void fail(String expected) throws X {
-        fail(expected, Messages.describe(actual));
+        fail(expected, Descriptions.describe(actual));
     }
 }

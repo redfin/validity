@@ -32,7 +32,7 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     public AbstractVerifiableObject(T actual, String description, FailedValidationHandler<X> failedValidationHandler) {
         if (null == failedValidationHandler) {
-            throw new NullPointerException(Messages.nullArgumentMessage("failedValidationHandler"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("failedValidationHandler"));
         }
         this.actual = actual;
         this.description = description;
@@ -44,7 +44,7 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     }
 
     protected String describeType(T t) {
-        return Messages.describe(t);
+        return Descriptions.describe(t);
     }
 
     protected final void fail(String expected) throws X {
@@ -71,24 +71,24 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     public T isEqualTo(T other) throws X {
         if (null == actual || !actual.equals(other)) {
-            fail("t -> t.equals(" + Messages.describe(other) + ")");
+            fail("t -> t.equals(" + Descriptions.describe(other) + ")");
         }
         return actual;
     }
 
     public T isNotEqualTo(T other) throws X {
         if (null == actual || actual.equals(other)) {
-            fail("t -> !t.equals(" + Messages.describe(other) + ")");
+            fail("t -> !t.equals(" + Descriptions.describe(other) + ")");
         }
         return actual;
     }
 
     public T satisfies(Predicate<T> expected) throws X {
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         if (!expected.test(actual)) {
-            fail(Messages.describePredicate(expected));
+            fail(Descriptions.describe(expected));
         }
         return actual;
     }
@@ -100,7 +100,7 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     @Deprecated
     @Override
     public final boolean equals(Object obj) {
-        throw new UnsupportedOperationException(Messages.unsupportedEqualsMessage());
+        throw new UnsupportedOperationException(Descriptions.unsupportedEqualsMessage());
     }
 
     /**
@@ -110,6 +110,6 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     @Deprecated
     @Override
     public final int hashCode() {
-        throw new UnsupportedOperationException(Messages.unsupportedHashCodeMessage());
+        throw new UnsupportedOperationException(Descriptions.unsupportedHashCodeMessage());
     }
 }

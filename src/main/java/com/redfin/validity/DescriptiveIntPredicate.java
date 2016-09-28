@@ -51,7 +51,7 @@ public final class DescriptiveIntPredicate extends AbstractDescriptivePredicate 
     public DescriptiveIntPredicate(String description, IntPredicate predicate) {
         super(description);
         if (null == predicate) {
-            throw new NullPointerException(Messages.nullArgumentMessage("predicate"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("predicate"));
         }
         this.predicate = predicate;
     }
@@ -68,11 +68,11 @@ public final class DescriptiveIntPredicate extends AbstractDescriptivePredicate 
 
     @Override
     public DescriptiveIntPredicate and(IntPredicate other) {
-        return new DescriptiveIntPredicate(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
+        return new DescriptiveIntPredicate(getDescriptionForAnd(getDescription(other)), predicate.and(other));
     }
 
     @Override
     public DescriptiveIntPredicate or(IntPredicate other) {
-        return new DescriptiveIntPredicate(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
+        return new DescriptiveIntPredicate(getDescriptionForOr(getDescription(other)), predicate.or(other));
     }
 }

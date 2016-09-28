@@ -74,7 +74,7 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
     public T contains(E e) throws X {
         T actual = getActual();
         if (null == actual && !actual.contains(e)) {
-            fail("t -> t.contains(" + Messages.describe(e) + ")");
+            fail("t -> t.contains(" + Descriptions.describe(e) + ")");
         }
         return actual;
     }
@@ -82,7 +82,7 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
     public T doesNotContain(E e) throws X {
         T actual = getActual();
         if (null == actual || actual.contains(e)) {
-            fail("t -> !t.contains(" + Messages.describe(e) + ")");
+            fail("t -> !t.contains(" + Descriptions.describe(e) + ")");
         }
         return actual;
     }

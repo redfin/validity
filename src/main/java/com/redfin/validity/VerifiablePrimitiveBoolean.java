@@ -45,6 +45,6 @@ public final class VerifiablePrimitiveBoolean<X extends Throwable> extends Abstr
     }
 
     private void fail(String expected) throws X {
-        fail(expected, Messages.describe(actual));
+        fail(expected, Descriptions.describe(actual));
     }
 }

@@ -51,7 +51,7 @@ public final class DescriptiveLongPredicate extends AbstractDescriptivePredicate
     public DescriptiveLongPredicate(String description, LongPredicate predicate) {
         super(description);
         if (null == predicate) {
-            throw new NullPointerException(Messages.nullArgumentMessage("predicate"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("predicate"));
         }
         this.predicate = predicate;
     }
@@ -68,11 +68,11 @@ public final class DescriptiveLongPredicate extends AbstractDescriptivePredicate
 
     @Override
     public DescriptiveLongPredicate and(LongPredicate other) {
-        return new DescriptiveLongPredicate(getDescriptionForAnd(Messages.describePredicate(other)), predicate.and(other));
+        return new DescriptiveLongPredicate(getDescriptionForAnd(getDescription(other)), predicate.and(other));
     }
 
     @Override
     public DescriptiveLongPredicate or(LongPredicate other) {
-        return new DescriptiveLongPredicate(getDescriptionForOr(Messages.describePredicate(other)), predicate.or(other));
+        return new DescriptiveLongPredicate(getDescriptionForOr(getDescription(other)), predicate.or(other));
     }
 }

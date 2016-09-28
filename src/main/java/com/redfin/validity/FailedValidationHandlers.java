@@ -74,7 +74,7 @@ public final class FailedValidationHandlers {
      */
     public static <X extends Throwable> FailedValidationHandler<X> getDefaultValidationHandler(Function<String, X> throwableFunction) {
         if (null == throwableFunction) {
-            throw new NullPointerException(Messages.nullArgumentMessage("throwableFunction"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("throwableFunction"));
         }
         return (String description, String expected, String actual) -> {
             // Create the throwable
@@ -129,7 +129,7 @@ public final class FailedValidationHandlers {
      */
     public static <X extends Throwable> FailedValidationHandler<X> getStackTrimmingValidationHandler(Function<String, X> throwableFunction) {
         if (null == throwableFunction) {
-            throw new NullPointerException(Messages.nullArgumentMessage("throwableFunction"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("throwableFunction"));
         }
         return (String description, String expected, String actual) -> {
             // Create the throwable
@@ -166,10 +166,10 @@ public final class FailedValidationHandlers {
     private static String buildMessage(String description, String expected, String actual) {
         // Validate the inputs
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         if (null == actual) {
-            throw new NullPointerException(Messages.nullArgumentMessage("actual"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("actual"));
         }
         if (null == description) {
             description = DEFAULT_DESCRIPTION;
@@ -178,11 +178,16 @@ public final class FailedValidationHandlers {
         return String.format(MESSAGE_FORMAT, description, expected, actual);
     }
 
-    /*
-     * Force the class to be non-instantiable
-     */
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Private Constructor
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    /**
+     * Force the class to be non-instantiable
+     *
+     * @throws AssertionError always.
+     */
     private FailedValidationHandlers() {
-        throw new AssertionError(Messages.nonInstantiableMessage());
+        throw new AssertionError(Descriptions.nonInstantiableMessage());
     }
 }

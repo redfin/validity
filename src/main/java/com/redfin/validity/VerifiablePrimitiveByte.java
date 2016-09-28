@@ -34,29 +34,29 @@ public final class VerifiablePrimitiveByte<X extends Throwable> extends Abstract
 
     public byte isEqualTo(byte value) throws X {
         if (Byte.compare(actual, value) != 0) {
-            fail("t -> Byte.compare(t, " + Messages.describe(value) + ") == 0");
+            fail("t -> Byte.compare(t, " + Descriptions.describe(value) + ") == 0");
         }
         return actual;
     }
 
     public byte isNotEqualTo(byte value) throws X {
         if (Byte.compare(actual, value) == 0) {
-            fail("t -> Byte.compare(t, " + Messages.describe(value) + ") != 0");
+            fail("t -> Byte.compare(t, " + Descriptions.describe(value) + ") != 0");
         }
         return actual;
     }
 
     public byte satisfies(Predicate<Byte> expected) throws X {
         if (null == expected) {
-            throw new NullPointerException(Messages.nullArgumentMessage("expected"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
         }
         if (!expected.test(actual)) {
-            fail(Messages.describePredicate(expected));
+            fail(Descriptions.describe(expected));
         }
         return actual;
     }
 
     private void fail(String expected) throws X {
-        fail(expected, Messages.describe(actual));
+        fail(expected, Descriptions.describe(actual));
     }
 }

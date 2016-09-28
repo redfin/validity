@@ -16,6 +16,11 @@
 
 package com.redfin.validity;
 
+import java.util.function.DoublePredicate;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+import java.util.function.Predicate;
+
 /**
  * Base class for the descriptive predicate objects.
  */
@@ -62,7 +67,7 @@ public abstract class AbstractDescriptivePredicate {
      */
     public AbstractDescriptivePredicate(String description) {
         if (null == description) {
-            throw new NullPointerException(Messages.nullArgumentMessage("description"));
+            throw new NullPointerException(Descriptions.nullArgumentMessage("description"));
         }
         if (!description.contains(TOKEN)) {
             throw new IllegalArgumentException("Cannot have a description that doesn't contain the token: " + TOKEN);
@@ -131,7 +136,7 @@ public abstract class AbstractDescriptivePredicate {
     @Deprecated
     @Override
     public final boolean equals(Object obj) {
-        throw new UnsupportedOperationException(Messages.unsupportedEqualsMessage());
+        throw new UnsupportedOperationException(Descriptions.unsupportedEqualsMessage());
     }
 
     /**
@@ -141,6 +146,65 @@ public abstract class AbstractDescriptivePredicate {
     @Deprecated
     @Override
     public final int hashCode() {
-        throw new UnsupportedOperationException(Messages.unsupportedHashCodeMessage());
+        throw new UnsupportedOperationException(Descriptions.unsupportedHashCodeMessage());
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Static Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * @param other the {@link IntPredicate} to get a description from.
+     *              May not be null.
+     * @return the String description from the other predicate if it is an AbstractDescriptivePredicate
+     * or a standard formatted string if it is not.
+     * @throws NullPointerException if other is null.
+     */
+    protected static String getDescription(IntPredicate other) {
+        return getDescriptionHelper(other);
+    }
+
+    /**
+     * @param other the {@link LongPredicate} to get a description from.
+     *              May not be null.
+     * @return the String description from the other predicate if it is an AbstractDescriptivePredicate
+     * or a standard formatted string if it is not.
+     * @throws NullPointerException if other is null.
+     */
+    protected static String getDescription(LongPredicate other) {
+        return getDescriptionHelper(other);
+    }
+
+    /**
+     * @param other the {@link DoublePredicate} to get a description from.
+     *              May not be null.
+     * @return the String description from the other predicate if it is an AbstractDescriptivePredicate
+     * or a standard formatted string if it is not.
+     * @throws NullPointerException if other is null.
+     */
+    protected static String getDescription(DoublePredicate other) {
+        return getDescriptionHelper(other);
+    }
+
+    /**
+     * @param other the {@link Predicate} to get a description from.
+     *              May not be null.
+     * @return the String description from the other predicate if it is an AbstractDescriptivePredicate
+     * or a standard formatted string if it is not.
+     * @throws NullPointerException if other is null.
+     */
+    protected static String getDescription(Predicate<?> other) {
+        return getDescriptionHelper(other);
+    }
+
+    private static String getDescriptionHelper(Object other) {
+        if (null == other) {
+            throw new NullPointerException(Descriptions.nullArgumentMessage("other"));
+        }
+        if (other instanceof AbstractDescriptivePredicate) {
+            return ((AbstractDescriptivePredicate) other).description;
+        } else {
+            return Descriptions.unknownPredicatePrefix() + other.toString();
+        }
     }
 }
