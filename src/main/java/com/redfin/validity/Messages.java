@@ -29,11 +29,21 @@ import java.util.stream.Collectors;
 final class Messages {
 
     private static final String NON_INSTANTIABLE_MESSAGE = "Cannot instantiate this class";
+    private static final String UNSUPPORTED_EQUALS_MESSAGE = "This class cannot be treated as a value and does not support the Object equals method.";
+    private static final String UNSUPPORTED_HASH_CODE_MESSAGE = "This class cannot be treated as a value and does not support the Object hashCode method.";
     private static final String NULL_ARGUMENT_MESSAGE = "May not have null as the value for the argument: ";
     private static final String UNKNOWN_PREDICATE_PREFIX = "unknown predicate: ";
 
     static String nonInstantiableMessage() {
         return NON_INSTANTIABLE_MESSAGE;
+    }
+
+    static String unsupportedEqualsMessage() {
+        return UNSUPPORTED_EQUALS_MESSAGE;
+    }
+
+    static String unsupportedHashCodeMessage() {
+        return UNSUPPORTED_HASH_CODE_MESSAGE;
     }
 
     static String nullArgumentMessage(String argumentName) {

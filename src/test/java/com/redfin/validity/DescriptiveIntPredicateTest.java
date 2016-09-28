@@ -28,7 +28,12 @@ final class DescriptiveIntPredicateTest implements ContractAbstractDescriptivePr
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public DescriptiveIntPredicate getInstance(String description) {
+    public DescriptiveIntPredicate getNotValueTypeInstance() {
+        return new DescriptiveIntPredicate(DESCRIPTION, PREDICATE);
+    }
+
+    @Override
+    public DescriptiveIntPredicate getAbstractDescriptivePredicateInstance(String description) {
         return new DescriptiveIntPredicate(description, t -> true);
     }
 

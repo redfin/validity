@@ -95,12 +95,12 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     /**
      * @throws UnsupportedOperationException always
-     * @deprecated use {@link #isEqualTo(Object)} instead to test a verifiable for equality.
+     * @deprecated use {@link #isEqualTo(Object)} instead to test for equality to the test subject.
      */
     @Deprecated
     @Override
     public final boolean equals(Object obj) {
-        throw new UnsupportedOperationException("A verifiable instance does not support equality. Use .isEqualTo instead.");
+        throw new UnsupportedOperationException(Messages.unsupportedEqualsMessage());
     }
 
     /**
@@ -110,6 +110,6 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     @Deprecated
     @Override
     public final int hashCode() {
-        throw new UnsupportedOperationException("A verifiable instance does not support hash code creation.");
+        throw new UnsupportedOperationException(Messages.unsupportedHashCodeMessage());
     }
 }

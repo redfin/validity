@@ -23,9 +23,10 @@ import org.junit.jupiter.api.Test;
  * Contract to be implemented by tests for classes inheriting from
  * the {@link AbstractDescriptivePredicate} class.
  *
- * @param <T> the type that is being tested.
+ * @param <T> the type that is being tested. Must be a subclass of
+ *            {@link AbstractDescriptivePredicate}.
  */
-interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePredicate> {
+interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePredicate> extends ContractNotValueType<T> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test Values & Helpers
@@ -40,7 +41,7 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
      * @param description the String description for the abstract descriptive predicate.
      * @return the abstract descriptive predicate with the given description.
      */
-    T getInstance(String description);
+    T getAbstractDescriptivePredicateInstance(String description);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test Cases
@@ -48,7 +49,7 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
 
     @Test
     default void testAbstractDescriptivePredicateConstructorWithNullArgumentThrowsExpectedException() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getInstance(null));
+        NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getAbstractDescriptivePredicateInstance(null));
         Assertions.assertEquals(exception.getMessage(),
                                 Messages.nullArgumentMessage("description"),
                                 "Exception for a null description should have the expected message.");
@@ -56,7 +57,7 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
 
     @Test
     default void testAbstractDescriptivePredicateConstructorWithInvalidArgumentThrowsExpectedException() {
-        IllegalArgumentException exception = Assertions.expectThrows(IllegalArgumentException.class, () -> getInstance("hello"));
+        IllegalArgumentException exception = Assertions.expectThrows(IllegalArgumentException.class, () -> getAbstractDescriptivePredicateInstance("hello"));
         Assertions.assertEquals(exception.getMessage(),
                                 "Cannot have a description that doesn't contain the token: " + AbstractDescriptivePredicate.TOKEN,
                                 "Exception for an invalid description should have the expected message.");
@@ -64,60 +65,42 @@ interface ContractAbstractDescriptivePredicate<T extends AbstractDescriptivePred
 
     @Test
     default void testAbstractDescriptivePredicateCanInstantiateWithValidDescription() {
-        Assertions.assertNotNull(getInstance(DESCRIPTION),
+        Assertions.assertNotNull(getAbstractDescriptivePredicateInstance(DESCRIPTION),
                                  "Should be able to instantiate an AbstractDescriptivePredicate with a valid description.");
     }
 
     @Test
     default void testAbstractDescriptivePredicateReturnsGivenDescription() {
         Assertions.assertEquals(DESCRIPTION,
-                                getInstance(DESCRIPTION).getDescription(),
+                                getAbstractDescriptivePredicateInstance(DESCRIPTION).getDescription(),
                                 "AbstractDescriptivePredicate should return the given description.");
     }
 
     @Test
     default void testAbstractDescriptiveToStringReturnsExpectedResult() {
         Assertions.assertEquals("t -> " + DESCRIPTION.replace(AbstractDescriptivePredicate.TOKEN, "t"),
-                                getInstance(DESCRIPTION).toString(),
+                                getAbstractDescriptivePredicateInstance(DESCRIPTION).toString(),
                                 "AbstractDescriptivePredicate should return the expected toString value.");
     }
 
     @Test
     default void testAbstractDescriptivePredicateReturnsExpectedNegatedString() {
         Assertions.assertEquals(String.format("!(%s)", DESCRIPTION),
-                                getInstance(DESCRIPTION).getDescriptionForNegate(),
+                                getAbstractDescriptivePredicateInstance(DESCRIPTION).getDescriptionForNegate(),
                                 "AbstractDescriptivePredicate should return the expected negated description.");
     }
 
     @Test
     default void testAbstractDescriptivePredicateReturnsExpectedAndString() {
         Assertions.assertEquals(String.format("(%s) && (%s)", DESCRIPTION, OTHER_DESCRIPTION),
-                                getInstance(DESCRIPTION).getDescriptionForAnd(OTHER_DESCRIPTION),
+                                getAbstractDescriptivePredicateInstance(DESCRIPTION).getDescriptionForAnd(OTHER_DESCRIPTION),
                                 "AbstractDescriptivePredicate should return the expected and description.");
     }
 
     @Test
     default void testAbstractDescriptivePredicateReturnsExpectedOrString() {
         Assertions.assertEquals(String.format("(%s) || (%s)", DESCRIPTION, OTHER_DESCRIPTION),
-                                getInstance(DESCRIPTION).getDescriptionForOr(OTHER_DESCRIPTION),
+                                getAbstractDescriptivePredicateInstance(DESCRIPTION).getDescriptionForOr(OTHER_DESCRIPTION),
                                 "AbstractDescriptivePredicate should return the expected and description.");
-    }
-
-    @Test
-    default void testAbstractDescriptivePredicateThrowsExceptionForEquals() {
-        T first = getInstance(DESCRIPTION);
-        T second = first;
-        UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, () -> first.equals(second));
-        Assertions.assertEquals("A descriptive predicate instance does not support equality.",
-                                exception.getMessage(),
-                                "Calling equals on a descriptive predicate should throw an exception with the expected message.");
-    }
-
-    @Test
-    default void testAbstractDescriptivePredicateThrowsExceptionForHashCode() {
-        UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, getInstance(DESCRIPTION)::hashCode);
-        Assertions.assertEquals("A descriptive predicate instance does not support hash code creation.",
-                                exception.getMessage(),
-                                "Calling hashCode on a descriptive predicate should throw an exception with the expected message.");
     }
 }

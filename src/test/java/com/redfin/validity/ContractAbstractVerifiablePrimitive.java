@@ -16,13 +16,48 @@
 
 package com.redfin.validity;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * Contract to be implemented by tests for classes inheriting from
  * the {@link AbstractVerifiablePrimitive} class.
  *
- * @param <T> the type being tested.
+ * @param <T> the type being tested. Must be a subclass of {@link AbstractVerifiablePrimitive}.
  */
-interface ContractAbstractVerifiablePrimitive<T> {
+interface ContractAbstractVerifiablePrimitive<T extends AbstractVerifiablePrimitive> extends ContractNotValueType<T> {
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Test Values & Helpers
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * Method for implementing class to allow for inheriting tests.
+     *
+     * @param description             the String description for the abstract verifiable primitive.
+     * @param failedValidationHandler the {@link FailedValidationHandler} to use for the abstract verifiable primitive.
+     * @return the abstract verifiable primitive with the given description
+     * and failed validation handler.
+     */
+    T getAbstractVerifiablePrimitiveInstance(String description, FailedValidationHandler<?> failedValidationHandler);
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Test Cases
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    @Test
+    default void testAbstractVerifiablePrimtitiveConstructorThrowsExceptionForNullFailedValidationHandler() {
+
+    }
+
+    @Test
+    default void testAbstractVerifiablePrimtiveCanInstantiateWithNullDescription() {
+
+    }
+
+    @Test
+    default void testCanAbstractVerifiablePrimitiveCanInstantiateWithValidArguments() {
+
+    }
 
     // todo
 }

@@ -28,7 +28,12 @@ final class DescriptiveDoublePredicateTest implements ContractAbstractDescriptiv
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public DescriptiveDoublePredicate getInstance(String description) {
+    public DescriptiveDoublePredicate getNotValueTypeInstance() {
+        return new DescriptiveDoublePredicate(DESCRIPTION, PREDICATE);
+    }
+
+    @Override
+    public DescriptiveDoublePredicate getAbstractDescriptivePredicateInstance(String description) {
         return new DescriptiveDoublePredicate(description, t -> true);
     }
 

@@ -28,7 +28,12 @@ final class DescriptiveLongPredicateTest implements ContractAbstractDescriptiveP
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public DescriptiveLongPredicate getInstance(String description) {
+    public DescriptiveLongPredicate getNotValueTypeInstance() {
+        return new DescriptiveLongPredicate(DESCRIPTION, PREDICATE);
+    }
+
+    @Override
+    public DescriptiveLongPredicate getAbstractDescriptivePredicateInstance(String description) {
         return new DescriptiveLongPredicate(description, t -> true);
     }
 
