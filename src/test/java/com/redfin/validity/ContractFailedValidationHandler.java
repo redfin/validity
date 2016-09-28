@@ -21,7 +21,7 @@ package com.redfin.validity;
  *
  * @param <T>
  */
-public interface ContractFailedValidationHandler<T> {
+interface ContractFailedValidationHandler<T> {
 
     // todo
 }

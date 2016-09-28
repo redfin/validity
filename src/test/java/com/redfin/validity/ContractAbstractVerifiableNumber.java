@@ -21,7 +21,7 @@ package com.redfin.validity;
  *
  * @param <T>
  */
-public interface ContractAbstractVerifiableNumber<T> {
+interface ContractAbstractVerifiableNumber<T> {
 
     // todo
 }

@@ -21,7 +21,7 @@ package com.redfin.validity;
  *
  * @param <T>
  */
-public interface ContractNonInstantiable<T> {
+interface ContractNonInstantiable<T> {
 
     // todo
 }
