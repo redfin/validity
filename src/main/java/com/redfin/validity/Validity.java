@@ -53,6 +53,6 @@ public final class Validity {
      * @throws AssertionError always.
      */
     private Validity() {
-        throw new AssertionError(Descriptions.nonInstantiableMessage());
+        throw new AssertionError(ValidityUtils.nonInstantiableMessage());
     }
 }

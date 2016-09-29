@@ -19,17 +19,32 @@ package com.redfin.validity;
 import java.util.function.Predicate;
 
 /**
- * A class implementing the {@link Predicate} interface and extending the {@link AbstractDescriptivePredicate}.
+ * A class implementing the {@link Predicate} interface.
  * This allows for the {@link Predicate} behavior but with a nice, human-readable toString output.
  *
  * @param <T> the type that this predicate will test.
  */
-public final class DescriptivePredicate<T> extends AbstractDescriptivePredicate implements Predicate<T> {
+public final class DescriptivePredicate<T> implements Predicate<T> {
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Constants
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
+     * The String token that must be used in place of the variable in a
+     * {@link DescriptivePredicate} description.
+     */
+    public static final String TOKEN = "{}";
+
+    private static final String NEGATE_FORMAT = "!(%s)";
+    private static final String AND_FORMAT = "(%s) && (%s)";
+    private static final String OR_FORMAT = "(%s) || (%s)";
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    private final String description;
     private final Predicate<T> predicate;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,10 +66,16 @@ public final class DescriptivePredicate<T> extends AbstractDescriptivePredicate 
      * @throws IllegalArgumentException if description does not contain {@literal "{}"}.
      */
     public DescriptivePredicate(String description, Predicate<T> predicate) {
-        super(description);
-        if (null == predicate) {
-            throw new NullPointerException(Descriptions.nullArgumentMessage("predicate"));
+        if (null == description) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("description"));
         }
+        if (!description.contains(TOKEN)) {
+            throw new IllegalArgumentException("DescriptivePredicate descriptions must include the token.");
+        }
+        if (null == predicate) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("predicate"));
+        }
+        this.description = description;
         this.predicate = predicate;
     }
 
@@ -65,16 +86,34 @@ public final class DescriptivePredicate<T> extends AbstractDescriptivePredicate 
 
     @Override
     public DescriptivePredicate<T> negate() {
-        return new DescriptivePredicate<>(getDescriptionForNegate(), predicate.negate());
+        return new DescriptivePredicate<>(String.format(NEGATE_FORMAT,
+                                                        description),
+                                          predicate.negate());
     }
 
     @Override
     public DescriptivePredicate<T> and(Predicate<? super T> other) {
-        return new DescriptivePredicate<>(getDescriptionForAnd(getDescription(other)), predicate.and(other));
+        return new DescriptivePredicate<>(String.format(AND_FORMAT,
+                                                        description,
+                                                        describeOther(other)),
+                                          predicate.and(other));
     }
 
     @Override
     public DescriptivePredicate<T> or(Predicate<? super T> other) {
-        return new DescriptivePredicate<>(getDescriptionForOr(getDescription(other)), predicate.or(other));
+        return new DescriptivePredicate<>(String.format(OR_FORMAT,
+                                                        description,
+                                                        describeOther(other)),
+                                          predicate.and(other));
+    }
+
+    private static String describeOther(Predicate<?> other) {
+        if (null == other) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("other"));
+        }
+        if (other instanceof DescriptivePredicate) {
+            return ((DescriptivePredicate<?>) other).description;
+        }
+        return ValidityUtils.unknownPredicatePrefix() + other.toString();
     }
 }

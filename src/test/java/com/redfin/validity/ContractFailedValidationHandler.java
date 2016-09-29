@@ -51,7 +51,7 @@ interface ContractFailedValidationHandler {
     @Test
     default void testFailedValidationHandlerThrowsExceptionForNullExpected() {
         NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getFailedValidationHandler().buildThrowable(VALID_DESCRIPTION, null, VALID_ACTUAL));
-        Assertions.assertEquals(Descriptions.nullArgumentMessage("expected"),
+        Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),
                                 "A failed validation handler should throw the expected null pointer exception for a null expected.");
     }
@@ -59,7 +59,7 @@ interface ContractFailedValidationHandler {
     @Test
     default void testFailedValidationHandlerThrowsExceptionForNullActual() {
         NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getFailedValidationHandler().buildThrowable(VALID_DESCRIPTION, VALID_EXPECTED, null));
-        Assertions.assertEquals(Descriptions.nullArgumentMessage("actual"),
+        Assertions.assertEquals(ValidityUtils.nullArgumentMessage("actual"),
                                 exception.getMessage(),
                                 "A failed validation handler should throw the expected null pointer exception for a null actual.");
     }
@@ -67,7 +67,7 @@ interface ContractFailedValidationHandler {
     @Test
     default void testFailedValidationHandlerThrowsExceptionForNullActualAndExpected() {
         NullPointerException exception = Assertions.expectThrows(NullPointerException.class, () -> getFailedValidationHandler().buildThrowable(VALID_DESCRIPTION, null, null));
-        Assertions.assertEquals(Descriptions.nullArgumentMessage("expected"),
+        Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),
                                 "A failed validation handler should throw the expected null pointer exception for a null actual and expected.");
     }

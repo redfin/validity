@@ -85,7 +85,7 @@ interface ContractNonInstantiable<T> {
         });
         Assertions.assertNotNull(error.getCause(),
                                  "The error from the constructor should be wrapped in a InvocationTargetException.");
-        Assertions.assertEquals(Descriptions.nonInstantiableMessage(),
+        Assertions.assertEquals(ValidityUtils.nonInstantiableMessage(),
                                 error.getCause().getMessage(),
                                 "A non-instantiable class should throw the expected AssertionError from it's constructor.");
     }

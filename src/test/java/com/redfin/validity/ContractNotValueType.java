@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
  *
  * @param <T> the type that is being tested.
  */
-interface ContractNotValueType<T> {
+public interface ContractNotValueType<T> {
 
     /**
      * Method for implementing class to allow for inheriting tests.
@@ -23,7 +23,7 @@ interface ContractNotValueType<T> {
     default void testNotValueTypeThrowsExpectedExceptionForEquals() {
         T instance = getNotValueTypeInstance();
         UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, () -> instance.equals(instance));
-        Assertions.assertEquals(Descriptions.unsupportedEqualsMessage(),
+        Assertions.assertEquals(ValidityUtils.unsupportedEqualsMessage(),
                                 exception.getMessage(),
                                 "A non-value type class should throw an exception for equals with the expected message.");
     }
@@ -32,7 +32,7 @@ interface ContractNotValueType<T> {
     default void testNotValueTypeThrowsExpectedExceptionForHashCode() {
         T instance = getNotValueTypeInstance();
         UnsupportedOperationException exception = Assertions.expectThrows(UnsupportedOperationException.class, instance::hashCode);
-        Assertions.assertEquals(Descriptions.unsupportedHashCodeMessage(),
+        Assertions.assertEquals(ValidityUtils.unsupportedHashCodeMessage(),
                                 exception.getMessage(),
                                 "A non-value type class should throw an exception for hashCode with the expected message.");
     }

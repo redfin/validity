@@ -74,7 +74,7 @@ public final class FailedValidationHandlers {
      */
     public static <X extends Throwable> FailedValidationHandler<X> getDefaultValidationHandler(Function<String, X> throwableFunction) {
         if (null == throwableFunction) {
-            throw new NullPointerException(Descriptions.nullArgumentMessage("throwableFunction"));
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("throwableFunction"));
         }
         return (String description, String expected, String actual) -> {
             // Create the throwable
@@ -129,7 +129,7 @@ public final class FailedValidationHandlers {
      */
     public static <X extends Throwable> FailedValidationHandler<X> getStackTrimmingValidationHandler(Function<String, X> throwableFunction) {
         if (null == throwableFunction) {
-            throw new NullPointerException(Descriptions.nullArgumentMessage("throwableFunction"));
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("throwableFunction"));
         }
         return (String description, String expected, String actual) -> {
             // Create the throwable
@@ -166,10 +166,10 @@ public final class FailedValidationHandlers {
     private static String buildMessage(String description, String expected, String actual) {
         // Validate the inputs
         if (null == expected) {
-            throw new NullPointerException(Descriptions.nullArgumentMessage("expected"));
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("expected"));
         }
         if (null == actual) {
-            throw new NullPointerException(Descriptions.nullArgumentMessage("actual"));
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("actual"));
         }
         if (null == description) {
             description = DEFAULT_DESCRIPTION;
@@ -188,6 +188,6 @@ public final class FailedValidationHandlers {
      * @throws AssertionError always.
      */
     private FailedValidationHandlers() {
-        throw new AssertionError(Descriptions.nonInstantiableMessage());
+        throw new AssertionError(ValidityUtils.nonInstantiableMessage());
     }
 }
