@@ -17,39 +17,79 @@
 package com.redfin.validity;
 
 /**
- * todo
+ * Static class meant to be the entry point for validation.
  */
 public final class Validity {
 
-    private static final FailedValidationHandler<IllegalArgumentException> VERIFY_HANDLER = FailedValidationHandlers.getDefaultValidationHandler();
-    private static final FailedValidationHandler<AssertionError> AFFIRM_HANDLER = FailedValidationHandlers.getStackTrimmingValidationHandler();
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Constants
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private static final ValidityFactory<IllegalArgumentException> CACHED_VERIFY_BUILDER = new ValidityFactory<>(VERIFY_HANDLER, null);
-    private static final ValidityFactory<AssertionError> CACHED_AFFIRM_BUILDER = new ValidityFactory<>(AFFIRM_HANDLER, null);
+    /*
+     * For performance, cache instances of the null message ValidationBuilders.
+     * Since it and the default validation executors are as well, we can
+     * simply re-use the same instances each time if there isn't a given
+     * message. If a message is, given, though, a new instance is required.
+     */
 
-    public static ValidityFactory<IllegalArgumentException> verify() {
-        return CACHED_VERIFY_BUILDER;
-    }
+    private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE = FailedValidationExecutors.getDefaultFailureExecutor();
+    private static final FailedValidationExecutor<AssertionError> ASSERT_FAILURE = FailedValidationExecutors.getStackTrimmingFailureExecutor();
 
-    public static ValidityFactory<IllegalArgumentException> verifyAs(String description) {
-        return new ValidityFactory<>(FailedValidationHandlers.getDefaultValidationHandler(), description);
-    }
-
-    public static ValidityFactory<AssertionError> asserts() {
-        return CACHED_AFFIRM_BUILDER;
-    }
-
-    public static ValidityFactory<AssertionError> assertsAs(String description) {
-        return new ValidityFactory<>(FailedValidationHandlers.getStackTrimmingValidationHandler(), description);
-    }
+    private static final ValidationFactory<IllegalArgumentException> VERIFY_BUILDER = new ValidationFactory<>(null, VERIFY_FAILURE);
+    private static final ValidationFactory<AssertionError> ASSERT_BUILDER = new ValidationFactory<>(null, ASSERT_FAILURE);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Private Constructor
+    // Static Methods
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Force the class to be non-instantiable
-     *
+     * @return a {@link ValidationFactory} instance with the default message
+     * prefix and the default {@link FailedValidationExecutor} for argument
+     * validation.
+     */
+    public static ValidationFactory<IllegalArgumentException> verify() {
+        return VERIFY_BUILDER;
+    }
+
+    /**
+     * @param message the String message to use as a prefix for the validation.
+     * @return a {@link ValidationFactory} instance with the given message and
+     * the default {@link FailedValidationExecutor} for argument validation.
+     */
+    public static ValidationFactory<IllegalArgumentException> verifyWithMessage(String message) {
+        if (null == message) {
+            return VERIFY_BUILDER;
+        } else {
+            return new ValidationFactory<>(message, FailedValidationExecutors.getDefaultFailureExecutor());
+        }
+    }
+
+    /**
+     * @return a {@link ValidationFactory} instance with the default message
+     * prefix and the default {@link FailedValidationExecutor} for assertions.
+     */
+    public static ValidationFactory<AssertionError> asserts() {
+        return ASSERT_BUILDER;
+    }
+
+    /**
+     * @param message the String message to use as a prefix for the validation.
+     * @return a {@link ValidationFactory} instance with the given message and
+     * the default {@link FailedValidationExecutor} for assertions.
+     */
+    public static ValidationFactory<AssertionError> assertsWithMessage(String message) {
+        if (null == message) {
+            return ASSERT_BUILDER;
+        } else {
+            return new ValidationFactory<>(message, FailedValidationExecutors.getStackTrimmingFailureExecutor());
+        }
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Instance Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /**
      * @throws AssertionError always.
      */
     private Validity() {

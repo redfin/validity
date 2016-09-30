@@ -16,12 +16,15 @@
 
 package com.redfin.validity;
 
+import com.redfin.validity.predicates.AbstractDescriptivePredicate;
 import java.util.Arrays;
+import java.util.function.DoublePredicate;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * A static class containing methods to convert other values into Strings. This enables
- * decorating certain value types and a consistent formatting to be applied, if desired.
+ * Static class containing various utilities for the Validity library.
  */
 public final class ValidityUtils {
 
@@ -30,12 +33,11 @@ public final class ValidityUtils {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private static final String NON_INSTANTIABLE_MESSAGE = "Cannot instantiate this class";
-    private static final String UNSUPPORTED_EQUALS_MESSAGE = "This class cannot be treated as a value and does not support the Object equals method";
-    private static final String UNSUPPORTED_HASH_CODE_MESSAGE = "This class cannot be treated as a value and does not support the Object hashCode method";
     private static final String NULL_ARGUMENT_MESSAGE = "May not have null as the value for the argument: ";
     private static final String NULL_THROWABLE_FROM_HANDLER = "A null throwable was returned from the validation handler";
     private static final String UNKNOWN_PREDICATE_PREFIX = "unknown predicate: ";
     private static final String NULL = "null";
+    private static final String TRUNCATE_FORMAT = "%s ...";
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Static Methods
@@ -64,20 +66,6 @@ public final class ValidityUtils {
     }
 
     /**
-     * @return the String message for unsupported equals method exceptions.
-     */
-    public static String unsupportedEqualsMessage() {
-        return UNSUPPORTED_EQUALS_MESSAGE;
-    }
-
-    /**
-     * @return the String message for unsupported hashCode method exceptions.
-     */
-    public static String unsupportedHashCodeMessage() {
-        return UNSUPPORTED_HASH_CODE_MESSAGE;
-    }
-
-    /**
      * @param argumentName the String argument name that was null.
      *                     May not be null.
      * @return the String message for exceptions for null arguments.
@@ -90,44 +78,28 @@ public final class ValidityUtils {
         return NULL_ARGUMENT_MESSAGE + argumentName;
     }
 
-    /**
-     * @param value the value to convert into a String.
-     * @return a String representation of the given value.
+    // --------------------------------------------------------------
+    // Describe Methods
+    // --------------------------------------------------------------
+
+    /*
+     * These mostly just return the String valueOf or toString
+     * methods for the various types. But by consistently using
+     * these methods, we can wrap or decorate the values
+     * later and it also switches between deep array and regular
+     * array toString as well.
      */
-    public static String describe(short[] value) {
-        return Arrays.toString(value);
-    }
+
+    // - - - - - - - - - - - - - - - - - - - - - -
+    // Primitive Arrays
+    // - - - - - - - - - - - - - - - - - - - - - -
 
     /**
      * @param value the value to convert into a String.
      * @return a String representation of the given value.
      */
-    public static String describe(int[] value) {
-        return Arrays.toString(value);
-    }
-
-    /**
-     * @param value the value to convert into a String.
-     * @return a String representation of the given value.
-     */
-    public static String describe(long[] value) {
-        return Arrays.toString(value);
-    }
-
-    /**
-     * @param value the value to convert into a String.
-     * @return a String representation of the given value.
-     */
-    public static String describe(float[] value) {
-        return Arrays.toString(value);
-    }
-
-    /**
-     * @param value the value to convert into a String.
-     * @return a String representation of the given value.
-     */
-    public static String describe(double[] value) {
-        return Arrays.toString(value);
+    public static String describe(boolean[] value) {
+        return truncateIfNecessary(Arrays.toString(value));
     }
 
     /**
@@ -135,15 +107,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(byte[] value) {
-        return Arrays.toString(value);
-    }
-
-    /**
-     * @param value the value to convert into a String.
-     * @return a String representation of the given value.
-     */
-    public static String describe(boolean[] value) {
-        return Arrays.toString(value);
+        return truncateIfNecessary(Arrays.toString(value));
     }
 
     /**
@@ -151,15 +115,93 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(char[] value) {
-        return Arrays.toString(value);
+        return truncateIfNecessary(Arrays.toString(value));
     }
 
     /**
      * @param value the value to convert into a String.
      * @return a String representation of the given value.
      */
-    public static String describe(String value) {
-        return (null == value) ? NULL : "\"" + value + "\"";
+    public static String describe(double[] value) {
+        return truncateIfNecessary(Arrays.toString(value));
+    }
+
+    /**
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(float[] value) {
+        return truncateIfNecessary(Arrays.toString(value));
+    }
+
+    /**
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(int[] value) {
+        return truncateIfNecessary(Arrays.toString(value));
+    }
+
+    /**
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(long[] value) {
+        return truncateIfNecessary(Arrays.toString(value));
+    }
+
+    /**
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(short[] value) {
+        return truncateIfNecessary(Arrays.toString(value));
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - -
+    // Predicates
+    // - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(IntPredicate value) {
+        if (value instanceof AbstractDescriptivePredicate) {
+            return truncateIfNecessary(value.toString());
+        } else if (null != value) {
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
+        } else {
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
+        }
+    }
+
+    /**
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(LongPredicate value) {
+        if (value instanceof AbstractDescriptivePredicate) {
+            return truncateIfNecessary(value.toString());
+        } else if (null != value) {
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
+        } else {
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
+        }
+    }
+
+    /**
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(DoublePredicate value) {
+        if (value instanceof AbstractDescriptivePredicate) {
+            return truncateIfNecessary(value.toString());
+        } else if (null != value) {
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
+        } else {
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
+        }
     }
 
     /**
@@ -167,11 +209,28 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(Predicate<?> value) {
-        if (value instanceof DescriptivePredicate) {
-            return value.toString();
+        if (value instanceof AbstractDescriptivePredicate) {
+            return truncateIfNecessary(value.toString());
+        } else if (null != value) {
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
         } else {
-            return (null == value) ? NULL : UNKNOWN_PREDICATE_PREFIX + value.toString();
+            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
         }
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - -
+    // Other Objects
+    // - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * Describing a String will wrap it in quotation marks to delineate more clearly
+     * the empty string, the string "null" versus an actual null string, etc.
+     *
+     * @param value the value to convert into a String.
+     * @return a String representation of the given value.
+     */
+    public static String describe(String value) {
+        return truncateIfNecessary((null == value) ? NULL : "\"" + value + "\"");
     }
 
     /**
@@ -184,14 +243,27 @@ public final class ValidityUtils {
         // only handles a single level so without this multi-dimensional arrays
         // of objects are not cleanly handled.
         if (value instanceof Object[]) {
-            return Arrays.deepToString((Object[]) value);
+            return truncateIfNecessary(Arrays.deepToString((Object[]) value));
         } else {
-            return (null == value) ? NULL : value.toString();
+            return truncateIfNecessary((null == value) ? NULL : value.toString());
+        }
+    }
+
+    /*
+     * Guard against an array or object with an insanely long string
+     * that will make the thrown message un-readable.
+     */
+
+    private static String truncateIfNecessary(String value) {
+        if (value != null && value.length() > 100) {
+            return String.format(TRUNCATE_FORMAT, value.substring(0, 100));
+        } else {
+            return value;
         }
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Private Constructor
+    // Instance Methods
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
