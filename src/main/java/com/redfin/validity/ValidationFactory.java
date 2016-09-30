@@ -99,6 +99,7 @@ public class ValidationFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     * @param <E> the type of the elements in the array.
      * @return a {@link VerifiableArray} instance for the given subject.
      */
     public <E> VerifiableArray<E, X> that(E[] subject) {
@@ -267,6 +268,7 @@ public class ValidationFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     * @param <T> the class being validated.
      * @return a {@link VerifiableClass} instance for the given subject.
      */
     public <T> VerifiableClass<T, X> that(Class<T> subject) {
@@ -275,6 +277,8 @@ public class ValidationFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     * @param <E> the type of the objects in the collection.
+     * @param <T> the type of the Collection (e.g. list, map, etc).
      * @return a {@link VerifiableCollection} instance for the given subject.
      */
     public <E, T extends Collection<E>> VerifiableCollection<E, T, X> that(T subject) {

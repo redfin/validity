@@ -235,6 +235,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     * @param <T> the type of the object to describe.
      * @return a String representation of the given value.
      */
     public static <T> String describe(T value) {
