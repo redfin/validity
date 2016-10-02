@@ -30,7 +30,7 @@ public final class FailedValidationExecutors {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private static final String DEFAULT_MESSAGE = "Subject failed validation";
-    private static final String MESSAGE_FORMAT = "%s\n\texpected : %s\n\t subject : <%s>";
+    private static final String MESSAGE_FORMAT = "%s\n    expected : %s\n     subject : <%s>";
     private static final String PACKAGE_NAME = FailedValidationExecutors.class.getPackage().getName() + ".";
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,7 +91,7 @@ public final class FailedValidationExecutors {
                 // Create the throwable
                 X throwable = throwableFunction.apply(String.format(MESSAGE_FORMAT, message, expected, subjectDescription));
                 if (null == throwable) {
-                    throw new NullPointerException("Received a null throwable from the throwableFunction.");
+                    throw new NullPointerException(ValidityUtils.nullThrowableFromFunction());
                 }
                 // Trim the stack trace and throw
                 StackTraceElement[] elements = throwable.getStackTrace();
@@ -158,7 +158,7 @@ public final class FailedValidationExecutors {
                 // Create the throwable
                 X throwable = throwableFunction.apply(String.format(MESSAGE_FORMAT, message, expected, subjectDescription));
                 if (null == throwable) {
-                    throw new NullPointerException("Received a null throwable from the throwableFunction.");
+                    throw new NullPointerException(ValidityUtils.nullThrowableFromFunction());
                 }
                 // Trim the stack trace and throw
                 StackTraceElement[] elements = throwable.getStackTrace();
@@ -172,11 +172,9 @@ public final class FailedValidationExecutors {
                         }
                     }
                 }
-                if (null == caller) {
-                    throwable.setStackTrace(new StackTraceElement[0]);
-                } else {
-                    throwable.setStackTrace(new StackTraceElement[]{caller});
-                }
+                StackTraceElement[] newStackTrace;
+                newStackTrace = (null == caller) ? new StackTraceElement[0] : new StackTraceElement[] {caller};
+                throwable.setStackTrace(newStackTrace);
                 throw throwable;
             }
         };

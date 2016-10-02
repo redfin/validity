@@ -59,9 +59,9 @@ public final class ValidityUtils {
 
     /**
      * @return the String message for a null throwable being returned from
-     * a failed validation handler.
+     * a failed validation handler's throwable function.
      */
-    public static String nullThrowableFromHandler() {
+    public static String nullThrowableFromFunction() {
         return NULL_THROWABLE_FROM_HANDLER;
     }
 
@@ -99,7 +99,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(boolean[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     /**
@@ -107,7 +107,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(byte[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     /**
@@ -115,7 +115,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(char[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     /**
@@ -123,7 +123,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(double[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     /**
@@ -131,7 +131,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(float[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     /**
@@ -139,7 +139,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(int[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     /**
@@ -147,7 +147,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(long[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     /**
@@ -155,7 +155,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(short[] value) {
-        return truncateIfNecessary(Arrays.toString(value));
+        return transformDescription(Arrays.toString(value));
     }
 
     // - - - - - - - - - - - - - - - - - - - - - -
@@ -168,11 +168,11 @@ public final class ValidityUtils {
      */
     public static String describe(IntPredicate value) {
         if (value instanceof AbstractDescriptivePredicate) {
-            return truncateIfNecessary(value.toString());
+            return transformDescription(value.toString());
         } else if (null != value) {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
         } else {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
         }
     }
 
@@ -182,11 +182,11 @@ public final class ValidityUtils {
      */
     public static String describe(LongPredicate value) {
         if (value instanceof AbstractDescriptivePredicate) {
-            return truncateIfNecessary(value.toString());
+            return transformDescription(value.toString());
         } else if (null != value) {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
         } else {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
         }
     }
 
@@ -196,11 +196,11 @@ public final class ValidityUtils {
      */
     public static String describe(DoublePredicate value) {
         if (value instanceof AbstractDescriptivePredicate) {
-            return truncateIfNecessary(value.toString());
+            return transformDescription(value.toString());
         } else if (null != value) {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
         } else {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
         }
     }
 
@@ -210,11 +210,11 @@ public final class ValidityUtils {
      */
     public static String describe(Predicate<?> value) {
         if (value instanceof AbstractDescriptivePredicate) {
-            return truncateIfNecessary(value.toString());
+            return transformDescription(value.toString());
         } else if (null != value) {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + value.toString());
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
         } else {
-            return truncateIfNecessary(UNKNOWN_PREDICATE_PREFIX + NULL);
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
         }
     }
 
@@ -230,7 +230,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(String value) {
-        return truncateIfNecessary((null == value) ? NULL : "\"" + value + "\"");
+        return transformDescription((null == value) ? NULL : "\"" + value + "\"");
     }
 
     /**
@@ -244,18 +244,20 @@ public final class ValidityUtils {
         // only handles a single level so without this multi-dimensional arrays
         // of objects are not cleanly handled.
         if (value instanceof Object[]) {
-            return truncateIfNecessary(Arrays.deepToString((Object[]) value));
+            return transformDescription(Arrays.deepToString((Object[]) value));
         } else {
-            return truncateIfNecessary((null == value) ? NULL : value.toString());
+            return transformDescription((null == value) ? NULL : value.toString());
         }
     }
 
     /*
+     * Transform all descriptions.
+     *
      * Guard against an array or object with an insanely long string
      * that will make the thrown message un-readable.
      */
 
-    private static String truncateIfNecessary(String value) {
+    private static String transformDescription(String value) {
         if (value != null && value.length() > 100) {
             return String.format(TRUNCATE_FORMAT, value.substring(0, 100));
         } else {

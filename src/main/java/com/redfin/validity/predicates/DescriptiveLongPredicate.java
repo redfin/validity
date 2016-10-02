@@ -37,7 +37,11 @@ public final class DescriptiveLongPredicate extends AbstractDescriptivePredicate
 
     /**
      * Create a new {@link DescriptiveLongPredicate} instance with the given description
-     * and predicate.
+     * and predicate.<br>
+     * <br>
+     * Note that the predicate description must contain the {@link AbstractDescriptivePredicate#TOKEN}
+     * and should not contain the {@link AbstractDescriptivePredicate#VARIABLE} as a variable name
+     * already in the description as that can lead to confusion.
      *
      * @param description the String token-ized description for this instance.
      *                    May not be null and must contain the token {@literal "{}"}.

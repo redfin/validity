@@ -35,53 +35,61 @@ public final class Validity {
     private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE = FailedValidationExecutors.getDefaultFailureExecutor();
     private static final FailedValidationExecutor<AssertionError> ASSERT_FAILURE = FailedValidationExecutors.getStackTrimmingFailureExecutor();
 
-    private static final ValidationFactory<IllegalArgumentException> VERIFY_BUILDER = new ValidationFactory<>(null, VERIFY_FAILURE);
-    private static final ValidationFactory<AssertionError> ASSERT_BUILDER = new ValidationFactory<>(null, ASSERT_FAILURE);
+    private static final VerifiableFactory<IllegalArgumentException> VERIFY_BUILDER = new VerifiableFactory<>(null, VERIFY_FAILURE);
+    private static final VerifiableFactory<AssertionError> ASSERT_BUILDER = new VerifiableFactory<>(null, ASSERT_FAILURE);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Static Methods
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    // --------------------------------------------------------------
+    // Verify Methods
+    // --------------------------------------------------------------
+
     /**
-     * @return a {@link ValidationFactory} instance with the default message
+     * @return a {@link VerifiableFactory} instance with the default message
      * prefix and the default {@link FailedValidationExecutor} for argument
      * validation.
      */
-    public static ValidationFactory<IllegalArgumentException> verify() {
+    public static VerifiableFactory<IllegalArgumentException> verify() {
         return VERIFY_BUILDER;
     }
 
     /**
      * @param message the String message to use as a prefix for the validation.
-     * @return a {@link ValidationFactory} instance with the given message and
+     * @return a {@link VerifiableFactory} instance with the given message and
      * the default {@link FailedValidationExecutor} for argument validation.
      */
-    public static ValidationFactory<IllegalArgumentException> verifyWithMessage(String message) {
+    public static VerifiableFactory<IllegalArgumentException> verifyWithMessage(String message) {
         if (null == message) {
             return VERIFY_BUILDER;
         } else {
-            return new ValidationFactory<>(message, FailedValidationExecutors.getDefaultFailureExecutor());
+            return new VerifiableFactory<>(message, FailedValidationExecutors.getDefaultFailureExecutor());
         }
     }
 
+    // --------------------------------------------------------------
+    // Asserts Methods
+    // --------------------------------------------------------------
+
     /**
-     * @return a {@link ValidationFactory} instance with the default message
+     * @return a {@link VerifiableFactory} instance with the default message
      * prefix and the default {@link FailedValidationExecutor} for assertions.
      */
-    public static ValidationFactory<AssertionError> asserts() {
+    public static VerifiableFactory<AssertionError> asserts() {
         return ASSERT_BUILDER;
     }
 
     /**
      * @param message the String message to use as a prefix for the validation.
-     * @return a {@link ValidationFactory} instance with the given message and
+     * @return a {@link VerifiableFactory} instance with the given message and
      * the default {@link FailedValidationExecutor} for assertions.
      */
-    public static ValidationFactory<AssertionError> assertsWithMessage(String message) {
+    public static VerifiableFactory<AssertionError> assertsWithMessage(String message) {
         if (null == message) {
             return ASSERT_BUILDER;
         } else {
-            return new ValidationFactory<>(message, FailedValidationExecutors.getStackTrimmingFailureExecutor());
+            return new VerifiableFactory<>(message, FailedValidationExecutors.getStackTrimmingFailureExecutor());
         }
     }
 

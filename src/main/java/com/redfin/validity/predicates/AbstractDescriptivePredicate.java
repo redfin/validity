@@ -41,8 +41,16 @@ public abstract class AbstractDescriptivePredicate {
      * The toString would return:<br>
      * <br>
      * {@code "t -> null != t"}<br>
+     * <br>
+     * The value of "t" is from the the {@link #VARIABLE} value.
      */
     public static final String TOKEN = "{}";
+
+    /**
+     * The String variable name that will replace all instances of the {@link #TOKEN}
+     * String when the {@link #toString()} method is called on a descriptive predicate.
+     */
+    public static final String VARIABLE = "t";
 
     private static final String NEGATE_FORMAT = "!(%s)";
     private static final String AND_FORMAT = "(%s) && (%s)";
@@ -60,7 +68,11 @@ public abstract class AbstractDescriptivePredicate {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Create a new {@link AbstractDescriptivePredicate} instance with the given description.
+     * Create a new {@link AbstractDescriptivePredicate} instance with the given description.<br>
+     * <br>
+     * Note that the predicate description must contain the {@link #TOKEN} and should not
+     * contain the {@link #VARIABLE} as a variable name already in the description as that
+     * can lead to confusion.
      *
      * @param description the String description for this predicate instance.
      *                    May not be null and must contain the TOKEN.

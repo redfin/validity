@@ -39,6 +39,13 @@ public final class VerifiablePrimitiveChar<X extends Throwable> extends Abstract
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
+     * @return the given test subject.
+     */
+    final char getSubject() {
+        return subject;
+    }
+
+    /**
      * Create a new {@link VerifiablePrimitiveChar} instance with the given values.
      *
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called

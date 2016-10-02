@@ -55,6 +55,13 @@ public final class VerifiablePrimitiveByte<X extends Throwable> extends Abstract
     }
 
     /**
+     * @return the given test subject.
+     */
+    final byte getSubject() {
+        return subject;
+    }
+
+    /**
      * @param other the object to check for equality with against the subject.
      * @return the subject if it is equal to other.
      * @throws X if the subject is null or if it is not equal to other.

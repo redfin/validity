@@ -39,6 +39,13 @@ public final class VerifiablePrimitiveLong<X extends Throwable> extends Abstract
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
+     * @return the given test subject.
+     */
+    final long getSubject() {
+        return subject;
+    }
+
+    /**
      * Create a new {@link VerifiablePrimitiveLong} instance with the given values.
      *
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called

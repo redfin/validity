@@ -52,7 +52,7 @@ import java.util.Collection;
  * until a test subject for validation is given. At that point the correct
  * type of verifiable is returned depending upon the type of the subject.
  */
-public class ValidationFactory<X extends Throwable> {
+public class VerifiableFactory<X extends Throwable> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields
@@ -66,7 +66,7 @@ public class ValidationFactory<X extends Throwable> {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Create a new {@link ValidationFactory} instance with the given message and failed validation
+     * Create a new {@link VerifiableFactory} instance with the given message and failed validation
      * executor.
      *
      * @param message                  the String message to pre-pend the failure message with, if necessary.
@@ -76,7 +76,7 @@ public class ValidationFactory<X extends Throwable> {
      *                                 May not be null.
      * @throws NullPointerException if failedValidationExecutor is null.
      */
-    public ValidationFactory(String message, FailedValidationExecutor<X> failedValidationExecutor) {
+    public VerifiableFactory(String message, FailedValidationExecutor<X> failedValidationExecutor) {
         this.message = message;
         if (null == failedValidationExecutor) {
             throw new NullPointerException(ValidityUtils.nullArgumentMessage("failedValidationExecutor"));
@@ -343,5 +343,29 @@ public class ValidationFactory<X extends Throwable> {
      */
     public VerifiableString<X> that(String subject) {
         return new VerifiableString<>(failedValidationExecutor, subject, message);
+    }
+
+    // --------------------------------------------------------------
+    // Not a value type enforcement
+    // --------------------------------------------------------------
+
+    /**
+     * @throws UnsupportedOperationException always.
+     * @deprecated VerifiableFactory objects cannot be tested for equality.
+     */
+    @Deprecated
+    @Override
+    public final boolean equals(Object obj) {
+        throw new UnsupportedOperationException("This class cannot be treated as a value and does not support the Object equals method");
+    }
+
+    /**
+     * @throws UnsupportedOperationException always.
+     * @deprecated VerifiableFactory objects cannot be hashed.
+     */
+    @Deprecated
+    @Override
+    public final int hashCode() {
+        throw new UnsupportedOperationException("This class cannot be treated as a value and does not support the Object hashCode method");
     }
 }

@@ -39,6 +39,13 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
+     * @return the given test subject.
+     */
+    final float getSubject() {
+        return subject;
+    }
+
+    /**
      * Create a new {@link VerifiablePrimitiveFloat} instance with the given values.
      *
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called

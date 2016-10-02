@@ -64,10 +64,24 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     }
 
     /**
+     * @return the given {@link FailedValidationExecutor}.
+     */
+    protected final FailedValidationExecutor<X> getFailedValidationExecutor() {
+        return failedValidationExecutor;
+    }
+
+    /**
      * @return the given test subject.
      */
     protected final T getSubject() {
         return subject;
+    }
+
+    /**
+     * @return the given message.
+     */
+    protected final String getMessage() {
+        return message;
     }
 
     /**

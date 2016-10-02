@@ -39,6 +39,13 @@ public final class VerifiablePrimitiveDouble<X extends Throwable> extends Abstra
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
+     * @return the given test subject.
+     */
+    final double getSubject() {
+        return subject;
+    }
+
+    /**
      * Create a new {@link VerifiablePrimitiveDouble} instance with the given values.
      *
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called
