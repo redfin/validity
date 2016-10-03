@@ -7,17 +7,17 @@ Say you have a class or method that has some invariants. You can either:
 
 1) write an if statement to check each argument.
 
-1) ignore argument validation and assume things will break later on
+2) ignore argument validation and assume things will break later on
 
-1) use an existing validation library to validate the argument (e.g. Guava's Preconditions, etc)
+3) use an existing validation library to validate the argument (e.g. Guava's Preconditions, etc)
 
 but:
 
 1) is verbose, is inconsistent in what exceptions are thrown, and is inconsistent in what the messages say.
 
-1) is not a best practice. By not validating arguments the failures can either happen in a different part of the program and can drastically increase the amount of time it takes to debug a failure. Or, even worse, the failure may *never* happen, but instead incorrect results can trickle out through the program.
+2) is not a best practice. By not validating arguments the failures can either happen in a different part of the program and can drastically increase the amount of time it takes to debug a failure. Or, even worse, the failure may *never* happen, but instead incorrect results can trickle out through the program.
 
-1) that is nice, but none of the libraries provide all of the things I was looking for.
+3) that is nice, but none of the libraries provide all of the things I was looking for.
 
 ## What did we want from a validation library?
 
