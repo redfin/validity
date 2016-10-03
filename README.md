@@ -167,6 +167,12 @@ java.lang.AssertionError: Subject failed validation
 	at com.redfin.example.FooTest.testAsserts(FooTest.java:41)
 ```
 
+## Thread-safety and bet practices
+
+While many of the classes themselves are immutable in the Validity library, they might not necessarily be. The internal objects are not intended to be stored or shared. The intended use is to create them and immediately call a terminal operation on them to either return the subject being validated or throw an exception or error.
+
+The validation also does not make any copies of the subject being validated. If the subject is mutable, it may have it's inner state changed in a way that would cause validation to fail after it's been validated. It is best practice when validating arguments to make a defensive copy and validating the copy to avoid an invariant being broken.
+
 ## Customization
 
 The verifiable types, though, are all implemented with generics so that if a company or project wants to use the library but have different behavior than the default, they would simply need to implement a wrapper.
