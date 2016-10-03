@@ -31,7 +31,7 @@ final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateC
     private static final IntPredicate VALID_PREDICATE = t -> 0 < t;
 
     @Override
-    public DescriptiveIntPredicate getInstance() {
+    public DescriptiveIntPredicate getNotValueTypeInstance() {
         return new DescriptiveIntPredicate(VALID_DESCRIPTION, VALID_PREDICATE);
     }
 
@@ -46,7 +46,7 @@ final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateC
 
     @Test
     void testCanInstantiateDescriptiveIntPredicateWithValidArguments() {
-        Assertions.assertNotNull(getInstance(),
+        Assertions.assertNotNull(getNotValueTypeInstance(),
                                  "Should be able to instantiate a descriptive int predicate with valid arguments.");
     }
 
@@ -61,7 +61,7 @@ final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateC
 
     @Test
     void testDescriptiveIntPredicateHasExpectedPredicate() {
-        IntPredicate predicate = getInstance();
+        IntPredicate predicate = getNotValueTypeInstance();
         Assertions.assertAll("DescriptiveIntPredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test(1)),
                              () -> Assertions.assertFalse(predicate.test(0)),
@@ -70,7 +70,7 @@ final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateC
 
     @Test
     void testDescriptiveIntPredicateNegateHasExpectedPredicate() {
-        IntPredicate predicate = getInstance().negate();
+        IntPredicate predicate = getNotValueTypeInstance().negate();
         Assertions.assertAll("DescriptiveIntPredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test(1)),
                              () -> Assertions.assertTrue(predicate.test(0)),
@@ -81,14 +81,14 @@ final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateC
     void testDescriptiveIntPredicateNegateHasExpectedToString() {
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         Assertions.assertEquals(toStringHelper(predicate.getNegateDescription()),
-                                getInstance().negate().toString(),
+                                getNotValueTypeInstance().negate().toString(),
                                 "DescriptiveIntPredicate negate should return the expected toString.");
     }
 
     @Test
     void testDescriptiveIntPredicateAndHasExpectedPredicate() {
         IntPredicate other = new DescriptiveIntPredicate("10 > " + AbstractDescriptivePredicate.TOKEN, t -> 10 > t);
-        IntPredicate predicate = getInstance().and(other);
+        IntPredicate predicate = getNotValueTypeInstance().and(other);
         Assertions.assertAll("DescriptiveIntPredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test(-1)),
                              () -> Assertions.assertFalse(predicate.test(0)),
@@ -102,14 +102,14 @@ final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateC
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "10 > " + AbstractDescriptivePredicate.TOKEN;
         Assertions.assertEquals(toStringHelper(predicate.getAndDescription(otherDescription)),
-                                getInstance().and(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().and(getInstance(otherDescription)).toString(),
                                 "DescriptiveIntPredicate and should return the expected toString.");
     }
 
     @Test
     void testDescriptiveIntPredicateOrHasExpectedPredicate() {
         IntPredicate other = new DescriptiveIntPredicate("10 > " + AbstractDescriptivePredicate.TOKEN, t -> 10 > t);
-        IntPredicate predicate = getInstance().or(other);
+        IntPredicate predicate = getNotValueTypeInstance().or(other);
         Assertions.assertAll("DescriptiveIntPredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test(-1)),
                              () -> Assertions.assertTrue(predicate.test(0)),
@@ -123,7 +123,7 @@ final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateC
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "10 > " + AbstractDescriptivePredicate.TOKEN;
         Assertions.assertEquals(toStringHelper(predicate.getOrDescription(otherDescription)),
-                                getInstance().or(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().or(getInstance(otherDescription)).toString(),
                                 "DescriptiveIntPredicate or should return the expected toString.");
     }
 }

@@ -31,7 +31,7 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
     private static final DoublePredicate VALID_PREDICATE = t -> 0 < t;
 
     @Override
-    public DescriptiveDoublePredicate getInstance() {
+    public DescriptiveDoublePredicate getNotValueTypeInstance() {
         return new DescriptiveDoublePredicate(VALID_DESCRIPTION, VALID_PREDICATE);
     }
 
@@ -46,7 +46,7 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
 
     @Test
     void testCanInstantiateDescriptiveDoublePredicateWithValidArguments() {
-        Assertions.assertNotNull(getInstance(),
+        Assertions.assertNotNull(getNotValueTypeInstance(),
                                  "Should be able to instantiate a descriptive double predicate with valid arguments.");
     }
 
@@ -61,7 +61,7 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
 
     @Test
     void testDescriptiveDoublePredicateHasExpectedPredicate() {
-        DoublePredicate predicate = getInstance();
+        DoublePredicate predicate = getNotValueTypeInstance();
         Assertions.assertAll("DescriptiveDoublePredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test(1.0)),
                              () -> Assertions.assertFalse(predicate.test(0.0)),
@@ -70,7 +70,7 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
 
     @Test
     void testDescriptiveDoublePredicateNegateHasExpectedPredicate() {
-        DoublePredicate predicate = getInstance().negate();
+        DoublePredicate predicate = getNotValueTypeInstance().negate();
         Assertions.assertAll("DescriptiveDoublePredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test(1.0)),
                              () -> Assertions.assertTrue(predicate.test(0.0)),
@@ -81,14 +81,14 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
     void testDescriptiveDoublePredicateNegateHasExpectedToString() {
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         Assertions.assertEquals(toStringHelper(predicate.getNegateDescription()),
-                                getInstance().negate().toString(),
+                                getNotValueTypeInstance().negate().toString(),
                                 "DescriptiveDoublePredicate negate should return the expected toString.");
     }
 
     @Test
     void testDescriptiveDoublePredicateAndHasExpectedPredicate() {
         DoublePredicate other = new DescriptiveDoublePredicate("10 > " + AbstractDescriptivePredicate.TOKEN, t -> 10 > t);
-        DoublePredicate predicate = getInstance().and(other);
+        DoublePredicate predicate = getNotValueTypeInstance().and(other);
         Assertions.assertAll("DescriptiveDoublePredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test(-1.0)),
                              () -> Assertions.assertFalse(predicate.test(0.0)),
@@ -102,14 +102,14 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "10 > " + AbstractDescriptivePredicate.TOKEN;
         Assertions.assertEquals(toStringHelper(predicate.getAndDescription(otherDescription)),
-                                getInstance().and(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().and(getInstance(otherDescription)).toString(),
                                 "DescriptiveDoublePredicate and should return the expected toString.");
     }
 
     @Test
     void testDescriptiveDoublePredicateOrHasExpectedPredicate() {
         DoublePredicate other = new DescriptiveDoublePredicate("10 > " + AbstractDescriptivePredicate.TOKEN, t -> 10 > t);
-        DoublePredicate predicate = getInstance().or(other);
+        DoublePredicate predicate = getNotValueTypeInstance().or(other);
         Assertions.assertAll("DescriptiveDoublePredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test(-1.0)),
                              () -> Assertions.assertTrue(predicate.test(0.0)),
@@ -123,7 +123,7 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "10 > " + AbstractDescriptivePredicate.TOKEN;
         Assertions.assertEquals(toStringHelper(predicate.getOrDescription(otherDescription)),
-                                getInstance().or(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().or(getInstance(otherDescription)).toString(),
                                 "DescriptiveDoublePredicate or should return the expected toString.");
     }
 }

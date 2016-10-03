@@ -63,6 +63,10 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
         this.message = message;
     }
 
+    // --------------------------------------------------------------
+    // Getter methods
+    // --------------------------------------------------------------
+
     /**
      * @return the given {@link FailedValidationExecutor}.
      */
@@ -82,6 +86,32 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
      */
     protected final String getMessage() {
         return message;
+    }
+
+    // --------------------------------------------------------------
+    // Verification methods & helpers
+    // --------------------------------------------------------------
+
+    /**
+     * @return the subject if it is null.
+     * @throws X if the subject is not null.
+     */
+    public T isNull() throws X {
+        if (null != subject) {
+            fail("t -> null == t");
+        }
+        return subject;
+    }
+
+    /**
+     * @return the subject if it is not null.
+     * @throws X if the subject is null.
+     */
+    public T isNotNull() throws X {
+        if (null == subject) {
+            fail("t -> null != t");
+        }
+        return subject;
     }
 
     /**
@@ -133,6 +163,10 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     protected final void fail(String expected) throws X {
         failedValidationExecutor.fail(expected, subject, message);
     }
+
+    // --------------------------------------------------------------
+    // Object overridden methods
+    // --------------------------------------------------------------
 
     @Override
     public String toString() {

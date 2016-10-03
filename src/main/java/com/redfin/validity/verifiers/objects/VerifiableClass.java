@@ -46,11 +46,11 @@ public final class VerifiableClass<T, X extends Throwable> extends AbstractVerif
     }
 
     /**
-     * @param clazz the class to check if the subject is assignable to.
-     * @return the subject if it is assignable to clazz.
-     * @throws X if the subject is null or is not assignable to clazz.
+     * @param clazz the class to check if the subject is assignable from.
+     * @return the subject if it is assignable from clazz.
+     * @throws X if the subject is null or is not assignable from clazz.
      */
-    public Class<T> isAssignableTo(Class<?> clazz) throws X {
+    public Class<T> isAssignableFrom(Class<?> clazz) throws X {
         Class<T> subject = getSubject();
         if (null == subject || !subject.isAssignableFrom(clazz)) {
             fail("t -> t.isAssignableFrom(" + ValidityUtils.describe(clazz) + ")");

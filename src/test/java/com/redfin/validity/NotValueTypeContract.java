@@ -36,7 +36,7 @@ public interface NotValueTypeContract<T> {
     /**
      * @return the class object of the class being tested.
      */
-    T getInstance();
+    T getNotValueTypeInstance();
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test cases
@@ -45,12 +45,12 @@ public interface NotValueTypeContract<T> {
     @Test
     default void testNotValueTypeInstanceThrowsExceptionForEqualsWithNonNullValue() {
         Assertions.assertThrows(UnsupportedOperationException.class,
-                                () -> getInstance().equals(null));
+                                () -> getNotValueTypeInstance().equals(null));
     }
 
     @Test
     default void testNotValueTypeInstanceThrowsExceptionForEqualsWithSelf() {
-        T instance = getInstance();
+        T instance = getNotValueTypeInstance();
         Assertions.assertThrows(UnsupportedOperationException.class,
                                 () -> instance.equals(instance));
     }
@@ -58,6 +58,6 @@ public interface NotValueTypeContract<T> {
     @Test
     default void testNotValueTypeThrowsExceptionForHashCode() {
         Assertions.assertThrows(UnsupportedOperationException.class,
-                                () -> getInstance().hashCode());
+                                () -> getNotValueTypeInstance().hashCode());
     }
 }

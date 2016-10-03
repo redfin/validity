@@ -65,7 +65,7 @@ final class VerifiableFactoryTest implements NotValueTypeContract<VerifiableFact
     };
 
     @Override
-    public VerifiableFactory<IllegalArgumentException> getInstance() {
+    public VerifiableFactory<IllegalArgumentException> getNotValueTypeInstance() {
         return new VerifiableFactory<>(VALID_MESSAGE, VALIDATION_EXECUTOR);
     }
 
@@ -115,126 +115,126 @@ final class VerifiableFactoryTest implements NotValueTypeContract<VerifiableFact
     @Test
     void testReturnsExpectedVerifiableArray() {
         Integer[] subject = new Integer[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableArray<?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableArray<?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableArrayForNullSubject() {
         Integer[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableArray<?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableArray<?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableBooleanArray() {
         boolean[] subject = new boolean[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableBooleanArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableBooleanArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableBooleanArrayForNullSubject() {
         boolean[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableBooleanArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableBooleanArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableByteArray() {
         byte[] subject = new byte[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableByteArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableByteArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableByteArrayForNullSubject() {
         byte[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableByteArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableByteArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableCharArray() {
         char[] subject = new char[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableCharArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableCharArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableCharArrayForNullSubject() {
         char[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableCharArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableCharArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableDoubleArray() {
         double[] subject = new double[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableDoubleArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableDoubleArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableDoubleArrayForNullSubject() {
         double[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableDoubleArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableDoubleArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableFloatArray() {
         float[] subject = new float[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableFloatArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableFloatArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableFloatArrayForNullSubject() {
         float[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableFloatArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableFloatArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableIntArray() {
         int[] subject = new int[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableIntArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableIntArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableIntArrayForNullSubject() {
         int[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableIntArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableIntArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableLongArray() {
         long[] subject = new long[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableLongArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableLongArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableLongArrayForNullSubject() {
         long[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableLongArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableLongArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableShortArray() {
         short[] subject = new short[0];
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableShortArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableShortArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableShortArrayForNullSubject() {
         short[] subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableShortArray<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableShortArray<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
@@ -245,56 +245,56 @@ final class VerifiableFactoryTest implements NotValueTypeContract<VerifiableFact
     @Test
     void testReturnsExpectedVerifiablePrimitiveBoolean() {
         boolean subject = true;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveBoolean<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveBoolean<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiablePrimitiveByte() {
         byte subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveByte<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveByte<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiablePrimitiveChar() {
         char subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveChar<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveChar<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiablePrimitiveDouble() {
         double subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveDouble<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveDouble<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiablePrimitiveFloat() {
         float subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveFloat<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveFloat<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiablePrimitiveInt() {
         int subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveInt<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveInt<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiablePrimitiveLong() {
         long subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveLong<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveLong<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiablePrimitiveShort() {
         short subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiablePrimitiveShort<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiablePrimitiveShort<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
@@ -305,161 +305,161 @@ final class VerifiableFactoryTest implements NotValueTypeContract<VerifiableFact
     @Test
     void testReturnsExpectedVerifiableBoolean() {
         Boolean subject = true;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableBoolean<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableBoolean<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableBooleanForNullSubject() {
         Boolean subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableBoolean<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableBoolean<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableByte() {
         Byte subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableByte<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableByte<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableByteForNullSubject() {
         Byte subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableByte<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableByte<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableCharacter() {
         Character subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableCharacter<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableCharacter<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableCharacterForNullSubject() {
         Character subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableCharacter<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableCharacter<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableClass() {
         Class<?> subject = VerifiableFactoryTest.class;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableClass<?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableClass<?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableClassForNullSubject() {
         Class<?> subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableClass<?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableClass<?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableCollections() {
         Collection<String> subject = new ArrayList<>();
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableCollection<?, ?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableCollection<?, ?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableCollectionsForNullSubject() {
         Collection<String> subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableCollection<?, ?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableCollection<?, ?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableDouble() {
         Double subject = 0D;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableDouble<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableDouble<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableDoubleForNullSubject() {
         Double subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableDouble<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableDouble<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableFloat() {
         Float subject = 0F;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableFloat<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableFloat<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableInteger() {
         Integer subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableInteger<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableInteger<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableIntegerForNullSubject() {
         Integer subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableInteger<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableInteger<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableLong() {
         Long subject = 0L;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableLong<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableLong<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableLongForNullSubject() {
         Long subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableLong<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableLong<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableObject() {
         Object subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableObject<?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableObject<?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableObjectForNullSubject() {
         Object subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableObject<?, ?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableObject<?, ?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableShort() {
         Short subject = 0;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableShort<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableShort<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableShortForNullSubject() {
         Short subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableShort<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableShort<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableString() {
         String subject = "";
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableString<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableString<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 
     @Test
     void testReturnsExpectedVerifiableStringForNullSubject() {
         String subject = null;
-        Assertions.assertTrue(getInstance().that(subject) instanceof VerifiableString<?>,
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableString<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 }

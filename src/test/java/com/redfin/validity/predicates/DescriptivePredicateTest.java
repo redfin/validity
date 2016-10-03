@@ -31,7 +31,7 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
     private static final Predicate<String> VALID_PREDICATE = t -> null != t;
 
     @Override
-    public DescriptivePredicate<String> getInstance() {
+    public DescriptivePredicate<String> getNotValueTypeInstance() {
         return new DescriptivePredicate<>(VALID_DESCRIPTION, VALID_PREDICATE);
     }
 
@@ -46,7 +46,7 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
 
     @Test
     void testCanInstantiateDescriptivePredicateWithValidArguments() {
-        Assertions.assertNotNull(getInstance(),
+        Assertions.assertNotNull(getNotValueTypeInstance(),
                                  "Should be able to instantiate a descriptive predicate with valid arguments.");
     }
 
@@ -61,7 +61,7 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
 
     @Test
     void testDescriptivePredicateHasExpectedPredicate() {
-        DescriptivePredicate<String> predicate = getInstance();
+        DescriptivePredicate<String> predicate = getNotValueTypeInstance();
         Assertions.assertAll("DescriptivePredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test("")),
                              () -> Assertions.assertTrue(predicate.test("hello")),
@@ -70,7 +70,7 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
 
     @Test
     void testDescriptivePredicateNegateHasExpectedPredicate() {
-        DescriptivePredicate<String> predicate = getInstance().negate();
+        DescriptivePredicate<String> predicate = getNotValueTypeInstance().negate();
         Assertions.assertAll("DescriptivePredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test("")),
                              () -> Assertions.assertFalse(predicate.test("hello")),
@@ -81,14 +81,14 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
     void testDescriptivePredicateNegateHasExpectedToString() {
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         Assertions.assertEquals(toStringHelper(predicate.getNegateDescription()),
-                                getInstance().negate().toString(),
+                                getNotValueTypeInstance().negate().toString(),
                                 "DescriptivePredicate negate should return the expected toString.");
     }
 
     @Test
     void testDescriptivePredicateAndHasExpectedPredicate() {
         DescriptivePredicate<String> other = new DescriptivePredicate<>("!" + AbstractDescriptivePredicate.TOKEN + ".isEmpty()", t -> !t.isEmpty());
-        DescriptivePredicate<String> predicate = getInstance().and(other);
+        DescriptivePredicate<String> predicate = getNotValueTypeInstance().and(other);
         Assertions.assertAll("DescriptivePredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test(null)),
                              () -> Assertions.assertFalse(predicate.test("")),
@@ -100,14 +100,14 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "!" + AbstractDescriptivePredicate.TOKEN + ".isEmpty()";
         Assertions.assertEquals(toStringHelper(predicate.getAndDescription(otherDescription)),
-                                getInstance().and(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().and(getInstance(otherDescription)).toString(),
                                 "DescriptivePredicate and should return the expected toString.");
     }
 
     @Test
     void testDescriptivePredicateOrHasExpectedPredicate() {
         DescriptivePredicate<String> other = new DescriptivePredicate<>("!" + AbstractDescriptivePredicate.TOKEN + ".isEmpty()", t -> !t.isEmpty());
-        DescriptivePredicate<String> predicate = getInstance().or(other);
+        DescriptivePredicate<String> predicate = getNotValueTypeInstance().or(other);
         Assertions.assertAll("DescriptivePredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test("")),
                              () -> Assertions.assertTrue(predicate.test("hello")));
@@ -120,7 +120,7 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "!" + AbstractDescriptivePredicate.TOKEN + ".isEmpty()";
         Assertions.assertEquals(toStringHelper(predicate.getOrDescription(otherDescription)),
-                                getInstance().or(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().or(getInstance(otherDescription)).toString(),
                                 "DescriptivePredicate or should return the expected toString.");
     }
 }

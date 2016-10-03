@@ -31,7 +31,7 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
     private static final LongPredicate VALID_PREDICATE = t -> 0 < t;
 
     @Override
-    public DescriptiveLongPredicate getInstance() {
+    public DescriptiveLongPredicate getNotValueTypeInstance() {
         return new DescriptiveLongPredicate(VALID_DESCRIPTION, VALID_PREDICATE);
     }
 
@@ -46,7 +46,7 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
 
     @Test
     void testCanInstantiateDescriptiveLongPredicateWithValidArguments() {
-        Assertions.assertNotNull(getInstance(),
+        Assertions.assertNotNull(getNotValueTypeInstance(),
                                  "Should be able to instantiate a descriptive long predicate with valid arguments.");
     }
 
@@ -61,7 +61,7 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
 
     @Test
     void testDescriptiveLongPredicateHasExpectedPredicate() {
-        LongPredicate predicate = getInstance();
+        LongPredicate predicate = getNotValueTypeInstance();
         Assertions.assertAll("DescriptiveLongPredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test(1)),
                              () -> Assertions.assertFalse(predicate.test(0)),
@@ -70,7 +70,7 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
 
     @Test
     void testDescriptiveLongPredicateNegateHasExpectedPredicate() {
-        LongPredicate predicate = getInstance().negate();
+        LongPredicate predicate = getNotValueTypeInstance().negate();
         Assertions.assertAll("DescriptiveLongPredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test(1)),
                              () -> Assertions.assertTrue(predicate.test(0)),
@@ -81,14 +81,14 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
     void testDescriptiveLongPredicateNegateHasExpectedToString() {
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         Assertions.assertEquals(toStringHelper(predicate.getNegateDescription()),
-                                getInstance().negate().toString(),
+                                getNotValueTypeInstance().negate().toString(),
                                 "DescriptiveLongPredicate negate should return the expected toString.");
     }
 
     @Test
     void testDescriptiveLongPredicateAndHasExpectedPredicate() {
         LongPredicate other = new DescriptiveLongPredicate("10 > " + AbstractDescriptivePredicate.TOKEN, t -> 10 > t);
-        LongPredicate predicate = getInstance().and(other);
+        LongPredicate predicate = getNotValueTypeInstance().and(other);
         Assertions.assertAll("DescriptiveLongPredicate should wrap the expected predicate.",
                              () -> Assertions.assertFalse(predicate.test(-1)),
                              () -> Assertions.assertFalse(predicate.test(0)),
@@ -102,14 +102,14 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "10 > " + AbstractDescriptivePredicate.TOKEN;
         Assertions.assertEquals(toStringHelper(predicate.getAndDescription(otherDescription)),
-                                getInstance().and(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().and(getInstance(otherDescription)).toString(),
                                 "DescriptiveLongPredicate and should return the expected toString.");
     }
 
     @Test
     void testDescriptiveLongPredicateOrHasExpectedPredicate() {
         LongPredicate other = new DescriptiveLongPredicate("10 > " + AbstractDescriptivePredicate.TOKEN, t -> 10 > t);
-        LongPredicate predicate = getInstance().or(other);
+        LongPredicate predicate = getNotValueTypeInstance().or(other);
         Assertions.assertAll("DescriptiveLongPredicate should wrap the expected predicate.",
                              () -> Assertions.assertTrue(predicate.test(-1)),
                              () -> Assertions.assertTrue(predicate.test(0)),
@@ -123,7 +123,7 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
         AbstractDescriptivePredicate predicate = new AbstractDescriptivePredicate(VALID_DESCRIPTION) { };
         String otherDescription = "10 > " + AbstractDescriptivePredicate.TOKEN;
         Assertions.assertEquals(toStringHelper(predicate.getOrDescription(otherDescription)),
-                                getInstance().or(getInstance(otherDescription)).toString(),
+                                getNotValueTypeInstance().or(getInstance(otherDescription)).toString(),
                                 "DescriptiveLongPredicate or should return the expected toString.");
     }
 }
