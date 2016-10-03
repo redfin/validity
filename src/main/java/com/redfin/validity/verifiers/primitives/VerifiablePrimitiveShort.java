@@ -39,13 +39,6 @@ public final class VerifiablePrimitiveShort<X extends Throwable> extends Abstrac
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * @return the given test subject.
-     */
-    final short getSubject() {
-        return subject;
-    }
-
-    /**
      * Create a new {@link VerifiablePrimitiveShort} instance with the given values.
      *
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called

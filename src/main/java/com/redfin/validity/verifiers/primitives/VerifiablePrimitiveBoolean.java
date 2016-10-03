@@ -54,13 +54,6 @@ public final class VerifiablePrimitiveBoolean<X extends Throwable> extends Abstr
     }
 
     /**
-     * @return the given test subject.
-     */
-    final boolean getSubject() {
-        return subject;
-    }
-
-    /**
      * @return the Boolean true if the subject is true.
      * @throws X if the subject is null or false.
      */

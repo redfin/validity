@@ -39,13 +39,6 @@ public final class VerifiablePrimitiveChar<X extends Throwable> extends Abstract
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * @return the given test subject.
-     */
-    final char getSubject() {
-        return subject;
-    }
-
-    /**
      * Create a new {@link VerifiablePrimitiveChar} instance with the given values.
      *
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called
@@ -83,44 +76,6 @@ public final class VerifiablePrimitiveChar<X extends Throwable> extends Abstract
             fail("t -> t != " + ValidityUtils.describe(other));
         }
         return subject;
-    }
-
-    /**
-     * @return the subject if it is comparable to zero.
-     * @throws X if the subject is not zero.
-     */
-    public char isZero() throws X {
-        if (subject != 0) {
-            fail("t -> t == 0");
-        }
-        return subject;
-    }
-
-    /**
-     * @return the subject if it is not comparable to zero.
-     * @throws X if the subject is zero.
-     */
-    public char isNotZero() throws X {
-        if (subject == 0) {
-            fail("t -> t != 0");
-        }
-        return subject;
-    }
-
-    /**
-     * @return the subject if it is greater than zero.
-     * @throws X if the subject is less than or equal to zero.
-     */
-    public char isStrictlyPositive() throws X {
-        return isGreaterThan((char) 0);
-    }
-
-    /**
-     * @return the subject if it is less than zero.
-     * @throws X if the subject is greater than or equal to zero.
-     */
-    public char isStrictlyNegative() throws X {
-        return isLessThan((char) 0);
     }
 
     /**

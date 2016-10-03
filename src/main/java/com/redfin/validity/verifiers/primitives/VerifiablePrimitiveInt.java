@@ -39,13 +39,6 @@ public final class VerifiablePrimitiveInt<X extends Throwable> extends AbstractV
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * @return the given test subject.
-     */
-    final int getSubject() {
-        return subject;
-    }
-
-    /**
      * Create a new {@link VerifiablePrimitiveInt} instance with the given values.
      *
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called
