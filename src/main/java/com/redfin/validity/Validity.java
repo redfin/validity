@@ -27,7 +27,7 @@ public final class Validity {
 
     /*
      * For performance, cache instances of the null message ValidationBuilders.
-     * Since it and the default validation executors are as well, we can
+     * Since it and the default validation executors are immutable, we can
      * simply re-use the same instances each time if there isn't a given
      * message. If a message is, given, though, a new instance is required.
      */
