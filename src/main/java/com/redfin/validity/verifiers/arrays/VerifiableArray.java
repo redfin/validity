@@ -49,7 +49,6 @@ public final class VerifiableArray<E, X extends Throwable> extends AbstractVerif
         super(failedValidationExecutor, subject, message);
     }
 
-
     @Override
     public E[] isEqualTo(E[] other) throws X {
         E[] subject = getSubject();
