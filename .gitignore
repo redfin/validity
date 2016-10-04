@@ -6,7 +6,7 @@
 !.gitignore
 !pom.xml
 !README.md
-!CONTRIBUTING.md
+!.travis.yml
 !LICENSE
 !src/
 !src/**
