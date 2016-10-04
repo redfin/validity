@@ -1,31 +1,13 @@
 # Validity
 
-
-## Why validate?
-
-Say you have a class or method that has some invariants. You can either:
-
-1) write an if statement to check each argument.
-
-2) ignore argument validation and assume things will break later on
-
-3) use an existing validation library to validate the argument (e.g. Guava's Preconditions, etc)
-
-but:
-
-1) is verbose, is inconsistent in what exceptions are thrown, and is inconsistent in what the messages say.
-
-2) is not a best practice. By not validating arguments the failures can either happen in a different part of the program and can drastically increase the amount of time it takes to debug a failure. Or, even worse, the failure may *never* happen, but instead incorrect results can trickle out through the program.
-
-3) that is nice, but none of the libraries provide all of the things I was looking for.
-
 ## What did we want from a validation library?
 
-+ A fluent, highly human-readable syntax to allow for clean method chaining with smart IDE auto-completion.
-+ Strongly typed so that validation only displayed methods that made sense for the type being validated.
++ A fluent, highly human-readable syntax to allow for clean method chaining.
++ Strongly typed so that only methods that make sense for the type being validated show up in IDE auto-completion.
++ The value being validated should be returned on successful validation to allow for one line validation and assignment.
 + The ability to customize the failure exceptions, the message, and easily add validation for more types.
 + Clean, informative failure messages without the user having to add a custom string.
-+ The line that calls into the validation library be the first line of the stack trace if validation fails.
++ The line that calls into the validation library should be the first line of the stack trace if validation fails.
 
 ## By example
 
@@ -184,6 +166,21 @@ The verifiable types, though, are all implemented with generics so that if a com
 A wrapper like the `Validity` class itself can be created to create a `VerifiableFactory` class with different `FailedValidationExecutor` implementations that handle the creation and throwing of Throwable's on failure. Implementations of that interface are where the stack trimming portions of the library are implemented.
 
 The `VerifiableFactory` class can be sub-classed to add new, custom, verifiable types.
+
+## Descriptive Predicates
+
+If you would like to validate an argument that doesn't have a built in type but don't want to go so far as to define custom validation types, each of the verifiable objects that are pre-defined also take in a predicate for one of the method types.
+This allows for any type of subject to be validated (though without smart auto completion and missing a bit of the default information from the failure messages).
+However, there are descriptive predicate classes defined that bridge the gap of being used like a predicate while having a nice, human-readable toString output.
+
+```
+Predicate<String> predicate = new DescriptivePredicate<>("null != {}", t -> null != t);
+predicate.toString();
+```
+The output of the toString method above would be:
+```
+t -> null != t
+```
 
 ## Installation
 
