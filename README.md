@@ -12,6 +12,18 @@
 + Clean, informative failure messages without the user having to add a custom string.
 + The line that calls into the validation library should be the first line of the stack trace if validation fails.
 
+## Installation
+
+To install, you can simply include the dependency from Maven Central:
+
+```
+<dependency>
+    <groupId>com.redfin</groupId>
+    <artifactId>validity</artifactId>
+    <version>0.1.1-beta</version>
+</dependency>
+```
+
 ## Thread-safety and best practices
 
 Many of the internal classes in the Validity library are immutable by default, but it cannot be counted upon, especially if a custom FailedValidationExecutor is supplied.
@@ -135,7 +147,3 @@ java.lang.AssertionError: Subject failed validation
 
 	at com.redfin.example.FooTest.testAsserts(FooTest.java:41)
 ```
-
-## Installation
-
-todo : upload the project to Maven Central and then add to this portion of the documentation.
