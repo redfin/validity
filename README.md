@@ -153,18 +153,22 @@ java.lang.AssertionError: Subject failed validation
 	at com.redfin.example.FooTest.testAsserts(FooTest.java:41)
 ```
 
-## Thread-safety and bet practices
+## Thread-safety and best practices
 
-While many of the classes themselves are immutable in the Validity library, they might not necessarily be. The internal objects are not intended to be stored or shared. The intended use is to create them and immediately call a terminal operation on them to either return the subject being validated or throw an exception or error.
+Many of the internal classes in the Validity library are immutable by default, but it cannot be counted upon, especially if a custom FailedValidationExecutor is supplied.
+The internal validation objects are not intended to be stored or shared.
+The intended use is to create them and immediately call a terminal operation on them to either return the subject being validated or throw an exception or error.
 
-The validation also does not make any copies of the subject being validated. If the subject is mutable, it may have it's inner state changed in a way that would cause validation to fail after it's been validated. It is best practice when validating arguments to make a defensive copy and validating the copy to avoid an invariant being broken.
+The validation also does not make any copies of the subject being validated.
+If the subject is mutable, it may have it's inner state changed in a way that would cause validation to fail after it's been validated. It is best practice when validating arguments to make a defensive copy and validating the copy to avoid an invariant being broken.
+An example of this would be if a list is handed to a method that verifies the list is not empty but then an external pointer to that list calls the clear method on it.
+This is not a concern when validating immutable types or primitive types.
 
 ## Customization
 
-The verifiable types, though, are all implemented with generics so that if a company or project wants to use the library but have different behavior than the default, they would simply need to implement a wrapper.
+The verifiable types are implemented with generics so that if a company or project wants to use the library but have different behavior than the default, they can.
 
-A wrapper like the `Validity` class itself can be created to create a `VerifiableFactory` class with different `FailedValidationExecutor` implementations that handle the creation and throwing of Throwable's on failure. Implementations of that interface are where the stack trimming portions of the library are implemented.
-
+A static class (like the `Validity` class itself) can be created that returns e a `VerifiableFactory` class with different `FailedValidationExecutor` implementations that handle the creation and throwing of Throwable's on failure. Implementations of that interface are where the stack trimming portions of the library are implemented.
 The `VerifiableFactory` class can be sub-classed to add new, custom, verifiable types.
 
 ## Descriptive Predicates
