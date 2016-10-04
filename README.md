@@ -135,7 +135,17 @@ java.lang.IllegalArgumentException: Subject failed validation
 
 ## Asserts vs. Verify
 
-Another component of Validity is to have a consistent experience while writing both production code and unit tests. These two types of code, though, have some different needs. You typically throw an AssertionError on failure during a test instead of, say, an IllegalArgumentException. Also, while it is nice to know the line that failed, if you are following best practices there should only be 1 or 2 assertions per test method and they will be directly in the test class. The Validity library, therefore, trims out all the extraneous stack frames from the thrown error so that only the caller shows up.
+Another component of Validity is to have a consistent experience while writing both production code and unit tests.
+These two types of code, though, have some different needs.
+With argument validation, you may want failures to throw an IllegalArgumentException and to show the full stack trace (up to when validation was called) so you know which part of the program is passing in incorrect data.
+On the other hand, with test assertions you typically throw an AssertionError on failure.
+Also, while it is nice to know the line that failed, there should only be 1 or 2 assertions per test method and which will be directly called from the test method itself so the stack trace is nearly always mostly just noise from the test running framework itself.
+
+The Validity library, therefore, handles both cases.
+When using the `Validity.verify()` type methods, it will throw an `IllegalArgumentException` on failure and will only trim the library stack frames out of the exception.
+When using the `Validity.asserts()` type methods, it will throw an `AssertionError` on failure which trims all lines except the caller from the exception.
+
+Note that this behavior is completely customizable, if desired, by defining a custom wrapper and `FailedValidationExecutor` implementation.
 
 This code:
 ```
