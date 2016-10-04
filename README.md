@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/redfin/validity.svg?branch=master)](https://travis-ci.org/redfin/validity)
+[![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 # Validity
 
 ## What did we want from a validation library?
