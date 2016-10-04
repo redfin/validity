@@ -26,15 +26,10 @@
         <system>github</system>
         <url>https://github.com/redfin/validity/issues</url>
     </issueManagement>
-
-    <!-- todo : add these values when we have them
-
     <ciManagement>
         <system>Travis</system>
-        <url>todo</url>
+        <url>https://travis-ci.org/redfin/validity</url>
     </ciManagement>
-
-    -->
 
     <licenses>
         <license>
