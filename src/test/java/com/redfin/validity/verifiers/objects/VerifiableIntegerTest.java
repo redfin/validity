@@ -27,31 +27,6 @@ final class VerifiableIntegerTest implements AbstractVerifiableComparableNumberC
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableInteger<IllegalArgumentException> getNotValueTypeInstance() {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), 0, "message");
-    }
-
-    @Override
-    public VerifiableInteger<IllegalArgumentException> getAbstractVerifiableComparableNumber() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public VerifiableInteger<IllegalArgumentException> getAbstractVerifiableComparable() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Integer getSubject() {
         return new Integer(0);
     }
@@ -67,7 +42,57 @@ final class VerifiableIntegerTest implements AbstractVerifiableComparableNumberC
     }
 
     @Override
-    public VerifiableInteger<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Integer subject, String message) {
+    public Integer getComparableSubject() {
+        return new Integer(0);
+    }
+
+    @Override
+    public Integer getNonComparableSubject() {
+        return new Integer(1);
+    }
+
+    @Override
+    public Integer getLessThanSubject() {
+        return new Integer(-1);
+    }
+
+    @Override
+    public Integer getGreaterThanSubject() {
+        return new Integer(1);
+    }
+
+    @Override
+    public Integer getZeroSubject() {
+        return new Integer(0);
+    }
+
+    @Override
+    public Integer getNonZeroSubject() {
+        return new Integer(1);
+    }
+
+    @Override
+    public Integer getPositiveSubject() {
+        return new Integer(1);
+    }
+
+    @Override
+    public Integer getNegativeSubject() {
+        return new Integer(-1);
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
+    }
+
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public VerifiableInteger<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Integer subject, String message) {
         return new VerifiableInteger<>(failedValidationExecutor, subject, message);
     }
 }

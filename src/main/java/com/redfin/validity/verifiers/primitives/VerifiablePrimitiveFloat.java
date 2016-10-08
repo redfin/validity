@@ -183,6 +183,10 @@ public final class VerifiablePrimitiveFloat<X extends Throwable> extends Abstrac
     }
 
     /**
+     * Tests the subject with the given predicate. Note that any {@link Throwable} thrown
+     * during the testing of the predicate is not handled and will be thrown instead
+     * of the usual throwable for this verifiable instance.
+     *
      * @param expected the {@link DoublePredicate} to use to test the subject.
      *                 May not be null.
      * @return the subject if it satisfies the predicate.

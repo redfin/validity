@@ -37,16 +37,6 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * @return the {@link FailedValidationExecutor} for the tests.
-     */
-    FailedValidationExecutor<X> getAbstractVerifiablePrimitiveFailedValidationExecutor();
-
-    /**
-     * @return the class object of the throwable type for the validation executor.
-     */
-    Class<X> getThrowableClass();
-
-    /**
      * @return a test subject for the verifiable object under test.
      */
     E getSubject();
@@ -61,13 +51,36 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
      */
     E getNonEqualSubject();
 
+    @Override
+    default T getNotValueTypeInstance() {
+        return getVerifiableInstance(getSubject());
+    }
+
+    /**
+     * @param subject the subject for the verifiable instance.
+     * @return the verifiable instance being tested.
+     */
+    default T getVerifiableInstance(E subject) {
+        return getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
+    }
+
     /**
      * @param failedValidationExecutor the failed validation executor.
      * @param subject                  the subject of the verifiable object.
      * @param message                  the String message of the verifiable object.
      * @return an instance of {@link AbstractVerifiableObject}.
      */
-    T getAbstractVerifiableObjectInstance(FailedValidationExecutor<X> failedValidationExecutor, E subject, String message);
+    T getVerifiableInstance(FailedValidationExecutor<X> failedValidationExecutor, E subject, String message);
+
+    /**
+     * @return the class object of the throwable type for the validation executor.
+     */
+    Class<X> getThrowableClass();
+
+    /**
+     * @return the {@link FailedValidationExecutor} for the tests.
+     */
+    FailedValidationExecutor<X> getFailedValidationExecutor();
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test cases
@@ -79,26 +92,26 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
 
     @Test
     default void testCanInstantiateWithValidArguments() {
-        Assertions.assertNotNull(getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), getSubject(), "message"),
+        Assertions.assertNotNull(getVerifiableInstance(getFailedValidationExecutor(), getSubject(), "message"),
                                  "Should be able to instantiate an AbstractVerifiableObject with valid arguments.");
     }
 
     @Test
     default void testCanInstantiateWithNullSubject() {
-        Assertions.assertNotNull(getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), getSubject(), null),
+        Assertions.assertNotNull(getVerifiableInstance(getFailedValidationExecutor(), getSubject(), null),
                                  "Should be able to instantiate an AbstractVerifiableObject with a null subject.");
     }
 
     @Test
     default void testCanInstantiateWithNullMessage() {
-        Assertions.assertNotNull(getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), null, "message"),
+        Assertions.assertNotNull(getVerifiableInstance(getFailedValidationExecutor(), null, "message"),
                                  "Should be able to instantiate an AbstractVerifiableObject with a null message.");
     }
 
     @Test
     default void testAbstractVerifiableObjectConstructorThrowsExceptionForNullValidationExecutor() {
         NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
-                                                                 () -> getAbstractVerifiableObjectInstance(null, getSubject(), "message"));
+                                                                 () -> getVerifiableInstance(null, getSubject(), "message"));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("failedValidationExecutor"),
                                 exception.getMessage(),
                                 "Should throw an exception for a null validation executor.");
@@ -110,22 +123,22 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
 
     @Test
     default void testGetFailedValidationExecutorReturnsGivenInstance() {
-        FailedValidationExecutor<X> failedValidationExecutor = getAbstractVerifiablePrimitiveFailedValidationExecutor();
-        Assertions.assertTrue(failedValidationExecutor == getAbstractVerifiableObjectInstance(failedValidationExecutor, getSubject(), "message").getFailedValidationExecutor(),
+        FailedValidationExecutor<X> failedValidationExecutor = getFailedValidationExecutor();
+        Assertions.assertTrue(failedValidationExecutor == getVerifiableInstance(failedValidationExecutor, getSubject(), "message").getFailedValidationExecutor(),
                               "An AbstractVerifiableObject should return the given validation executor instance.");
     }
 
     @Test
     default void testGetFailedValidationExecutorReturnsGivenSubject() {
         E subject = getSubject();
-        Assertions.assertTrue(subject == getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message").getSubject(),
+        Assertions.assertTrue(subject == getVerifiableInstance(getFailedValidationExecutor(), subject, "message").getSubject(),
                               "An AbstractVerifiableObject should return the given subject.");
     }
 
     @Test
     default void testGetFailedValidationExecutorReturnsGivenMessage() {
         String message = "message";
-        Assertions.assertTrue(message == getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), getSubject(), message).getMessage(),
+        Assertions.assertTrue(message == getVerifiableInstance(getFailedValidationExecutor(), getSubject(), message).getMessage(),
                               "An AbstractVerifiableObject should return the given subject.");
     }
 
@@ -135,7 +148,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
 
     @Test
     default void testIsNullReturnsSubjectForNullSubject() throws X {
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), null, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), null, "message");
         Assertions.assertTrue(null == verifiable.isNull(),
                               "An AbstractVerifiableObject should return null for isNull with null subject.");
     }
@@ -143,7 +156,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsNullThrowsForNonNullSubject() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNull);
     }
@@ -151,7 +164,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsNotNullReturnsSubjectForNonNullSubject() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertTrue(subject == verifiable.isNotNull(),
                               "An AbstractVerifiableObject should return subject for isNotNull with non-null subject.");
 
@@ -159,7 +172,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
 
     @Test
     default void testIsNotNullThrowsForNullSubject() throws X {
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), null, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), null, "message");
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNotNull);
     }
@@ -167,7 +180,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsEqualReturnsSubjectForSameInstance() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertTrue(subject == verifiable.isEqualTo(subject),
                               "An AbstractVerifiableObject should return the given subject for isEqual with same instance.");
     }
@@ -175,7 +188,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsEqualReturnsSubjectForEqual() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertTrue(subject == verifiable.isEqualTo(getEqualSubject()),
                               "An AbstractVerifiableObject should return the given subject for isEqual with equal object.");
     }
@@ -183,14 +196,14 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsEqualThrowsForNonEqual() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertThrows(getThrowableClass(),
                                 () -> verifiable.isEqualTo(getNonEqualSubject()));
     }
 
     @Test
     default void testIsEqualThrowsForNullSubject() throws X {
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), null, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), null, "message");
         Assertions.assertThrows(getThrowableClass(),
                                 () -> verifiable.isEqualTo(getEqualSubject()));
     }
@@ -198,7 +211,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsNotEqualThrowsForSameInstance() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertThrows(getThrowableClass(),
                                 () -> verifiable.isNotEqualTo(subject));
     }
@@ -206,7 +219,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsNotEqualThrowsForEqual() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertThrows(getThrowableClass(),
                                 () -> verifiable.isNotEqualTo(getEqualSubject()));
     }
@@ -214,14 +227,14 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testIsNotEqualReturnsSubjectForNonEqual() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertTrue(subject == verifiable.isNotEqualTo(getNonEqualSubject()),
                               "An AbstractVerifiableObject should return the given subject for isNotEqual with not equal object.");
     }
 
     @Test
     default void testIsNotEqualThrowsForNullSubject() throws X {
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), null, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), null, "message");
         Assertions.assertThrows(getThrowableClass(),
                                 () -> verifiable.isNotEqualTo(getEqualSubject()));
     }
@@ -230,7 +243,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testSatisfiesReturnsSubjectForSatisfiedPredicate() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertTrue(subject == verifiable.satisfies(t -> null != t),
                               "An AbstractVerfiableObject should return the given subject for satisfied predicate.");
     }
@@ -238,7 +251,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testSatisfiesThrowsForNonSatisfiedPredicate() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertThrows(getThrowableClass(),
                                 () -> verifiable.satisfies(t -> null == t));
     }
@@ -246,7 +259,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testSatisfiesThrowsForNullPredicate() throws X {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
                                                                  () -> verifiable.satisfies(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
@@ -261,8 +274,9 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testAbstractVerifiableObjectHasExpectedToString() {
         E subject = getSubject();
-        AbstractVerifiableObject<E, X> verifiable = getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
-        Assertions.assertEquals(verifiable.getClass().getSimpleName() + ": <" + ValidityUtils.describe(subject) + ">",
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
+        Assertions.assertEquals(verifiable.getClass()
+                                          .getSimpleName() + ": <" + ValidityUtils.describe(subject) + ">",
                                 verifiable.toString(),
                                 "An AbstractVerifiableObject should return the expected String for it's toString method.");
     }

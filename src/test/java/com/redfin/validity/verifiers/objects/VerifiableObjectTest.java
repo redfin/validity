@@ -30,21 +30,6 @@ final class VerifiableObjectTest implements AbstractVerifiableObjectContract<Ill
     private static final Object NOT_EQUALS = new Object();
 
     @Override
-    public VerifiableObject<Object, IllegalArgumentException> getNotValueTypeInstance() {
-        return new VerifiableObject<>(getAbstractVerifiablePrimitiveFailedValidationExecutor(), EQUALS, "message");
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Object getSubject() {
         return EQUALS;
     }
@@ -60,7 +45,17 @@ final class VerifiableObjectTest implements AbstractVerifiableObjectContract<Ill
     }
 
     @Override
-    public VerifiableObject<Object, IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Object subject, String message) {
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
+    }
+
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public VerifiableObject<Object, IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Object subject, String message) {
         return new VerifiableObject<>(failedValidationExecutor, subject, message);
     }
 }

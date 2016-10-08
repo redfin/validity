@@ -30,11 +30,11 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
 
     @Override
     public VerifiableDoubleArray<IllegalArgumentException> getNotValueTypeInstance() {
-        return getInstance(getSubject());
+        return getVerifiableInstance(getSubject());
     }
 
     @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
         return FailedValidationExecutors.getDefaultFailureExecutor();
     }
 
@@ -59,12 +59,8 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     }
 
     @Override
-    public VerifiableDoubleArray<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, double[] subject, String message) {
+    public VerifiableDoubleArray<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, double[] subject, String message) {
         return new VerifiableDoubleArray<>(failedValidationExecutor, subject, message);
-    }
-
-    private VerifiableDoubleArray<IllegalArgumentException> getInstance(double[] subject) {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,7 +71,7 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testIsEmptyReturnsSubjectForEmptySubject() {
         double[] subject = {};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.isEmpty(),
                               "VerifiableArray should return the given subject for isEmpty with empty subject.");
     }
@@ -83,14 +79,14 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testIsEmptyThrowsForNonEmptySubject() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isEmpty);
     }
 
     @Test
     void testIsEmptyThrowsForNullSubject() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isEmpty);
     }
@@ -98,7 +94,7 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testIsNotEmptyReturnsSubjectForNonEmptySubject() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.isNotEmpty(),
                               "VerifiableArray should return the given subject for isNotEmpty with non-empty subject.");
     }
@@ -106,14 +102,14 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testIsNotEmptyThrowsForEmptySubject() {
         double[] subject = {};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNotEmpty);
     }
 
     @Test
     void testIsNotEmptyThrowsForNullSubject() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNotEmpty);
     }
@@ -121,21 +117,21 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testHasLengthOfReturnsSubjectForSubjectWithMatchingLength() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOf(1),
                               "VerifiableArray should return the given subject for hasLengthOf with matching subject.");
     }
 
     @Test
     void testHasLengthOfThrowsForSubjectWithNonMatchingLength() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(new double[]{0, 1});
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(new double[]{0, 1});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOf(1));
     }
 
     @Test
     void testHasLengthOfThrowsForNullSubject() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOf(1));
     }
@@ -143,7 +139,7 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testHasLengthOfAtLeastReturnsSubjectForSubjectWithMatchingLength() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtLeast(1),
                               "VerifiableArray should return the given subject for hasLengthOfAtLeast with matching length subject.");
     }
@@ -151,21 +147,21 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testHasLengthOfAtLeastReturnsSubjectForSubjectWithGreaterLength() {
         double[] subject = {0, 1};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtLeast(1),
                               "VerifiableArray should return the given subject for hasLengthOfAtLeast with greater length subject.");
     }
 
     @Test
     void testHasLengthOfAtLeastThrowsForSubjectWithNonMatchingLength() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(new double[]{});
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(new double[]{});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtLeast(1));
     }
 
     @Test
     void testHasLengthOfAtLeastThrowsForNullSubject() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtLeast(1));
     }
@@ -173,7 +169,7 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testHasLengthOfAtMostReturnsSubjectForSubjectWithMatchingLength() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtMost(1),
                               "VerifiableArray should return the given subject for hasLengthOfAtMost with matching length subject.");
     }
@@ -181,21 +177,21 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testHasLengthOfAtMostReturnsSubjectForSubjectWithGreaterLength() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtMost(2),
                               "VerifiableArray should return the given subject for hasLengthOfAtMost with lesser length subject.");
     }
 
     @Test
     void testHasLengthOfAtMostThrowsForSubjectWithNonMatchingLength() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(new double[]{0});
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(new double[]{0});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtMost(0));
     }
 
     @Test
     void testHasLengthOfAtMostThrowsForNullSubject() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtMost(1));
     }
@@ -203,21 +199,21 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testContainsReturnsSubjectForSubjectContaining() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.contains(0),
                               "VerifiableChar should return subject for contains with matching element.");
     }
 
     @Test
     void testContainsThrowsForSubjectNotContaining() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(new double[]{0});
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(new double[]{0});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.contains(1));
     }
 
     @Test
     void testContainsThrowsForNullSubject() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(new double[]{0});
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(new double[]{0});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.contains(1));
     }
@@ -225,21 +221,21 @@ final class VerifiableDoubleArrayTest implements AbstractVerifiableObjectContrac
     @Test
     void testDoesNotContainReturnsSubjectForSubjectNotContaining() {
         double[] subject = {0};
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.doesNotContain(1),
                               "VerifiableChar should return subject for doesNotContain with non-matching element.");
     }
 
     @Test
     void testDoesNotContainThrowsForSubjectContaining() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(new double[]{0});
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(new double[]{0});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.doesNotContain(0));
     }
 
     @Test
     void testDoesNotContainThrowsForNullSubject() {
-        VerifiableDoubleArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableDoubleArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.doesNotContain(0));
     }

@@ -74,14 +74,19 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * Tests for equality using the {@link Comparable#compareTo(Object)} method. If the
-     * subject is not null and the compareTo method returns 0, then the values are considered
-     * to be equal.
+     * subject is not null, if other is not null, and the compareTo method returns 0,
+     * then the values are considered to be equal.
      *
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is comparable to other.
-     * @throws X if the subject is null or not comparable to other.
+     * @throws X                    if the subject is null or not comparable to other.
+     * @throws NullPointerException if other is null.
      */
     public T isComparableTo(T other) throws X {
+        if (null == other) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("other"));
+        }
         T subject = getSubject();
         if (null == subject || subject.compareTo(other) != 0) {
             fail("t -> t == " + ValidityUtils.describe(other));
@@ -91,14 +96,19 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * Tests for equality using the {@link Comparable#compareTo(Object)} method. If the
-     * subject is not null and the compareTo method returns 0, then the values are considered
-     * to be equal.
+     * subject is not null, if other is not null, and the compareTo method returns 0,
+     * then the values are considered to be equal.
      *
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is not comparable to other.
-     * @throws X if the subject is null or is comparable to other.
+     * @throws X                    if the subject is null or is comparable to other.
+     * @throws NullPointerException if other is null.
      */
     public T isNotComparableTo(T other) throws X {
+        if (null == other) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("other"));
+        }
         T subject = getSubject();
         if (null == subject || subject.compareTo(other) == 0) {
             fail("t -> t.compareTo(" + ValidityUtils.describe(other) + ") != 0");
@@ -108,10 +118,15 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is greater than other.
-     * @throws X if the subject is null or not greater than other.
+     * @throws X                    if the subject is null or not greater than other.
+     * @throws NullPointerException if other is null.
      */
     public T isGreaterThan(T other) throws X {
+        if (null == other) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("other"));
+        }
         T subject = getSubject();
         if (null == subject || subject.compareTo(other) <= 0) {
             fail("t -> t > " + ValidityUtils.describe(other));
@@ -121,10 +136,15 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is greater than or equal to other.
-     * @throws X if the subject is null or is not greater than or equal to other.
+     * @throws X                    if the subject is null or is not greater than or equal to other.
+     * @throws NullPointerException if other is null.
      */
     public T isGreaterThanOrEqualTo(T other) throws X {
+        if (null == other) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("other"));
+        }
         T subject = getSubject();
         if (null == subject || subject.compareTo(other) < 0) {
             fail("t -> t >= " + ValidityUtils.describe(other));
@@ -134,8 +154,10 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is greater than or equal to other.
-     * @throws X if the subject is null or is not greater than or equal to other.
+     * @throws X                    if the subject is null or is not greater than or equal to other.
+     * @throws NullPointerException if other is null.
      */
     public T isAtLeast(T other) throws X {
         return isGreaterThanOrEqualTo(other);
@@ -143,10 +165,15 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is less than other.
-     * @throws X if the subject is null or is not less than other.
+     * @throws X                    if the subject is null or is not less than other.
+     * @throws NullPointerException if other is null.
      */
     public T isLessThan(T other) throws X {
+        if (null == other) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("other"));
+        }
         T subject = getSubject();
         if (null == subject || subject.compareTo(other) >= 0) {
             fail("t -> t < " + ValidityUtils.describe(other));
@@ -156,10 +183,15 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is less than or equal to other.
-     * @throws X if the subject is null or is not less than or equal to to other.
+     * @throws X                    if the subject is null or is not less than or equal to to other.
+     * @throws NullPointerException if other is null.
      */
     public T isLessThanOrEqualTo(T other) throws X {
+        if (null == other) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("other"));
+        }
         T subject = getSubject();
         if (null == subject || subject.compareTo(other) > 0) {
             fail("t -> t <= " + ValidityUtils.describe(other));
@@ -169,8 +201,10 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
 
     /**
      * @param other the object to compare the subject against.
+     *              May not be null.
      * @return the subject if it is less than or equal to other.
-     * @throws X if the subject is null or is not less than or equal to other.
+     * @throws X                    if the subject is null or is not less than or equal to other.
+     * @throws NullPointerException if other is null.
      */
     public T isAtMost(T other) throws X {
         return isLessThanOrEqualTo(other);

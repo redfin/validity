@@ -27,31 +27,6 @@ final class VerifiableShortTest implements AbstractVerifiableComparableNumberCon
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableShort<IllegalArgumentException> getNotValueTypeInstance() {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), (short) 0, "message");
-    }
-
-    @Override
-    public VerifiableShort<IllegalArgumentException> getAbstractVerifiableComparableNumber() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public VerifiableShort<IllegalArgumentException> getAbstractVerifiableComparable() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Short getSubject() {
         return new Short((short) 0);
     }
@@ -67,7 +42,57 @@ final class VerifiableShortTest implements AbstractVerifiableComparableNumberCon
     }
 
     @Override
-    public VerifiableShort<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Short subject, String message) {
+    public Short getComparableSubject() {
+        return new Short((short) 0);
+    }
+
+    @Override
+    public Short getNonComparableSubject() {
+        return new Short((short) 1);
+    }
+
+    @Override
+    public Short getLessThanSubject() {
+        return new Short((short) -1);
+    }
+
+    @Override
+    public Short getGreaterThanSubject() {
+        return new Short((short) 1);
+    }
+
+    @Override
+    public Short getZeroSubject() {
+        return new Short((short) 0);
+    }
+
+    @Override
+    public Short getNonZeroSubject() {
+        return new Short((short) 1);
+    }
+
+    @Override
+    public Short getPositiveSubject() {
+        return new Short((short) 1);
+    }
+
+    @Override
+    public Short getNegativeSubject() {
+        return new Short((short) -1);
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
+    }
+
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public VerifiableShort<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Short subject, String message) {
         return new VerifiableShort<>(failedValidationExecutor, subject, message);
     }
 }

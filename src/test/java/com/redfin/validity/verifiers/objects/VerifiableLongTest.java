@@ -27,31 +27,6 @@ final class VerifiableLongTest implements AbstractVerifiableComparableNumberCont
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableLong<IllegalArgumentException> getNotValueTypeInstance() {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), 0L, "message");
-    }
-
-    @Override
-    public VerifiableLong<IllegalArgumentException> getAbstractVerifiableComparableNumber() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public VerifiableLong<IllegalArgumentException> getAbstractVerifiableComparable() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Long getSubject() {
         return new Long(0);
     }
@@ -67,7 +42,57 @@ final class VerifiableLongTest implements AbstractVerifiableComparableNumberCont
     }
 
     @Override
-    public VerifiableLong<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Long subject, String message) {
+    public Long getComparableSubject() {
+        return new Long(0);
+    }
+
+    @Override
+    public Long getNonComparableSubject() {
+        return new Long(1);
+    }
+
+    @Override
+    public Long getLessThanSubject() {
+        return new Long(-1);
+    }
+
+    @Override
+    public Long getGreaterThanSubject() {
+        return new Long(1);
+    }
+
+    @Override
+    public Long getZeroSubject() {
+        return new Long(0);
+    }
+
+    @Override
+    public Long getNonZeroSubject() {
+        return new Long(1);
+    }
+
+    @Override
+    public Long getPositiveSubject() {
+        return new Long(1);
+    }
+
+    @Override
+    public Long getNegativeSubject() {
+        return new Long(-1);
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
+    }
+
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public VerifiableLong<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Long subject, String message) {
         return new VerifiableLong<>(failedValidationExecutor, subject, message);
     }
 }

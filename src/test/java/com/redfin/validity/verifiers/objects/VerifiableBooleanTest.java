@@ -29,21 +29,6 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableBoolean<IllegalArgumentException> getNotValueTypeInstance() {
-        return getVerifiableBoolean(true);
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Boolean getSubject() {
         return new Boolean(true);
     }
@@ -59,12 +44,18 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
     }
 
     @Override
-    public VerifiableBoolean<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Boolean subject, String message) {
+    public VerifiableBoolean<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Boolean subject, String message) {
         return new VerifiableBoolean<>(failedValidationExecutor, subject, message);
     }
 
-    private VerifiableBoolean<IllegalArgumentException> getVerifiableBoolean(Boolean subject) {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,7 +65,7 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
     @Test
     void testIsTrueReturnsSubjectForTrue() {
         Boolean subject = new Boolean(true);
-        Assertions.assertTrue(subject == getVerifiableBoolean(subject).isTrue(),
+        Assertions.assertTrue(subject == getVerifiableInstance(subject).isTrue(),
                               "VerifiableBoolean should return subject for isTrue with true subject.");
     }
 
@@ -82,19 +73,19 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
     void testIsTrueThrowsForFalse() {
         Boolean subject = new Boolean(false);
         Assertions.expectThrows(IllegalArgumentException.class,
-                                () -> getVerifiableBoolean(subject).isTrue());
+                                () -> getVerifiableInstance(subject).isTrue());
     }
 
     @Test
     void testIsTrueThrowsForNull() {
         Assertions.expectThrows(IllegalArgumentException.class,
-                                () -> getVerifiableBoolean(null).isTrue());
+                                () -> getVerifiableInstance(null).isTrue());
     }
 
     @Test
     void testIsFalseReturnsSubjectForFalse() {
         Boolean subject = new Boolean(false);
-        Assertions.assertTrue(subject == getVerifiableBoolean(subject).isFalse(),
+        Assertions.assertTrue(subject == getVerifiableInstance(subject).isFalse(),
                               "VerifiableBoolean should return subject for isFalse with false subject.");
     }
 
@@ -102,12 +93,12 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
     void testIsFalseThrowsForTrue() {
         Boolean subject = new Boolean(true);
         Assertions.expectThrows(IllegalArgumentException.class,
-                                () -> getVerifiableBoolean(subject).isFalse());
+                                () -> getVerifiableInstance(subject).isFalse());
     }
 
     @Test
     void testIsFalseThrowsForNull() {
         Assertions.expectThrows(IllegalArgumentException.class,
-                                () -> getVerifiableBoolean(null).isFalse());
+                                () -> getVerifiableInstance(null).isFalse());
     }
 }

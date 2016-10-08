@@ -30,11 +30,11 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
 
     @Override
     public VerifiableBooleanArray<IllegalArgumentException> getNotValueTypeInstance() {
-        return getInstance(getSubject());
+        return getVerifiableInstance(getSubject());
     }
 
     @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
         return FailedValidationExecutors.getDefaultFailureExecutor();
     }
 
@@ -59,12 +59,8 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     }
 
     @Override
-    public VerifiableBooleanArray<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, boolean[] subject, String message) {
+    public VerifiableBooleanArray<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, boolean[] subject, String message) {
         return new VerifiableBooleanArray<>(failedValidationExecutor, subject, message);
-    }
-
-    private VerifiableBooleanArray<IllegalArgumentException> getInstance(boolean[] subject) {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,7 +71,7 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testIsEmptyReturnsSubjectForEmptySubject() {
         boolean[] subject = {};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.isEmpty(),
                               "VerifiableArray should return the given subject for isEmpty with empty subject.");
     }
@@ -83,14 +79,14 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testIsEmptyThrowsForNonEmptySubject() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isEmpty);
     }
 
     @Test
     void testIsEmptyThrowsForNullSubject() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isEmpty);
     }
@@ -98,7 +94,7 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testIsNotEmptyReturnsSubjectForNonEmptySubject() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.isNotEmpty(),
                               "VerifiableArray should return the given subject for isNotEmpty with non-empty subject.");
     }
@@ -106,14 +102,14 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testIsNotEmptyThrowsForEmptySubject() {
         boolean[] subject = {};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNotEmpty);
     }
 
     @Test
     void testIsNotEmptyThrowsForNullSubject() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNotEmpty);
     }
@@ -121,21 +117,21 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testHasLengthOfReturnsSubjectForSubjectWithMatchingLength() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOf(1),
                               "VerifiableArray should return the given subject for hasLengthOf with matching subject.");
     }
 
     @Test
     void testHasLengthOfThrowsForSubjectWithNonMatchingLength() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(new boolean[]{true, false});
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(new boolean[]{true, false});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOf(1));
     }
 
     @Test
     void testHasLengthOfThrowsForNullSubject() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOf(1));
     }
@@ -143,7 +139,7 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testHasLengthOfAtLeastReturnsSubjectForSubjectWithMatchingLength() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtLeast(1),
                               "VerifiableArray should return the given subject for hasLengthOfAtLeast with matching length subject.");
     }
@@ -151,21 +147,21 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testHasLengthOfAtLeastReturnsSubjectForSubjectWithGreaterLength() {
         boolean[] subject = {true, false};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtLeast(1),
                               "VerifiableArray should return the given subject for hasLengthOfAtLeast with greater length subject.");
     }
 
     @Test
     void testHasLengthOfAtLeastThrowsForSubjectWithNonMatchingLength() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(new boolean[]{});
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(new boolean[]{});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtLeast(1));
     }
 
     @Test
     void testHasLengthOfAtLeastThrowsForNullSubject() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtLeast(1));
     }
@@ -173,7 +169,7 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testHasLengthOfAtMostReturnsSubjectForSubjectWithMatchingLength() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtMost(1),
                               "VerifiableArray should return the given subject for hasLengthOfAtMost with matching length subject.");
     }
@@ -181,21 +177,21 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testHasLengthOfAtMostReturnsSubjectForSubjectWithGreaterLength() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasLengthOfAtMost(2),
                               "VerifiableArray should return the given subject for hasLengthOfAtMost with lesser length subject.");
     }
 
     @Test
     void testHasLengthOfAtMostThrowsForSubjectWithNonMatchingLength() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(new boolean[]{true});
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(new boolean[]{true});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtMost(0));
     }
 
     @Test
     void testHasLengthOfAtMostThrowsForNullSubject() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtMost(1));
     }
@@ -203,21 +199,21 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testContainsReturnsSubjectForSubjectContaining() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.contains(true),
                               "VerifiableBoolean should return subject for contains with matching element.");
     }
 
     @Test
     void testContainsThrowsForSubjectNotContaining() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(new boolean[]{true});
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(new boolean[]{true});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.contains(false));
     }
 
     @Test
     void testContainsThrowsForNullSubject() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(new boolean[]{true});
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(new boolean[]{true});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.contains(false));
     }
@@ -225,21 +221,21 @@ final class VerifiableBooleanArrayTest implements AbstractVerifiableObjectContra
     @Test
     void testDoesNotContainReturnsSubjectForSubjectNotContaining() {
         boolean[] subject = {true};
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.doesNotContain(false),
                               "VerifiableBoolean should return subject for doesNotContain with non-matching element.");
     }
 
     @Test
     void testDoesNotContainThrowsForSubjectContaining() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(new boolean[]{true});
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(new boolean[]{true});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.doesNotContain(true));
     }
 
     @Test
     void testDoesNotContainThrowsForNullSubject() {
-        VerifiableBooleanArray<IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableBooleanArray<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.doesNotContain(true));
     }

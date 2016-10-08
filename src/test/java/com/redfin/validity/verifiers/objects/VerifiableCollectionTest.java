@@ -32,11 +32,11 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
 
     @Override
     public VerifiableCollection<String, List<String>, IllegalArgumentException> getNotValueTypeInstance() {
-        return getInstance(new ArrayList<>());
+        return getVerifiableInstance(new ArrayList<>());
     }
 
     @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
         return FailedValidationExecutors.getDefaultFailureExecutor();
     }
 
@@ -68,12 +68,8 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     }
 
     @Override
-    public VerifiableCollection<String, List<String>, IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, List<String> subject, String message) {
+    public VerifiableCollection<String, List<String>, IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, List<String> subject, String message) {
         return new VerifiableCollection<>(failedValidationExecutor, subject, message);
-    }
-
-    private VerifiableCollection<String, List<String>, IllegalArgumentException> getInstance(List<String> subject) {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,7 +79,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     @Test
     void testIsEmptyReturnsSubjectForEmptySubject() {
         List<String> subject = new ArrayList<>();
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.isEmpty(),
                               "VerifiableCollection should return it's subject for isEmpty when subject is empty.");
     }
@@ -92,14 +88,14 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testIsEmptyThrowsForNonEmptySubject() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isEmpty);
     }
 
     @Test
     void testIsEmptyThrowsForNullSubject() {
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isEmpty);
     }
@@ -107,7 +103,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     @Test
     void testIsNotEmptyReturnsThrowsForEmptySubject() {
         List<String> subject = new ArrayList<>();
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNotEmpty);
     }
@@ -116,14 +112,14 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testIsNotEmptyReturnsSubjectForNonEmptySubject() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.isNotEmpty(),
                               "VerifiableCollection should return it's subject for isNotEmpty when subject is not empty.");
     }
 
     @Test
     void testIsNotEmptyThrowsForNullSubject() {
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isNotEmpty);
     }
@@ -132,7 +128,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testHasSizeOfReturnsSubjectWithMatchingSize() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasSizeOf(1),
                               "VerifiableCollection should return it's subject for hasSizeOf when subject matches the given size.");
     }
@@ -141,14 +137,14 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testHasSizeOfThrowsForSubjectWithNonMatchingSize() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasSizeOf(2));
     }
 
     @Test
     void testHasSizeOfThrowsForNullSubject() {
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasSizeOf(1));
     }
@@ -157,7 +153,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testHasSizeOfAtLeastReturnsSubjectWithMatchingSize() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasSizeOfAtLeast(1),
                               "VerifiableCollection should return it's subject for hasSizeOfAtLeast when subject matches the given size.");
     }
@@ -167,7 +163,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
         List<String> subject = new ArrayList<>();
         subject.add("hello");
         subject.add("world");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasSizeOfAtLeast(1),
                               "VerifiableCollection should return it's subject for hasSizeOfAtLeast when subject matches the given size.");
     }
@@ -176,14 +172,14 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testHasSizeOfAtLeastThrowsForSubjectWithNonMatchingSize() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasSizeOfAtLeast(2));
     }
 
     @Test
     void testHasSizeOfAtLeastThrowsForNullSubject() {
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasSizeOfAtLeast(1));
     }
@@ -192,7 +188,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testHasSizeOfAtMostReturnsSubjectWithMatchingSize() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasSizeOfAtMost(1),
                               "VerifiableCollection should return it's subject for hasSizeOfAtMost when subject matches the given size.");
     }
@@ -202,7 +198,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
         List<String> subject = new ArrayList<>();
         subject.add("hello");
         subject.add("world");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.hasSizeOfAtMost(2),
                               "VerifiableCollection should return it's subject for hasSizeOfAtMost when subject matches the given size.");
     }
@@ -211,14 +207,14 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testHasSizeOfAtMostThrowsForSubjectWithNonMatchingSize() {
         List<String> subject = new ArrayList<>();
         subject.add("hello");
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasSizeOfAtMost(0));
     }
 
     @Test
     void testHasSizeOfAtMostThrowsForNullSubject() {
-        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableCollection<?, ?, IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasSizeOfAtMost(1));
     }
@@ -228,7 +224,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
         List<String> subject = new ArrayList<>();
         String element = "hello";
         subject.add(element);
-        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.contains(element),
                               "VerifiableCollection should return subject for contains with containing subject.");
     }
@@ -237,7 +233,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     void testContainsThrowsExceptionForNonContainingSubject() {
         List<String> subject = new ArrayList<>();
         String element = "hello";
-        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.contains(element));
     }
@@ -245,7 +241,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     @Test
     void testContainsThrowsExceptionForNullSubject() {
         String element = "hello";
-        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.contains(element));
     }
@@ -255,7 +251,7 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
         List<String> subject = new ArrayList<>();
         String element = "hello";
         subject.add(element);
-        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.doesNotContain(element));
 
@@ -264,14 +260,14 @@ final class VerifiableCollectionTest implements AbstractVerifiableObjectContract
     @Test
     void testDoesNotContainReturnsSubjectForNonContainingSubject() {
         List<String> subject = new ArrayList<>();
-        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getInstance(subject);
+        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertTrue(subject == verifiable.doesNotContain("hello"),
                               "VerifiableCollection should return subject for doesNotContain with non-containing subject.");
     }
 
     @Test
     void testDoesNotContainThrowsExceptionForNullSubject() {
-        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getInstance(null);
+        VerifiableCollection<String, List<String>, IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.contains("hello"));
     }

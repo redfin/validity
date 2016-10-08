@@ -30,21 +30,6 @@ final class VerifiableClassTest implements AbstractVerifiableObjectContract<Ille
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableClass<IllegalArgumentException, IllegalArgumentException> getNotValueTypeInstance() {
-        return getInstance(IllegalArgumentException.class);
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Class<IllegalArgumentException> getSubject() {
         return IllegalArgumentException.class;
     }
@@ -60,12 +45,22 @@ final class VerifiableClassTest implements AbstractVerifiableObjectContract<Ille
     }
 
     @Override
-    public VerifiableClass<IllegalArgumentException, IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Class<IllegalArgumentException> subject, String message) {
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
+    }
+
+    @Override
+    public VerifiableClass<IllegalArgumentException, IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Class<IllegalArgumentException> subject, String message) {
         return new VerifiableClass<>(failedValidationExecutor, subject, message);
     }
 
     private <T> VerifiableClass<T, IllegalArgumentException> getInstance(Class<T> clazz) {
-        return new VerifiableClass<>(getAbstractVerifiablePrimitiveFailedValidationExecutor(), clazz, "message");
+        return new VerifiableClass<>(getFailedValidationExecutor(), clazz, "message");
     }
 
     @Tag("foo")

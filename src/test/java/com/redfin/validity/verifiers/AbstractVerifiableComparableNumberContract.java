@@ -16,6 +16,9 @@
 
 package com.redfin.validity.verifiers;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 /**
  * A test contract that validates that the class under test is
  * maintaining the contract of its {@link AbstractVerifiableComparable} super class.
@@ -31,13 +34,134 @@ public interface AbstractVerifiableComparableNumberContract<X extends Throwable,
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * @return an instance of {@link AbstractVerifiableComparableNumber}.
+     * @return a zero subject.
      */
-    T getAbstractVerifiableComparableNumber();
+    E getZeroSubject();
+
+    /**
+     * @return a non-zero subject.
+     */
+    E getNonZeroSubject();
+
+    /**
+     * @return a strictly negative subject.
+     */
+    E getPositiveSubject();
+
+    /**
+     * @return a strictly negative subject.
+     */
+    E getNegativeSubject();
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test cases
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    // todo
+    @Test
+    default void testIsZeroReturnsSubjectForZeroSubject() throws X {
+        E subject = getZeroSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isZero(),
+                              "Should return the given subject for isZero with a zero subject.");
+    }
+
+    @Test
+    default void testIsZeroThrowsForNonZeroSubject() {
+        E subject = getNonZeroSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isZero);
+    }
+
+    @Test
+    default void testIsZeroThrowsForNullSubject() {
+        T verifiable = getVerifiableInstance(null);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isZero);
+    }
+
+    @Test
+    default void testIsNotZeroReturnsSubjectForNonZeroSubject() throws X {
+        E subject = getNonZeroSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isNotZero(),
+                              "Should return the given subject for isNotZero with a non-zero subject.");
+    }
+
+    @Test
+    default void testIsNotZeroThrowsForZeroSubject() {
+        E subject = getZeroSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isNotZero);
+    }
+
+    @Test
+    default void testIsNotZeroThrowsForNullSubject() {
+        T verifiable = getVerifiableInstance(null);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isNotZero);
+    }
+
+    @Test
+    default void testIsStrictlyPositiveReturnsSubjectForPositiveSubject() throws X {
+        E subject = getPositiveSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isStrictlyPositive(),
+                              "Should return the given subject for isStrictlyPositive with a positive subject.");
+    }
+
+    @Test
+    default void testIsStrictlyPositiveThrowsForZeroSubject() {
+        E subject = getZeroSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isStrictlyPositive);
+    }
+
+    @Test
+    default void testIsStrictlyPositiveThrowsForNegativeSubject() {
+        E subject = getNegativeSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isStrictlyPositive);
+    }
+
+    @Test
+    default void testIsStrictlyPositiveThrowsForNullSubject() {
+        T verifiable = getVerifiableInstance(null);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isStrictlyPositive);
+    }
+
+    @Test
+    default void testIsStrictlyNegativeReturnsSubjectForNegativeSubject() throws X {
+        E subject = getNegativeSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isStrictlyNegative(),
+                              "Should return the given subject for isStrictlyNegative with a negative subject.");
+    }
+
+    @Test
+    default void testIsStrictlyNegativeThrowsForZeroSubject() {
+        E subject = getZeroSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isStrictlyNegative);
+    }
+
+    @Test
+    default void testIsStrictlyNegativeThrowsForPositiveSubject() {
+        E subject = getPositiveSubject();
+        T verifiable = getVerifiableInstance(subject);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isStrictlyNegative);
+    }
+
+    @Test
+    default void testIsStrictlyNegativeThrowsForNullSubject() {
+        T verifiable = getVerifiableInstance(null);
+        Assertions.assertThrows(getThrowableClass(),
+                                verifiable::isStrictlyNegative);
+    }
 }

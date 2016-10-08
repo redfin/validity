@@ -27,31 +27,6 @@ final class VerifiableByteTest implements AbstractVerifiableComparableNumberCont
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableByte<IllegalArgumentException> getNotValueTypeInstance() {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), (byte) 0, "message");
-    }
-
-    @Override
-    public VerifiableByte<IllegalArgumentException> getAbstractVerifiableComparableNumber() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public VerifiableByte<IllegalArgumentException> getAbstractVerifiableComparable() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Byte getSubject() {
         return new Byte((byte) 0);
     }
@@ -67,7 +42,57 @@ final class VerifiableByteTest implements AbstractVerifiableComparableNumberCont
     }
 
     @Override
-    public VerifiableByte<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Byte subject, String message) {
+    public Byte getComparableSubject() {
+        return new Byte((byte) 0);
+    }
+
+    @Override
+    public Byte getNonComparableSubject() {
+        return new Byte((byte) 1);
+    }
+
+    @Override
+    public Byte getLessThanSubject() {
+        return new Byte((byte) -1);
+    }
+
+    @Override
+    public Byte getGreaterThanSubject() {
+        return new Byte((byte) 1);
+    }
+
+    @Override
+    public Byte getZeroSubject() {
+        return new Byte((byte) 0);
+    }
+
+    @Override
+    public Byte getNonZeroSubject() {
+        return new Byte((byte) 1);
+    }
+
+    @Override
+    public Byte getPositiveSubject() {
+        return new Byte((byte) 1);
+    }
+
+    @Override
+    public Byte getNegativeSubject() {
+        return new Byte((byte) -1);
+    }
+
+    @Override
+    public VerifiableByte<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Byte subject, String message) {
         return new VerifiableByte<>(failedValidationExecutor, subject, message);
+    }
+
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
     }
 }

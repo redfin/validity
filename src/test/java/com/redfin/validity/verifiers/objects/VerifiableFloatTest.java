@@ -27,31 +27,6 @@ final class VerifiableFloatTest implements AbstractVerifiableComparableNumberCon
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableFloat<IllegalArgumentException> getNotValueTypeInstance() {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), 0F, "message");
-    }
-
-    @Override
-    public VerifiableFloat<IllegalArgumentException> getAbstractVerifiableComparableNumber() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public VerifiableFloat<IllegalArgumentException> getAbstractVerifiableComparable() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Float getSubject() {
         return new Float(0);
     }
@@ -67,7 +42,57 @@ final class VerifiableFloatTest implements AbstractVerifiableComparableNumberCon
     }
 
     @Override
-    public VerifiableFloat<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Float subject, String message) {
+    public Float getComparableSubject() {
+        return new Float(0);
+    }
+
+    @Override
+    public Float getNonComparableSubject() {
+        return new Float(1);
+    }
+
+    @Override
+    public Float getLessThanSubject() {
+        return new Float(-1);
+    }
+
+    @Override
+    public Float getGreaterThanSubject() {
+        return new Float(1);
+    }
+
+    @Override
+    public Float getZeroSubject() {
+        return new Float(0);
+    }
+
+    @Override
+    public Float getNonZeroSubject() {
+        return new Float(1);
+    }
+
+    @Override
+    public Float getPositiveSubject() {
+        return new Float(1);
+    }
+
+    @Override
+    public Float getNegativeSubject() {
+        return new Float(-1);
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
+    }
+
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public VerifiableFloat<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Float subject, String message) {
         return new VerifiableFloat<>(failedValidationExecutor, subject, message);
     }
 }

@@ -27,31 +27,6 @@ final class VerifiableDoubleTest implements AbstractVerifiableComparableNumberCo
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public VerifiableDouble<IllegalArgumentException> getNotValueTypeInstance() {
-        return getAbstractVerifiableObjectInstance(getAbstractVerifiablePrimitiveFailedValidationExecutor(), 0.0, "message");
-    }
-
-    @Override
-    public VerifiableDouble<IllegalArgumentException> getAbstractVerifiableComparableNumber() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public VerifiableDouble<IllegalArgumentException> getAbstractVerifiableComparable() {
-        return getNotValueTypeInstance();
-    }
-
-    @Override
-    public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
-    }
-
-    @Override
-    public Class<IllegalArgumentException> getThrowableClass() {
-        return IllegalArgumentException.class;
-    }
-
-    @Override
     public Double getSubject() {
         return new Double(0);
     }
@@ -67,7 +42,57 @@ final class VerifiableDoubleTest implements AbstractVerifiableComparableNumberCo
     }
 
     @Override
-    public VerifiableDouble<IllegalArgumentException> getAbstractVerifiableObjectInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Double subject, String message) {
+    public Double getComparableSubject() {
+        return new Double(0);
+    }
+
+    @Override
+    public Double getNonComparableSubject() {
+        return new Double(1);
+    }
+
+    @Override
+    public Double getLessThanSubject() {
+        return new Double(-1);
+    }
+
+    @Override
+    public Double getGreaterThanSubject() {
+        return new Double(1);
+    }
+
+    @Override
+    public Double getZeroSubject() {
+        return new Double(0);
+    }
+
+    @Override
+    public Double getNonZeroSubject() {
+        return new Double(1);
+    }
+
+    @Override
+    public Double getPositiveSubject() {
+        return new Double(1);
+    }
+
+    @Override
+    public Double getNegativeSubject() {
+        return new Double(-1);
+    }
+
+    @Override
+    public Class<IllegalArgumentException> getThrowableClass() {
+        return IllegalArgumentException.class;
+    }
+
+    @Override
+    public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
+        return FailedValidationExecutors.getDefaultFailureExecutor();
+    }
+
+    @Override
+    public VerifiableDouble<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Double subject, String message) {
         return new VerifiableDouble<>(failedValidationExecutor, subject, message);
     }
 }
