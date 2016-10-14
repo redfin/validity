@@ -16,7 +16,7 @@
 
 To install, you can simply include the dependency from Maven Central:
 
-```
+```xml
 <dependency>
     <groupId>com.redfin</groupId>
     <artifactId>validity</artifactId>
@@ -48,12 +48,12 @@ If you would like to validate an argument that doesn't have a built in type but 
 This allows for any type of subject to be validated (though without smart auto completion and missing a bit of the default information from the failure messages).
 However, there are descriptive predicate classes defined that bridge the gap of being used like a predicate while having a nice, human-readable toString output.
 
-```
+```java
 Predicate<String> predicate = new DescriptivePredicate<>("null != {}", t -> null != t);
 predicate.toString();
 ```
 The output of the toString method above would be:
-```
+```java
 t -> null != t
 ```
 
@@ -73,7 +73,7 @@ Note that this behavior is completely customizable, if desired, by defining a cu
 
 ### Verify example
 
-```
+```java
 @Test
 public void showValidationExampleValidityWay() {
     new ClassValidatedByValidity(0);
@@ -133,7 +133,7 @@ java.lang.IllegalArgumentException: Subject failed validation
 
 ### Asserts example
 
-```
+```java
 @Test
 public void testAsserts() {
     Validity.asserts().that("hello").startsWith("w");
