@@ -215,7 +215,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsAtLeastReturnsSubjectForLessThanOther() throws X {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isGreaterThanOrEqualTo(getLessThanSubject()),
+        Assertions.assertTrue(subject == verifiable.isAtLeast(getLessThanSubject()),
                               "Should return the given subject for isGreaterThanOrEqualTo with less than other.");
     }
 
@@ -223,7 +223,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsAtLeastReturnsSubjectForEqualOther() throws X {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isGreaterThanOrEqualTo(getEqualSubject()),
+        Assertions.assertTrue(subject == verifiable.isAtLeast(getEqualSubject()),
                               "Should return the given subject for isGreaterThanOrEqualTo with equal other.");
     }
 
@@ -232,14 +232,14 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(getThrowableClass(),
-                                () -> verifiable.isGreaterThanOrEqualTo(getGreaterThanSubject()));
+                                () -> verifiable.isAtLeast(getGreaterThanSubject()));
     }
 
     @Test
     default void testIsAtLeastThrowsForNullSubject() {
         T verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(getThrowableClass(),
-                                () -> verifiable.isGreaterThanOrEqualTo(getLessThanSubject()));
+                                () -> verifiable.isAtLeast(getLessThanSubject()));
     }
 
     @Test
@@ -247,7 +247,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
         NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
-                                                                 () -> verifiable.isGreaterThanOrEqualTo(null));
+                                                                 () -> verifiable.isAtLeast(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
                                 "Should have the expected exception.");

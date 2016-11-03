@@ -73,38 +73,38 @@ final class ValidityTest implements NonInstantiableContract<Validity> {
 
     @Test
     void testVerifyReturnsNonNull() {
-        Assertions.assertNotNull(Validity.verify(),
-                                 "Validity verify should return a non null object.");
+        Assertions.assertNotNull(Validity.requires(),
+                                 "Validity requires should return a non null object.");
     }
 
     @Test
     void testVerifyWithMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.verifyWithMessage("hello"),
-                                 "Validity verify should return a non null object.");
+        Assertions.assertNotNull(Validity.requiresWithMessage("hello"),
+                                 "Validity requires should return a non null object.");
     }
 
     @Test
     void testVerifyWithNullMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.verifyWithMessage(null),
-                                 "Validity verify with null message should return a non null object.");
+        Assertions.assertNotNull(Validity.requiresWithMessage(null),
+                                 "Validity requires with null message should return a non null object.");
     }
 
     @Test
     void testRepeatedVerifyReturnsSameInstance() {
-        Assertions.assertTrue(Validity.verify() == Validity.verify(),
-                              "Repeated calls to verify should return the same instance.");
+        Assertions.assertTrue(Validity.requires() == Validity.requires(),
+                              "Repeated calls to requires should return the same instance.");
     }
 
     @Test
     void testRepeatedVerifyWithMessagesReturnDifferentInstances() {
         String message = "hello";
-        Assertions.assertFalse(Validity.verifyWithMessage(message) == Validity.verifyWithMessage(message),
-                               "Repeated calls to verify with message should return different instances.");
+        Assertions.assertFalse(Validity.requiresWithMessage(message) == Validity.requiresWithMessage(message),
+                               "Repeated calls to requires with message should return different instances.");
     }
 
     @Test
     void testVerifyWithNullMessageReturnsSameInstanceAsVerifyWithoutMessage() {
-        Assertions.assertTrue(Validity.verifyWithMessage(null) == Validity.verify(),
-                              "Calling verify with null message should return the same instance as verify without message.");
+        Assertions.assertTrue(Validity.requiresWithMessage(null) == Validity.requires(),
+                              "Calling requires with null message should return the same instance as requires without message.");
     }
 }

@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * A test contract to be applied to sub classes of the {@link AbstractDescriptivePredicate} to verify
+ * A test contract to be applied to sub classes of the {@link AbstractDescriptivePredicate} to requires
  * that they are adhering to the contracts of their super class.
  *
  * @param <T> the type of the sub class being tested.

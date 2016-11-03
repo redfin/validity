@@ -20,6 +20,7 @@ import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Concrete class for verifying primitive boolean array subjects.
@@ -168,10 +169,7 @@ public final class VerifiableBooleanArray<X extends Throwable> extends AbstractV
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private static boolean containsHelper(boolean[] array, boolean value) {
-        if (null == array) {
-            throw new NullPointerException(ValidityUtils.nullArgumentMessage("array"));
-        }
-        for (boolean next : array) {
+        for (boolean next : Objects.requireNonNull(array, ValidityUtils.nullArgumentMessage("array"))) {
             if (next == value) {
                 return true;
             }

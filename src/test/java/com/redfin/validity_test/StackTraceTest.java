@@ -50,7 +50,7 @@ final class StackTraceTest {
      * NOTE - IMPORTANT:
      *
      * The formatting of this file MATTERS. The tests are relying on relative line placement
-     * to verify that the first line in the returned stack trace is that of the original
+     * to requires that the first line in the returned stack trace is that of the original
      * caller to the failed validation executors. Be careful when editing.
      */
 

@@ -57,7 +57,7 @@ The output of the toString method above would be:
 t -> null != t
 ```
 
-## Asserts vs. Verify
+## Asserts vs. Requires
 
 Another component of Validity is to have a consistent experience while writing both production code and unit tests.
 These two types of code, though, have some different needs.
@@ -66,12 +66,12 @@ On the other hand, with test assertions you typically throw an AssertionError on
 Also, while it is nice to know the line that failed, there should only be 1 or 2 assertions per test method and which will be directly called from the test method itself so the stack trace is nearly always mostly just noise from the test running framework itself.
 
 The Validity library, therefore, handles both cases.
-When using the `Validity.verify()` type methods, it will throw an `IllegalArgumentException` on failure and will only trim the library stack frames out of the exception.
+When using the `Validity.requires()` type methods, it will throw an `IllegalArgumentException` on failure and will only trim the library stack frames out of the exception.
 When using the `Validity.asserts()` type methods, it will throw an `AssertionError` on failure which trims all lines except the caller from the exception.
 
 Note that this behavior is completely customizable, if desired, by defining a custom wrapper and `FailedValidationExecutor` implementation.
 
-### Verify example
+### Requires example
 
 ```java
 @Test
@@ -84,7 +84,7 @@ private static final class ClassValidatedByValidity {
     private final int i;
 
     private ClassValidatedByValidity(int i) {
-        this.i = Validity.verify().that(i).isStrictlyPositive();
+        this.i = Validity.requires().that(i).isStrictlyPositive();
     }
 }
 ```

@@ -51,7 +51,7 @@ public final class Validity {
      * prefix and the default {@link FailedValidationExecutor} for argument
      * validation.
      */
-    public static VerifiableFactory<IllegalArgumentException> verify() {
+    public static VerifiableFactory<IllegalArgumentException> requires() {
         return VERIFY_BUILDER;
     }
 
@@ -60,7 +60,7 @@ public final class Validity {
      * @return a {@link VerifiableFactory} instance with the given message and
      * the default {@link FailedValidationExecutor} for argument validation.
      */
-    public static VerifiableFactory<IllegalArgumentException> verifyWithMessage(String message) {
+    public static VerifiableFactory<IllegalArgumentException> requiresWithMessage(String message) {
         if (null == message) {
             return VERIFY_BUILDER;
         } else {

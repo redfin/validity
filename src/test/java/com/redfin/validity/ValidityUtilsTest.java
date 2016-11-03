@@ -247,6 +247,13 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
+    void testDescribeStringReturnsExpectedStringForNull() {
+        Assertions.assertEquals("null",
+                                ValidityUtils.describe((String) null),
+                                "Described null Strings should return the string \"null\"");
+    }
+
+    @Test
     void testDescribeObjectReturnsExpectedString() {
         Object subject = new Object();
         Assertions.assertEquals(subject.toString(),

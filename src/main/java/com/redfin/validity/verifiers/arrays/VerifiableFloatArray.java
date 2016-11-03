@@ -20,6 +20,7 @@ import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Concrete class for verifying primitive float array subjects.
@@ -168,10 +169,7 @@ public final class VerifiableFloatArray<X extends Throwable> extends AbstractVer
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private static boolean containsHelper(float[] array, float value) {
-        if (null == array) {
-            throw new NullPointerException(ValidityUtils.nullArgumentMessage("array"));
-        }
-        for (float next : array) {
+        for (float next : Objects.requireNonNull(array, ValidityUtils.nullArgumentMessage("array"))) {
             if (Float.compare(next, value) == 0) {
                 return true;
             }

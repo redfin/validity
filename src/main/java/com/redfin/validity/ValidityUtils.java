@@ -167,13 +167,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(IntPredicate value) {
-        if (value instanceof AbstractDescriptivePredicate) {
-            return transformDescription(value.toString());
-        } else if (null != value) {
-            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
-        } else {
-            return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
-        }
+        return describePredicate(value);
     }
 
     /**
@@ -181,13 +175,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(LongPredicate value) {
-        if (value instanceof AbstractDescriptivePredicate) {
-            return transformDescription(value.toString());
-        } else if (null != value) {
-            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
-        } else {
-            return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
-        }
+        return describePredicate(value);
     }
 
     /**
@@ -195,13 +183,7 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(DoublePredicate value) {
-        if (value instanceof AbstractDescriptivePredicate) {
-            return transformDescription(value.toString());
-        } else if (null != value) {
-            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
-        } else {
-            return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
-        }
+        return describePredicate(value);
     }
 
     /**
@@ -209,10 +191,14 @@ public final class ValidityUtils {
      * @return a String representation of the given value.
      */
     public static String describe(Predicate<?> value) {
-        if (value instanceof AbstractDescriptivePredicate) {
-            return transformDescription(value.toString());
-        } else if (null != value) {
-            return transformDescription(UNKNOWN_PREDICATE_PREFIX + value.toString());
+        return describePredicate(value);
+    }
+
+    private static String describePredicate(Object obj) {
+        if (obj instanceof AbstractDescriptivePredicate) {
+            return transformDescription(obj.toString());
+        } else if (null != obj) {
+            return transformDescription(UNKNOWN_PREDICATE_PREFIX + obj.toString());
         } else {
             return transformDescription(UNKNOWN_PREDICATE_PREFIX + NULL);
         }

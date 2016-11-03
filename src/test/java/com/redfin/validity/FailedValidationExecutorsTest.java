@@ -37,9 +37,9 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
 
         @Test
         default void testThrownExceptionHasExpectedMessage() {
-            String expected = "message";
-            String subject = "expected";
-            String message = "subject";
+            String expected = "expected";
+            String subject = "subject";
+            String message = "message";
             X throwable = Assertions.expectThrows(getThrowableClass(),
                                                   () -> getFailedValidationExecutor().fail(expected, subject, message));
             Assertions.assertEquals(String.format(MESSAGE_FORMAT,
@@ -52,8 +52,8 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
 
         @Test
         default void testThrownExceptionHasExpectedMessageWithNullMessage() {
-            String expected = "message";
-            String subject = "expected";
+            String expected = "expected";
+            String subject = "subject";
             X throwable = Assertions.expectThrows(getThrowableClass(),
                                                   () -> getFailedValidationExecutor().fail(expected, subject, null));
             Assertions.assertEquals(String.format(MESSAGE_FORMAT,
@@ -62,6 +62,31 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
                                                   subject),
                                     throwable.getMessage(),
                                     "The failed validation executors for the validity library should have the expected message.");
+        }
+    }
+
+    private interface NoStackTraceValidationExecutorsContract<X extends Throwable> extends ValidationExecutorsMessageContract<X> {
+
+        final class NoStackRuntimeException extends RuntimeException {
+            NoStackRuntimeException(String message) {
+                super(message);
+            }
+
+            @Override
+            public StackTraceElement[] getStackTrace() {
+                return null;
+            }
+        }
+
+        FailedValidationExecutor<NoStackRuntimeException> getNoStackFailedValidationExecutor();
+
+        @Test
+        default void testValidationExecutorCanHandleEmptyStackTraceFromException() {
+            String expected = "expected";
+            String subject = "subject";
+            String message = "message";
+            Assertions.assertThrows(NoStackRuntimeException.class,
+                                    () -> getNoStackFailedValidationExecutor().fail(expected, subject, message));
         }
     }
 
@@ -84,7 +109,7 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
     }
 
     @Nested
-    final class DefaultFailedValidationExecutorWithCustomThrowableTest implements ValidationExecutorsMessageContract<IllegalStateException> {
+    final class DefaultFailedValidationExecutorWithCustomThrowableTest implements NoStackTraceValidationExecutorsContract<IllegalStateException> {
 
         @Override
         public FailedValidationExecutor<IllegalStateException> getFailedValidationExecutor() {
@@ -94,6 +119,11 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
         @Override
         public Class<IllegalStateException> getThrowableClass() {
             return IllegalStateException.class;
+        }
+
+        @Override
+        public FailedValidationExecutor<NoStackRuntimeException> getNoStackFailedValidationExecutor() {
+            return FailedValidationExecutors.getDefaultFailureExecutor(NoStackRuntimeException::new);
         }
 
         @Test
@@ -130,7 +160,7 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
     }
 
     @Nested
-    final class StackTrimmingFailedValidationExecutorWithCustomThrowableTest implements ValidationExecutorsMessageContract<AssertionError> {
+    final class StackTrimmingFailedValidationExecutorWithCustomThrowableTest implements NoStackTraceValidationExecutorsContract<AssertionError> {
 
         @Override
         public FailedValidationExecutor<AssertionError> getFailedValidationExecutor() {
@@ -140,6 +170,11 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
         @Override
         public Class<AssertionError> getThrowableClass() {
             return AssertionError.class;
+        }
+
+        @Override
+        public FailedValidationExecutor<NoStackRuntimeException> getNoStackFailedValidationExecutor() {
+            return FailedValidationExecutors.getStackTrimmingFailureExecutor(NoStackRuntimeException::new);
         }
 
         @Test

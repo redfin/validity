@@ -20,6 +20,7 @@ import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Concrete class for verifying primitive short array subjects.
@@ -168,10 +169,7 @@ public final class VerifiableShortArray<X extends Throwable> extends AbstractVer
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private static boolean containsHelper(short[] array, short value) {
-        if (null == array) {
-            throw new NullPointerException(ValidityUtils.nullArgumentMessage("array"));
-        }
-        for (short next : array) {
+        for (short next : Objects.requireNonNull(array, ValidityUtils.nullArgumentMessage("array"))) {
             if (next == value) {
                 return true;
             }
