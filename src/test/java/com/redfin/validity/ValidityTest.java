@@ -19,15 +19,15 @@ package com.redfin.validity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-final class ValidityTest implements NonInstantiableContract<Validity> {
+final class ValidityTest implements VerifiableFactoryContract<IllegalArgumentException> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public Class<Validity> getNonInstantiableClassObject() {
-        return Validity.class;
+    public Validity getNotValueTypeInstance() {
+        return Validity.require();
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -35,76 +35,39 @@ final class ValidityTest implements NonInstantiableContract<Validity> {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Test
-    void testAssertsReturnsNonNull() {
-        Assertions.assertNotNull(Validity.asserts(),
-                                 "Validity asserts should return a non null object.");
+    void testRequireReturnsNonNull() {
+        Assertions.assertNotNull(Validity.require(),
+                                 "Validity require should return a non null object.");
     }
 
     @Test
-    void testAssertsWithMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.assertsWithMessage("hello"),
-                                 "Validity asserts should return a non null object.");
+    void testRequireWithMessageReturnsNonNull() {
+        Assertions.assertNotNull(Validity.requireAs("hello"),
+                                 "Validity require with message should return a non null object.");
     }
 
     @Test
-    void testAssertsWithNullMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.assertsWithMessage(null),
-                                 "Validity asserts with null message should return a non null object.");
+    void testRequireWithNullMessageReturnsNonNull() {
+        Assertions.assertNotNull(Validity.requireAs(null),
+                                 "Validity require with null message should return a non null object.");
     }
 
     @Test
     void testRepeatedAssertsReturnsSameInstance() {
-        Assertions.assertTrue(Validity.asserts() == Validity.asserts(),
-                              "Repeated calls to asserts should return the same instance.");
+        Assertions.assertTrue(Validity.require() == Validity.require(),
+                              "Repeated calls to require should return the same instance.");
     }
 
     @Test
     void testRepeatedAssertsWithMessagesReturnDifferentInstances() {
         String message = "hello";
-        Assertions.assertFalse(Validity.assertsWithMessage(message) == Validity.assertsWithMessage(message),
-                               "Repeated calls to asserts with message should return different instances.");
+        Assertions.assertFalse(Validity.requireAs(message) == Validity.requireAs(message),
+                               "Repeated calls to require with message should return different instances.");
     }
 
     @Test
-    void testAssertsWithNullMessageReturnsSameInstanceAsAssertWithoutMessage() {
-        Assertions.assertTrue(Validity.assertsWithMessage(null) == Validity.asserts(),
-                              "Calling asserts with null message should return the same instance as asserts without message.");
-    }
-
-    @Test
-    void testVerifyReturnsNonNull() {
-        Assertions.assertNotNull(Validity.requires(),
-                                 "Validity requires should return a non null object.");
-    }
-
-    @Test
-    void testVerifyWithMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.requiresWithMessage("hello"),
-                                 "Validity requires should return a non null object.");
-    }
-
-    @Test
-    void testVerifyWithNullMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.requiresWithMessage(null),
-                                 "Validity requires with null message should return a non null object.");
-    }
-
-    @Test
-    void testRepeatedVerifyReturnsSameInstance() {
-        Assertions.assertTrue(Validity.requires() == Validity.requires(),
-                              "Repeated calls to requires should return the same instance.");
-    }
-
-    @Test
-    void testRepeatedVerifyWithMessagesReturnDifferentInstances() {
-        String message = "hello";
-        Assertions.assertFalse(Validity.requiresWithMessage(message) == Validity.requiresWithMessage(message),
-                               "Repeated calls to requires with message should return different instances.");
-    }
-
-    @Test
-    void testVerifyWithNullMessageReturnsSameInstanceAsVerifyWithoutMessage() {
-        Assertions.assertTrue(Validity.requiresWithMessage(null) == Validity.requires(),
-                              "Calling requires with null message should return the same instance as requires without message.");
+    void testRequireWithNullMessageReturnsSameInstanceAsAssertWithoutMessage() {
+        Assertions.assertTrue(Validity.requireAs(null) == Validity.require(),
+                              "Calling require with null message should return the same instance as asserts without message.");
     }
 }

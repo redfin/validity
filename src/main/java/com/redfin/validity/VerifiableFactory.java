@@ -48,11 +48,11 @@ import com.redfin.validity.verifiers.primitives.VerifiablePrimitiveShort;
 import java.util.Collection;
 
 /**
- * A class that acts as a factory. It holds the information passed in
+ * An abstract class that acts as a factory. It holds the information passed in
  * until a test subject for validation is given. At that point the correct
  * type of verifiable is returned depending upon the type of the subject.
  */
-public class VerifiableFactory<X extends Throwable> {
+abstract class VerifiableFactory<X extends Throwable> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields

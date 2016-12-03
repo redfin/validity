@@ -39,22 +39,6 @@ public final class FailedValidationExecutors {
 
     /**
      * Create a new {@link FailedValidationExecutor} that, when given valid input, throws
-     * a {@link IllegalArgumentException} with the default message format of the Validity
-     * framework. The exception will have the initial stack trace elements removed from
-     * it's stack trace so that the first line in the call stack is the caller of the validation.<br>
-     * <br>
-     * Note that it does the stack trace removal via package name, so if the caller were from
-     * a package that starts with "com.redfin.validity." then that would be considered part of
-     * the Validity library and be removed as well.
-     *
-     * @return a new {@link FailedValidationExecutor} instance.
-     */
-    public static FailedValidationExecutor<IllegalArgumentException> getDefaultFailureExecutor() {
-        return getDefaultFailureExecutor(IllegalArgumentException::new);
-    }
-
-    /**
-     * Create a new {@link FailedValidationExecutor} that, when given valid input, throws
      * a {@link Throwable} of type (X) with the default message format of the Validity
      * framework. The exception will have the initial stack trace elements removed from
      * it's stack trace so that the first line in the call stack is the caller of the validation.<br>
@@ -104,21 +88,6 @@ public final class FailedValidationExecutors {
                 throw throwable;
             }
         };
-    }
-
-    /**
-     * Create a new {@link FailedValidationExecutor} that, when given valid input, throws
-     * a {@link AssertionError} with the default message format of the Validity
-     * framework. The exception will have the stack trace elements removed from
-     * it's stack trace so that the only line in the call stack is the caller of the validation.<br>
-     * <br>
-     * Note that it does the caller discovery via package name, so the caller is the first line
-     * in the stack trace that does not start with "com.redfi.validity.".
-     *
-     * @return a new {@link FailedValidationExecutor} instance.
-     */
-    public static FailedValidationExecutor<AssertionError> getStackTrimmingFailureExecutor() {
-        return getStackTrimmingFailureExecutor(AssertionError::new);
     }
 
     /**

@@ -36,7 +36,7 @@ final class VerifiablePrimitiveDoubleTest implements AbstractVerifiablePrimitive
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     @Override

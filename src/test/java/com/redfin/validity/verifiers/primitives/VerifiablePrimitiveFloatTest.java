@@ -36,7 +36,7 @@ final class VerifiablePrimitiveFloatTest implements AbstractVerifiablePrimitiveC
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     @Override

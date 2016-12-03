@@ -55,7 +55,7 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

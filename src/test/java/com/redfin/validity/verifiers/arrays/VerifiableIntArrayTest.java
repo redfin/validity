@@ -35,7 +35,7 @@ final class VerifiableIntArrayTest implements AbstractVerifiableObjectContract<I
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     @Override

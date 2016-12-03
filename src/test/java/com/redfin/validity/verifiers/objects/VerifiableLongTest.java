@@ -83,7 +83,7 @@ final class VerifiableLongTest implements AbstractVerifiableComparableNumberCont
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     @Override

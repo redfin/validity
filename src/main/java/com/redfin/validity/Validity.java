@@ -17,9 +17,11 @@
 package com.redfin.validity;
 
 /**
- * Static class meant to be the entry point for validation.
+ * The entry point for the Validity library. This is a specific sub-class
+ * of the {@link VerifiableFactory} that throws {@link IllegalArgumentException}s on
+ * validation failure.
  */
-public final class Validity {
+public final class Validity extends VerifiableFactory<IllegalArgumentException> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constants
@@ -32,75 +34,39 @@ public final class Validity {
      * message. If a message is, given, though, a new instance is required.
      */
 
-    private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE = FailedValidationExecutors.getDefaultFailureExecutor();
-    private static final FailedValidationExecutor<AssertionError> ASSERT_FAILURE = FailedValidationExecutors.getStackTrimmingFailureExecutor();
-
-    private static final VerifiableFactory<IllegalArgumentException> VERIFY_BUILDER = new VerifiableFactory<>(null, VERIFY_FAILURE);
-    private static final VerifiableFactory<AssertionError> ASSERT_BUILDER = new VerifiableFactory<>(null, ASSERT_FAILURE);
-
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Static Methods
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    // --------------------------------------------------------------
-    // Verify Methods
-    // --------------------------------------------------------------
-
-    /**
-     * @return a {@link VerifiableFactory} instance with the default message
-     * prefix and the default {@link FailedValidationExecutor} for argument
-     * validation.
-     */
-    public static VerifiableFactory<IllegalArgumentException> requires() {
-        return VERIFY_BUILDER;
-    }
-
-    /**
-     * @param message the String message to use as a prefix for the validation.
-     * @return a {@link VerifiableFactory} instance with the given message and
-     * the default {@link FailedValidationExecutor} for argument validation.
-     */
-    public static VerifiableFactory<IllegalArgumentException> requiresWithMessage(String message) {
-        if (null == message) {
-            return VERIFY_BUILDER;
-        } else {
-            return new VerifiableFactory<>(message, FailedValidationExecutors.getDefaultFailureExecutor());
-        }
-    }
-
-    // --------------------------------------------------------------
-    // Asserts Methods
-    // --------------------------------------------------------------
-
-    /**
-     * @return a {@link VerifiableFactory} instance with the default message
-     * prefix and the default {@link FailedValidationExecutor} for assertions.
-     */
-    public static VerifiableFactory<AssertionError> asserts() {
-        return ASSERT_BUILDER;
-    }
-
-    /**
-     * @param message the String message to use as a prefix for the validation.
-     * @return a {@link VerifiableFactory} instance with the given message and
-     * the default {@link FailedValidationExecutor} for assertions.
-     */
-    public static VerifiableFactory<AssertionError> assertsWithMessage(String message) {
-        if (null == message) {
-            return ASSERT_BUILDER;
-        } else {
-            return new VerifiableFactory<>(message, FailedValidationExecutors.getStackTrimmingFailureExecutor());
-        }
-    }
+    private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE = FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
+    private static final Validity NO_MESSAGE_INSTANCE = new Validity(null);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    private Validity(String message) {
+        super(message, VERIFY_FAILURE);
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Static Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     /**
-     * @throws AssertionError always.
+     * @return a {@link Validity} instance with the default message
+     * prefix.
      */
-    private Validity() {
-        throw new AssertionError(ValidityUtils.nonInstantiableMessage());
+    public static Validity require() {
+        return NO_MESSAGE_INSTANCE;
+    }
+
+    /**
+     * @param message the String message to use as a prefix for the validation.
+     *
+     * @return a {@link Validity} instance with the given message prefix.
+     */
+    public static VerifiableFactory<IllegalArgumentException> requireAs(String message) {
+        if (null == message) {
+            return NO_MESSAGE_INSTANCE;
+        } else {
+            return new Validity(message);
+        }
     }
 }

@@ -95,21 +95,7 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Nested
-    final class DefaultFailedValidationExecutorTest implements ValidationExecutorsMessageContract<IllegalArgumentException> {
-
-        @Override
-        public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
-            return FailedValidationExecutors.getDefaultFailureExecutor();
-        }
-
-        @Override
-        public Class<IllegalArgumentException> getThrowableClass() {
-            return IllegalArgumentException.class;
-        }
-    }
-
-    @Nested
-    final class DefaultFailedValidationExecutorWithCustomThrowableTest implements NoStackTraceValidationExecutorsContract<IllegalStateException> {
+    final class DefaultFailedValidationExecutorTest implements NoStackTraceValidationExecutorsContract<IllegalStateException> {
 
         @Override
         public FailedValidationExecutor<IllegalStateException> getFailedValidationExecutor() {
@@ -146,21 +132,7 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
     }
 
     @Nested
-    final class StackTrimmingFailedValidationExecutorTest implements ValidationExecutorsMessageContract<AssertionError> {
-
-        @Override
-        public FailedValidationExecutor<AssertionError> getFailedValidationExecutor() {
-            return FailedValidationExecutors.getStackTrimmingFailureExecutor();
-        }
-
-        @Override
-        public Class<AssertionError> getThrowableClass() {
-            return AssertionError.class;
-        }
-    }
-
-    @Nested
-    final class StackTrimmingFailedValidationExecutorWithCustomThrowableTest implements NoStackTraceValidationExecutorsContract<AssertionError> {
+    final class StackTrimmingFailedValidationExecutorTest implements NoStackTraceValidationExecutorsContract<AssertionError> {
 
         @Override
         public FailedValidationExecutor<AssertionError> getFailedValidationExecutor() {

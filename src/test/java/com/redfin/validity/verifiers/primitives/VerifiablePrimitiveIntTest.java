@@ -36,7 +36,7 @@ final class VerifiablePrimitiveIntTest implements AbstractVerifiablePrimitiveCon
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     @Override

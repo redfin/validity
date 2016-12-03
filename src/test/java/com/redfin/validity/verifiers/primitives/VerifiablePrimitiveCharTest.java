@@ -36,7 +36,7 @@ final class VerifiablePrimitiveCharTest implements AbstractVerifiablePrimitiveCo
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     @Override

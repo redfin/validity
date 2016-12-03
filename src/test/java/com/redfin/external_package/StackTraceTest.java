@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.redfin.validity_test;
+package com.redfin.external_package;
 
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutors;
@@ -35,11 +35,11 @@ final class StackTraceTest {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private FailedValidationExecutor<IllegalArgumentException> getDefaultExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor();
+        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
     }
 
     private FailedValidationExecutor<AssertionError> getStackTrimmingExecutor() {
-        return FailedValidationExecutors.getStackTrimmingFailureExecutor();
+        return FailedValidationExecutors.getStackTrimmingFailureExecutor(AssertionError::new);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
