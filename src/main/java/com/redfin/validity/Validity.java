@@ -62,7 +62,7 @@ public final class Validity extends VerifiableFactory<IllegalArgumentException> 
      *
      * @return a {@link Validity} instance with the given message prefix.
      */
-    public static VerifiableFactory<IllegalArgumentException> requireAs(String message) {
+    public static VerifiableFactory<IllegalArgumentException> requireWithMessage(String message) {
         if (null == message) {
             return NO_MESSAGE_INSTANCE;
         } else {

@@ -42,13 +42,13 @@ final class ValidityTest implements VerifiableFactoryContract<IllegalArgumentExc
 
     @Test
     void testRequireWithMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.requireAs("hello"),
+        Assertions.assertNotNull(Validity.requireWithMessage("hello"),
                                  "Validity require with message should return a non null object.");
     }
 
     @Test
     void testRequireWithNullMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.requireAs(null),
+        Assertions.assertNotNull(Validity.requireWithMessage(null),
                                  "Validity require with null message should return a non null object.");
     }
 
@@ -61,13 +61,13 @@ final class ValidityTest implements VerifiableFactoryContract<IllegalArgumentExc
     @Test
     void testRepeatedAssertsWithMessagesReturnDifferentInstances() {
         String message = "hello";
-        Assertions.assertFalse(Validity.requireAs(message) == Validity.requireAs(message),
+        Assertions.assertFalse(Validity.requireWithMessage(message) == Validity.requireWithMessage(message),
                                "Repeated calls to require with message should return different instances.");
     }
 
     @Test
     void testRequireWithNullMessageReturnsSameInstanceAsAssertWithoutMessage() {
-        Assertions.assertTrue(Validity.requireAs(null) == Validity.require(),
+        Assertions.assertTrue(Validity.requireWithMessage(null) == Validity.require(),
                               "Calling require with null message should return the same instance as asserts without message.");
     }
 }
