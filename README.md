@@ -20,7 +20,7 @@ To install, you can simply include the dependency from Maven Central:
 <dependency>
     <groupId>com.redfin</groupId>
     <artifactId>validity</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
