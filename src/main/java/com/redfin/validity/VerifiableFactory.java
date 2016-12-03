@@ -52,7 +52,7 @@ import java.util.Collection;
  * until a test subject for validation is given. At that point the correct
  * type of verifiable is returned depending upon the type of the subject.
  */
-abstract class VerifiableFactory<X extends Throwable> {
+public abstract class VerifiableFactory<X extends Throwable> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields
