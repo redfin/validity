@@ -16,31 +16,25 @@
 
 package com.redfin.external_package;
 
+import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
-import com.redfin.validity.FailedValidationExecutors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 /*
  * A separate package is used for this test since the default behavior
- * of the FailedValidationExecutors supplied in the library
- * trim out lines from inside the same package.
+ * of the DefaultValidityFailedValidationExecutor supplied in the library
+ * trims out lines from inside the Validity package.
  */
 
 final class StackTraceTest {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Test values & contract implementations
+    // Test values
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private FailedValidationExecutor<IllegalArgumentException> getDefaultExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
-    }
-
-    private FailedValidationExecutor<AssertionError> getStackTrimmingExecutor() {
-        return FailedValidationExecutors.getStackTrimmingFailureExecutor(AssertionError::new);
-    }
+    private static final FailedValidationExecutor<IllegalArgumentException> FVE = new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test cases
@@ -55,12 +49,12 @@ final class StackTraceTest {
      */
 
     @Test
-    void testDefaultExecutorReturnsThrowableWithExpectedStackTrace() {
+    void testDefaultValidityFailedValidationExecutorRemovesValidityStackFrames() {
         Exception exception = new NullPointerException();
         Assumptions.assumeTrue(null != exception.getStackTrace() && exception.getStackTrace().length > 0,
                                "This test can only work if the JVM is filling in stack traces.");
         IllegalArgumentException thrown = Assertions.expectThrows(IllegalArgumentException.class,
-                                                                  () -> getDefaultExecutor().fail("expected", "subject", "message"));
+                                                                  () -> FVE.fail("expected", "subject", "message"));
         int firstLineNumber = exception.getStackTrace()[0].getLineNumber();
         Assertions.assertTrue(null != thrown.getStackTrace() && thrown.getStackTrace().length > 0,
                               "If the JVM is filling in stack traces the thrown exception should have a stack trace.");
@@ -72,25 +66,5 @@ final class StackTraceTest {
                                 "Default stack trace should have the caller as the first line");
         Assertions.assertTrue(thrown.getStackTrace().length > 1,
                               "Default stack trace should have more than the caller.");
-    }
-
-    @Test
-    void testStackTrimmingExecutorReturnsThrowableWithExpectedStackTrace() {
-        Exception exception = new NullPointerException();
-        Assumptions.assumeTrue(null != exception.getStackTrace() && exception.getStackTrace().length > 0,
-                               "This test can only work if the JVM is filling in stack traces.");
-        AssertionError thrown = Assertions.expectThrows(AssertionError.class,
-                                                        () -> getStackTrimmingExecutor().fail("expected", "subject", "message"));
-        int firstLineNumber = exception.getStackTrace()[0].getLineNumber();
-        Assertions.assertTrue(null != thrown.getStackTrace() && thrown.getStackTrace().length > 0,
-                              "If the JVM is filling in stack traces the thrown exception should have a stack trace.");
-        Assertions.assertEquals(firstLineNumber + 4,
-                                thrown.getStackTrace()[0].getLineNumber(),
-                                "Stack trimming stack trace should have the caller as the first line number.");
-        Assertions.assertEquals(exception.getStackTrace()[0].getClassName(),
-                                thrown.getStackTrace()[0].getClassName(),
-                                "Stack trimming stack trace should have the caller as the first line");
-        Assertions.assertTrue(thrown.getStackTrace().length == 1,
-                              "Stack trimming stack trace should have only a single line.");
     }
 }

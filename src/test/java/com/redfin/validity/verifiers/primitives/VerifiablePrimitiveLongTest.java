@@ -16,8 +16,8 @@
 
 package com.redfin.validity.verifiers.primitives;
 
+import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
-import com.redfin.validity.FailedValidationExecutors;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiablePrimitiveContract;
 import org.junit.jupiter.api.Assertions;
@@ -36,7 +36,7 @@ final class VerifiablePrimitiveLongTest implements AbstractVerifiablePrimitiveCo
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getAbstractVerifiablePrimitiveFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
+        return new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
     }
 
     @Override

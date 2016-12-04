@@ -28,13 +28,13 @@ public final class Validity extends VerifiableFactory<IllegalArgumentException> 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /*
-     * For performance, cache instances of the null message ValidationBuilders.
-     * Since it and the default validation executors are immutable, we can
-     * simply re-use the same instances each time if there isn't a given
+     * For performance, cache instances of the null message Validity instance.
+     * Since it and the default validation executor is thread safe and re-usable,
+     * we can simply re-use the same instances each time if there isn't a given
      * message. If a message is, given, though, a new instance is required.
      */
 
-    private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE = FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
+    private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE = new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
     private static final Validity NO_MESSAGE_INSTANCE = new Validity(null);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,10 +59,12 @@ public final class Validity extends VerifiableFactory<IllegalArgumentException> 
 
     /**
      * @param message the String message to use as a prefix for the validation.
+     *                May be null.
      *
      * @return a {@link Validity} instance with the given message prefix.
+     * If the given message is null this is the same as calling {@link #require()}.
      */
-    public static VerifiableFactory<IllegalArgumentException> requireWithMessage(String message) {
+    public static VerifiableFactory<IllegalArgumentException> require(String message) {
         if (null == message) {
             return NO_MESSAGE_INSTANCE;
         } else {

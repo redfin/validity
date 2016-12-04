@@ -16,8 +16,8 @@
 
 package com.redfin.validity.verifiers.objects;
 
+import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
-import com.redfin.validity.FailedValidationExecutors;
 import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 
 final class VerifiableObjectTest implements AbstractVerifiableObjectContract<IllegalArgumentException, Object, VerifiableObject<Object, IllegalArgumentException>> {
@@ -46,7 +46,7 @@ final class VerifiableObjectTest implements AbstractVerifiableObjectContract<Ill
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
+        return new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
     }
 
     @Override

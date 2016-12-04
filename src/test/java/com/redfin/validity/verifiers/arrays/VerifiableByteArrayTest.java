@@ -16,8 +16,8 @@
 
 package com.redfin.validity.verifiers.arrays;
 
+import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
-import com.redfin.validity.FailedValidationExecutors;
 import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ final class VerifiableByteArrayTest implements AbstractVerifiableObjectContract<
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
+        return new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
     }
 
     @Override

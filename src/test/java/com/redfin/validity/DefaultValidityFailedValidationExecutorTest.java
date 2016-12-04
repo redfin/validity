@@ -20,16 +20,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-final class FailedValidationExecutorsTest implements NonInstantiableContract<FailedValidationExecutors> {
+final class DefaultValidityFailedValidationExecutorTest {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    @Override
-    public Class<FailedValidationExecutors> getNonInstantiableClassObject() {
-        return FailedValidationExecutors.class;
-    }
 
     private interface ValidationExecutorsMessageContract<X extends Throwable> extends FailedValidationExecutorContract<X> {
 
@@ -91,7 +86,7 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Test containers (for each FailedValidationExecutors methods)
+    // Test containers
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Nested
@@ -99,7 +94,7 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
 
         @Override
         public FailedValidationExecutor<IllegalStateException> getFailedValidationExecutor() {
-            return FailedValidationExecutors.getDefaultFailureExecutor(IllegalStateException::new);
+            return new DefaultValidityFailedValidationExecutor<>(IllegalStateException::new);
         }
 
         @Override
@@ -109,13 +104,13 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
 
         @Override
         public FailedValidationExecutor<NoStackRuntimeException> getNoStackFailedValidationExecutor() {
-            return FailedValidationExecutors.getDefaultFailureExecutor(NoStackRuntimeException::new);
+            return new DefaultValidityFailedValidationExecutor<>(NoStackRuntimeException::new);
         }
 
         @Test
         void throwsExceptionForNullThrowableFunction() {
             NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
-                                                                     () -> FailedValidationExecutors.getDefaultFailureExecutor(null));
+                                                                     () -> new DefaultValidityFailedValidationExecutor<>(null));
             Assertions.assertEquals(ValidityUtils.nullArgumentMessage("throwableFunction"),
                                     exception.getMessage(),
                                     "Failed validation executors should throw an exception for a null throwable function.");
@@ -124,44 +119,7 @@ final class FailedValidationExecutorsTest implements NonInstantiableContract<Fai
         @Test
         void testFailedValidationExecutorThrowsExceptionForNullThrowableCreation() {
             NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
-                                                                     () -> FailedValidationExecutors.getDefaultFailureExecutor(str -> null).fail("", "", ""));
-            Assertions.assertEquals(ValidityUtils.nullThrowableFromFunction(),
-                                    exception.getMessage(),
-                                    "Failed validation executors should throw the expected exception for a null throwable created.");
-        }
-    }
-
-    @Nested
-    final class StackTrimmingFailedValidationExecutorTest implements NoStackTraceValidationExecutorsContract<AssertionError> {
-
-        @Override
-        public FailedValidationExecutor<AssertionError> getFailedValidationExecutor() {
-            return FailedValidationExecutors.getStackTrimmingFailureExecutor(AssertionError::new);
-        }
-
-        @Override
-        public Class<AssertionError> getThrowableClass() {
-            return AssertionError.class;
-        }
-
-        @Override
-        public FailedValidationExecutor<NoStackRuntimeException> getNoStackFailedValidationExecutor() {
-            return FailedValidationExecutors.getStackTrimmingFailureExecutor(NoStackRuntimeException::new);
-        }
-
-        @Test
-        void throwsExceptionForNullThrowableFunction() {
-            NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
-                                                                     () -> FailedValidationExecutors.getStackTrimmingFailureExecutor(null));
-            Assertions.assertEquals(ValidityUtils.nullArgumentMessage("throwableFunction"),
-                                    exception.getMessage(),
-                                    "Failed validation executors should throw an exception for a null throwable function.");
-        }
-
-        @Test
-        void testFailedValidationExecutorThrowsExceptionForNullThrowableCreation() {
-            NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
-                                                                     () -> FailedValidationExecutors.getStackTrimmingFailureExecutor(str -> null).fail("", "", ""));
+                                                                     () -> new DefaultValidityFailedValidationExecutor<>(str -> null).fail("", "", ""));
             Assertions.assertEquals(ValidityUtils.nullThrowableFromFunction(),
                                     exception.getMessage(),
                                     "Failed validation executors should throw the expected exception for a null throwable created.");

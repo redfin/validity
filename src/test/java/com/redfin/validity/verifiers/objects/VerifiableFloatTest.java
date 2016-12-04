@@ -16,8 +16,8 @@
 
 package com.redfin.validity.verifiers.objects;
 
+import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
-import com.redfin.validity.FailedValidationExecutors;
 import com.redfin.validity.verifiers.AbstractVerifiableComparableNumberContract;
 
 final class VerifiableFloatTest implements AbstractVerifiableComparableNumberContract<IllegalArgumentException, Float, VerifiableFloat<IllegalArgumentException>> {
@@ -83,7 +83,7 @@ final class VerifiableFloatTest implements AbstractVerifiableComparableNumberCon
 
     @Override
     public FailedValidationExecutor<IllegalArgumentException> getFailedValidationExecutor() {
-        return FailedValidationExecutors.getDefaultFailureExecutor(IllegalArgumentException::new);
+        return new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
     }
 
     @Override
