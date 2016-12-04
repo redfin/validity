@@ -90,7 +90,7 @@ final class DefaultValidityFailedValidationExecutorTest {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Nested
-    final class DefaultFailedValidationExecutorTest implements NoStackTraceValidationExecutorsContract<IllegalStateException> {
+    final class DefaultValidityFailedValidationExecutorTestContainer implements NoStackTraceValidationExecutorsContract<IllegalStateException> {
 
         @Override
         public FailedValidationExecutor<IllegalStateException> getFailedValidationExecutor() {
