@@ -31,7 +31,9 @@ import com.redfin.validity.verifiers.objects.VerifiableCharacter;
 import com.redfin.validity.verifiers.objects.VerifiableClass;
 import com.redfin.validity.verifiers.objects.VerifiableCollection;
 import com.redfin.validity.verifiers.objects.VerifiableDouble;
+import com.redfin.validity.verifiers.objects.VerifiableDuration;
 import com.redfin.validity.verifiers.objects.VerifiableFloat;
+import com.redfin.validity.verifiers.objects.VerifiableInstant;
 import com.redfin.validity.verifiers.objects.VerifiableInteger;
 import com.redfin.validity.verifiers.objects.VerifiableLong;
 import com.redfin.validity.verifiers.objects.VerifiableObject;
@@ -45,6 +47,9 @@ import com.redfin.validity.verifiers.primitives.VerifiablePrimitiveFloat;
 import com.redfin.validity.verifiers.primitives.VerifiablePrimitiveInt;
 import com.redfin.validity.verifiers.primitives.VerifiablePrimitiveLong;
 import com.redfin.validity.verifiers.primitives.VerifiablePrimitiveShort;
+
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Collection;
 
 /**
@@ -242,6 +247,10 @@ public abstract class VerifiableFactory<X extends Throwable> {
     // Objects
     // - - - - - - - - - - - - - - - - - - - - - -
 
+    // - - - - - - - - - - - - - - - - -
+    // Boxed Primitive Types
+    // - - - - - - - - - - - - - - - - -
+
     /**
      * @param subject the object to perform validation on.
      * @return a {@link VerifiableBoolean} instance for the given subject.
@@ -264,25 +273,6 @@ public abstract class VerifiableFactory<X extends Throwable> {
      */
     public VerifiableCharacter<X> that(Character subject) {
         return new VerifiableCharacter<>(failedValidationExecutor, subject, message);
-    }
-
-    /**
-     * @param subject the object to perform validation on.
-     * @param <T> the class being validated.
-     * @return a {@link VerifiableClass} instance for the given subject.
-     */
-    public <T> VerifiableClass<T, X> that(Class<T> subject) {
-        return new VerifiableClass<>(failedValidationExecutor, subject, message);
-    }
-
-    /**
-     * @param subject the object to perform validation on.
-     * @param <E> the type of the objects in the collection.
-     * @param <T> the type of the Collection (e.g. list, map, etc).
-     * @return a {@link VerifiableCollection} instance for the given subject.
-     */
-    public <E, T extends Collection<E>> VerifiableCollection<E, T, X> that(T subject) {
-        return new VerifiableCollection<>(failedValidationExecutor, subject, message);
     }
 
     /**
@@ -318,6 +308,65 @@ public abstract class VerifiableFactory<X extends Throwable> {
     }
 
     /**
+     * @param subject the object to perform validation on.
+     * @return a {@link VerifiableShort} instance for the given subject.
+     */
+    public VerifiableShort<X> that(Short subject) {
+        return new VerifiableShort<>(failedValidationExecutor, subject, message);
+    }
+
+    // - - - - - - - - - - - - - - - - -
+    // Time Object Types
+    // - - - - - - - - - - - - - - - - -
+
+    /**
+     * @param subject the object to perform validation on.
+     * @return a {@link VerifiableDuration} instance for the given subject.
+     */
+    public VerifiableDuration<X> that(Duration subject) {
+        return new VerifiableDuration<>(failedValidationExecutor, subject, message);
+    }
+
+    /**
+     * @param subject the object to perform validation on.
+     * @return a {@link VerifiableInstant} instance for the given subject.
+     */
+    public VerifiableInstant<X> that(Instant subject) {
+        return new VerifiableInstant<>(failedValidationExecutor, subject, message);
+    }
+
+    // - - - - - - - - - - - - - - - - -
+    // Other Object Types
+    // - - - - - - - - - - - - - - - - -
+
+    /**
+     * @param subject the object to perform validation on.
+     * @param <T> the class being validated.
+     * @return a {@link VerifiableClass} instance for the given subject.
+     */
+    public <T> VerifiableClass<T, X> that(Class<T> subject) {
+        return new VerifiableClass<>(failedValidationExecutor, subject, message);
+    }
+
+    /**
+     * @param subject the object to perform validation on.
+     * @param <E> the type of the objects in the collection.
+     * @param <T> the type of the Collection (e.g. list, map, etc).
+     * @return a {@link VerifiableCollection} instance for the given subject.
+     */
+    public <E, T extends Collection<E>> VerifiableCollection<E, T, X> that(T subject) {
+        return new VerifiableCollection<>(failedValidationExecutor, subject, message);
+    }
+
+    /**
+     * @param subject the object to perform validation on.
+     * @return a {@link VerifiableString} instance for the given subject.
+     */
+    public VerifiableString<X> that(String subject) {
+        return new VerifiableString<>(failedValidationExecutor, subject, message);
+    }
+
+    /**
      * This is the default object validation for subjects that
      * don't match any of the other pre-defined types.
      *
@@ -327,22 +376,6 @@ public abstract class VerifiableFactory<X extends Throwable> {
      */
     public <T> VerifiableObject<T, X> that(T subject) {
         return new VerifiableObject<>(failedValidationExecutor, subject, message);
-    }
-
-    /**
-     * @param subject the object to perform validation on.
-     * @return a {@link VerifiableShort} instance for the given subject.
-     */
-    public VerifiableShort<X> that(Short subject) {
-        return new VerifiableShort<>(failedValidationExecutor, subject, message);
-    }
-
-    /**
-     * @param subject the object to perform validation on.
-     * @return a {@link VerifiableString} instance for the given subject.
-     */
-    public VerifiableString<X> that(String subject) {
-        return new VerifiableString<>(failedValidationExecutor, subject, message);
     }
 
     // --------------------------------------------------------------
