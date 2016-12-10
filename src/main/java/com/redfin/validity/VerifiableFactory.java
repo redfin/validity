@@ -89,6 +89,20 @@ public abstract class VerifiableFactory<X extends Throwable> {
         this.failedValidationExecutor = failedValidationExecutor;
     }
 
+    /**
+     * @return the message for this verifiable factory.
+     */
+    protected String getMessage() {
+        return message;
+    }
+
+    /**
+     * @return the {@link FailedValidationExecutor} for this verifiable factory.
+     */
+    protected FailedValidationExecutor<X> getFailedValidationExecutor() {
+        return failedValidationExecutor;
+    }
+
     // --------------------------------------------------------------
     // Factory Methods
     // --------------------------------------------------------------

@@ -63,4 +63,16 @@ final class VerifiableFactoryTest {
                                 exception.getMessage(),
                                 "Should not be able to instantiate a VerifiableFactory with a null failed validation executor.");
     }
+
+    @Test
+    void testReturnsGivenMessage() {
+        Assertions.assertTrue( VALID_MESSAGE == new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR).getMessage(),
+                               "A verifiable factory should return the same string message instance it is given");
+    }
+
+    @Test
+    void testReturnsGivenExecutor() {
+        Assertions.assertTrue( VALIDATION_EXECUTOR == new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR).getFailedValidationExecutor(),
+                               "A verifiable factory should return the same FailedValidationExecutor instance it is given");
+    }
 }
