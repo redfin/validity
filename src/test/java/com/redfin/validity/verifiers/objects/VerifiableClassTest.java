@@ -82,14 +82,14 @@ final class VerifiableClassTest implements AbstractVerifiableObjectContract<Ille
     void testIsAssignableToThrowsExceptionForNotAssignableClass() {
         Class<?> subject = getSubject();
         VerifiableClass<?, IllegalArgumentException> verifiable = getInstance(subject);
-        Assertions.expectThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.isAssignableFrom(AssertionError.class));
     }
 
     @Test
     void testIsAssignableToThrowsExceptionForNullSubject() {
         VerifiableClass<?, IllegalArgumentException> verifiable = getInstance(null);
-        Assertions.expectThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.isAssignableFrom(IllegalArgumentException.class));
     }
 

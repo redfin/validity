@@ -62,7 +62,7 @@ public interface AbstractVerifiablePrimitiveContract<X extends Throwable, T exte
 
     @Test
     default void testThrowsExpectedExceptionForNullFailedValidationExecutor() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> getAbstractVerifiablePrimitive(null, "hello"));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("failedValidationExecutor"),
                                 exception.getMessage(),

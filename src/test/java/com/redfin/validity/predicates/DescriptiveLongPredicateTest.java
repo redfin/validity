@@ -52,7 +52,7 @@ final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicate
 
     @Test
     void testDescriptiveLongPredicateConstructorThrowsExceptionForNullPredicate() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> new DescriptiveLongPredicate(VALID_DESCRIPTION, null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("predicate"),
                                 exception.getMessage(),

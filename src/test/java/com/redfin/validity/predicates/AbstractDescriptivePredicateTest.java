@@ -29,7 +29,7 @@ final class AbstractDescriptivePredicateTest {
     @Test
     void testDescribeOtherThrowsExceptionForNull() {
         String message = ValidityUtils.nullArgumentMessage("other");
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> AbstractDescriptivePredicate.describeOther(null));
         Assertions.assertEquals(message,
                                 exception.getMessage(),

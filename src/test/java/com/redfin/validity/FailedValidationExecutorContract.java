@@ -53,7 +53,7 @@ interface FailedValidationExecutorContract<X extends Throwable> {
 
     @Test
     default void testValidationExecutorThrowsExpectedExceptionForNullExpected() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> getFailedValidationExecutor().fail(null, "subject", "message"));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),

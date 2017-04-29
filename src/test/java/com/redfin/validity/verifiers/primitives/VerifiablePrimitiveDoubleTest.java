@@ -312,7 +312,7 @@ final class VerifiablePrimitiveDoubleTest implements AbstractVerifiablePrimitive
     void testSatisfiesThrowsForNullPredicate() {
         double subject = 0;
         VerifiablePrimitiveDouble<IllegalArgumentException> verifiable = getInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.satisfies(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),

@@ -52,7 +52,7 @@ final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredica
 
     @Test
     void testDescriptiveDoublePredicateConstructorThrowsExceptionForNullPredicate() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> new DescriptiveDoublePredicate(VALID_DESCRIPTION, null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("predicate"),
                                 exception.getMessage(),

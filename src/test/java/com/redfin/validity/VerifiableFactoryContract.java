@@ -31,7 +31,9 @@ import com.redfin.validity.verifiers.objects.VerifiableCharacter;
 import com.redfin.validity.verifiers.objects.VerifiableClass;
 import com.redfin.validity.verifiers.objects.VerifiableCollection;
 import com.redfin.validity.verifiers.objects.VerifiableDouble;
+import com.redfin.validity.verifiers.objects.VerifiableDuration;
 import com.redfin.validity.verifiers.objects.VerifiableFloat;
+import com.redfin.validity.verifiers.objects.VerifiableInstant;
 import com.redfin.validity.verifiers.objects.VerifiableInteger;
 import com.redfin.validity.verifiers.objects.VerifiableLong;
 import com.redfin.validity.verifiers.objects.VerifiableObject;
@@ -47,6 +49,8 @@ import com.redfin.validity.verifiers.primitives.VerifiablePrimitiveLong;
 import com.redfin.validity.verifiers.primitives.VerifiablePrimitiveShort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -404,6 +408,34 @@ interface VerifiableFactoryContract<X extends Throwable> extends NotValueTypeCon
     default void testReturnsExpectedVerifiableShortForNullSubject() {
         Short subject = null;
         Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableShort<?>,
+                              "VerifiableFactory should have returned a non-null object of the expected type.");
+    }
+
+    @Test
+    default void testReturnsExpectedVerifiableDuration() {
+        Duration subject = Duration.ZERO;
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableDuration<?>,
+                              "VerifiableFactory should have returned a non-null object of the expected type.");
+    }
+
+    @Test
+    default void testReturnsExpectedVerifiableDurationForNullSubject() {
+        Duration subject = null;
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableDuration<?>,
+                              "VerifiableFactory should have returned a non-null object of the expected type.");
+    }
+
+    @Test
+    default void testReturnsExpectedVerifiableInstant() {
+        Instant subject = Instant.now();
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableInstant<?>,
+                              "VerifiableFactory should have returned a non-null object of the expected type.");
+    }
+
+    @Test
+    default void testReturnsExpectedVerifiableInstantForNullSubject() {
+        Instant subject = null;
+        Assertions.assertTrue(getNotValueTypeInstance().that(subject) instanceof VerifiableInstant<?>,
                               "VerifiableFactory should have returned a non-null object of the expected type.");
     }
 

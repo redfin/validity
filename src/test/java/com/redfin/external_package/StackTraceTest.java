@@ -53,7 +53,7 @@ final class StackTraceTest {
         Exception exception = new NullPointerException();
         Assumptions.assumeTrue(null != exception.getStackTrace() && exception.getStackTrace().length > 0,
                                "This test can only work if the JVM is filling in stack traces.");
-        IllegalArgumentException thrown = Assertions.expectThrows(IllegalArgumentException.class,
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class,
                                                                   () -> FVE.fail("expected", "subject", "message"));
         int firstLineNumber = exception.getStackTrace()[0].getLineNumber();
         Assertions.assertTrue(null != thrown.getStackTrace() && thrown.getStackTrace().length > 0,

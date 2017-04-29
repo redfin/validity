@@ -46,7 +46,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
 
     @Test
     void testNullArgumentMessageThrowsExceptionForNullName() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> ValidityUtils.nullArgumentMessage(null));
         Assertions.assertEquals("Cannot call nullArgumentMessage with a null argumentName",
                                 exception.getMessage(),

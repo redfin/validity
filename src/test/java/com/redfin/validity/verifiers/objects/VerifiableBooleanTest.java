@@ -72,13 +72,13 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
     @Test
     void testIsTrueThrowsForFalse() {
         Boolean subject = new Boolean(false);
-        Assertions.expectThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> getVerifiableInstance(subject).isTrue());
     }
 
     @Test
     void testIsTrueThrowsForNull() {
-        Assertions.expectThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> getVerifiableInstance(null).isTrue());
     }
 
@@ -92,13 +92,13 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
     @Test
     void testIsFalseThrowsForTrue() {
         Boolean subject = new Boolean(true);
-        Assertions.expectThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> getVerifiableInstance(subject).isFalse());
     }
 
     @Test
     void testIsFalseThrowsForNull() {
-        Assertions.expectThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> getVerifiableInstance(null).isFalse());
     }
 }

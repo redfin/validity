@@ -312,7 +312,7 @@ final class VerifiablePrimitiveIntTest implements AbstractVerifiablePrimitiveCon
     void testSatisfiesThrowsForNullPredicate() {
         int subject = 0;
         VerifiablePrimitiveInt<IllegalArgumentException> verifiable = getInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.satisfies(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),

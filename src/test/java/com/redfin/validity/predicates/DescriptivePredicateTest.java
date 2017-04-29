@@ -52,7 +52,7 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
 
     @Test
     void testDescriptivePredicateConstructorThrowsExceptionForNullPredicate() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> new DescriptivePredicate<>(VALID_DESCRIPTION, null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("predicate"),
                                 exception.getMessage(),

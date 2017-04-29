@@ -86,7 +86,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsComparableToThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isComparableTo(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
@@ -120,7 +120,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsNotComparableToThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isNotComparableTo(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
@@ -162,7 +162,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsGreaterThanThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isGreaterThan(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
@@ -204,7 +204,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsGreaterThanOrEqualToThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isGreaterThanOrEqualTo(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
@@ -246,7 +246,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsAtLeastThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isAtLeast(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
@@ -288,7 +288,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsLessThanThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isLessThan(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
@@ -330,7 +330,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsLessThanOrEqualToThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isLessThanOrEqualTo(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),
@@ -372,7 +372,7 @@ public interface AbstractVerifiableComparableContract<X extends Throwable, E ext
     default void testIsAtMostThrowsForNullOther() {
         E subject = getSubject();
         T verifiable = getVerifiableInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.isAtMost(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("other"),
                                 exception.getMessage(),

@@ -64,7 +64,7 @@ public interface NonInstantiableContract<T> {
 
     @Test
     default void testNonInstantiableClassThrowsErrorIfConstructorIsCalled() {
-        AssertionError error = Assertions.expectThrows(AssertionError.class,
+        AssertionError error = Assertions.assertThrows(AssertionError.class,
                                                        () -> {
                                                            try {
                                                                Constructor<T> constructor = getNonInstantiableClassObject().getDeclaredConstructor();

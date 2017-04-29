@@ -49,7 +49,7 @@ interface AbstractDescriptivePredicateContract <T extends AbstractDescriptivePre
 
     @Test
     default void testAbstractDescriptivePredicateConstructorThrowsExceptionForNullDescription() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> getInstance(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("description"),
                                 exception.getMessage(),
@@ -58,7 +58,7 @@ interface AbstractDescriptivePredicateContract <T extends AbstractDescriptivePre
 
     @Test
     default void testAbstractDescriptivePredicateConstructorThrowsExceptionForNonTokenDescription() {
-        IllegalArgumentException exception = Assertions.expectThrows(IllegalArgumentException.class,
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class,
                                                                      () -> getInstance("hello"));
         Assertions.assertEquals("A descriptive predicate must have the token in the description.",
                                 exception.getMessage(),

@@ -312,7 +312,7 @@ final class VerifiablePrimitiveByteTest implements AbstractVerifiablePrimitiveCo
     void testSatisfiesThrowsForNullPredicate() {
         byte subject = 0;
         VerifiablePrimitiveByte<IllegalArgumentException> verifiable = getInstance(subject);
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.satisfies(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),

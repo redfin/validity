@@ -110,7 +110,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
 
     @Test
     default void testAbstractVerifiableObjectConstructorThrowsExceptionForNullValidationExecutor() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> getVerifiableInstance(null, getSubject(), "message"));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("failedValidationExecutor"),
                                 exception.getMessage(),
@@ -260,7 +260,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     default void testSatisfiesThrowsForNullPredicate() throws X {
         E subject = getSubject();
         AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> verifiable.satisfies(null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),

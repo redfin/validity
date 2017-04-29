@@ -57,7 +57,7 @@ final class VerifiableFactoryTest {
 
     @Test
     void testConstructorThrowsExceptionForNullValidationExecutor() {
-        NullPointerException exception = Assertions.expectThrows(NullPointerException.class,
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
                                                                  () -> new TestVerifiableFactory(VALID_MESSAGE, null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("failedValidationExecutor"),
                                 exception.getMessage(),
