@@ -105,7 +105,7 @@ public final class VerifiablePrimitiveInt<X extends Throwable> extends AbstractV
      * @throws X if the subject is less than or equal to zero.
      */
     public int isStrictlyPositive() throws X {
-        return isGreaterThan((int) 0);
+        return isGreaterThan(0);
     }
 
     /**
@@ -113,7 +113,7 @@ public final class VerifiablePrimitiveInt<X extends Throwable> extends AbstractV
      * @throws X if the subject is greater than or equal to zero.
      */
     public int isStrictlyNegative() throws X {
-        return isLessThan((int) 0);
+        return isLessThan(0);
     }
 
     /**

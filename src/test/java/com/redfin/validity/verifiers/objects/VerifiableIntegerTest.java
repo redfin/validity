@@ -28,57 +28,57 @@ final class VerifiableIntegerTest implements AbstractVerifiableComparableNumberC
 
     @Override
     public Integer getSubject() {
-        return new Integer(0);
+        return 0;
     }
 
     @Override
     public Integer getEqualSubject() {
-        return new Integer(0);
+        return 0;
     }
 
     @Override
     public Integer getNonEqualSubject() {
-        return new Integer(1);
+        return 1;
     }
 
     @Override
     public Integer getComparableSubject() {
-        return new Integer(0);
+        return 0;
     }
 
     @Override
     public Integer getNonComparableSubject() {
-        return new Integer(1);
+        return 1;
     }
 
     @Override
     public Integer getLessThanSubject() {
-        return new Integer(-1);
+        return -1;
     }
 
     @Override
     public Integer getGreaterThanSubject() {
-        return new Integer(1);
+        return 1;
     }
 
     @Override
     public Integer getZeroSubject() {
-        return new Integer(0);
+        return 0;
     }
 
     @Override
     public Integer getNonZeroSubject() {
-        return new Integer(1);
+        return 1;
     }
 
     @Override
     public Integer getPositiveSubject() {
-        return new Integer(1);
+        return 1;
     }
 
     @Override
     public Integer getNegativeSubject() {
-        return new Integer(-1);
+        return -1;
     }
 
     @Override

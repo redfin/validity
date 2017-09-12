@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
  *
  * @param <T> the class that is being tested.
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public interface NotValueTypeContract<T> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +35,7 @@ public interface NotValueTypeContract<T> {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * @return the class object of the class being tested.
+     * @return an object instance of the class being tested.
      */
     T getNotValueTypeInstance();
 
@@ -43,16 +44,9 @@ public interface NotValueTypeContract<T> {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Test
-    default void testNotValueTypeInstanceThrowsExceptionForEqualsWithNonNullValue() {
+    default void testNotValueTypeInstanceThrowsExceptionForEquals() {
         Assertions.assertThrows(UnsupportedOperationException.class,
-                                () -> getNotValueTypeInstance().equals(null));
-    }
-
-    @Test
-    default void testNotValueTypeInstanceThrowsExceptionForEqualsWithSelf() {
-        T instance = getNotValueTypeInstance();
-        Assertions.assertThrows(UnsupportedOperationException.class,
-                                () -> instance.equals(instance));
+                                () -> getNotValueTypeInstance().equals(getNotValueTypeInstance()));
     }
 
     @Test

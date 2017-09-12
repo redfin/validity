@@ -66,7 +66,7 @@ interface AbstractDescriptivePredicateContract <T extends AbstractDescriptivePre
     }
 
     @Test
-    default void testAbstractDescriptivePredicateGetNegatedDescriptionReturnsExpectedSring() {
+    default void testAbstractDescriptivePredicateGetNegatedDescriptionReturnsExpectedString() {
         String description = "null != " + AbstractDescriptivePredicate.TOKEN;
         Assertions.assertEquals(String.format("!(%s)", description),
                                 getInstance(description).getNegateDescription(),
@@ -74,7 +74,7 @@ interface AbstractDescriptivePredicateContract <T extends AbstractDescriptivePre
     }
 
     @Test
-    default void testAbstractDescriptivePredicateGetAndDescriptionReturnsExpectedSring() {
+    default void testAbstractDescriptivePredicateGetAndDescriptionReturnsExpectedString() {
         String description = "null != " + AbstractDescriptivePredicate.TOKEN;
         String otherDescription =  AbstractDescriptivePredicate.TOKEN + ".isEmpty()";
         Assertions.assertEquals(String.format("(%s) && (%s)", description, otherDescription),
@@ -83,7 +83,7 @@ interface AbstractDescriptivePredicateContract <T extends AbstractDescriptivePre
     }
 
     @Test
-    default void testAbstractDescriptivePredicateGetOrDescriptionReturnsExpectedSring() {
+    default void testAbstractDescriptivePredicateGetOrDescriptionReturnsExpectedString() {
         String description = "null != " + AbstractDescriptivePredicate.TOKEN;
         String otherDescription = AbstractDescriptivePredicate.TOKEN + ".isEmpty()";
         Assertions.assertEquals(String.format("(%s) || (%s)", description, otherDescription),

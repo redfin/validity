@@ -19,6 +19,8 @@ package com.redfin.validity.predicates;
 import com.redfin.validity.ValidityUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Objects;
 import java.util.function.Predicate;
 
 final class DescriptivePredicateTest implements AbstractDescriptivePredicateContract<DescriptivePredicate> {
@@ -28,7 +30,7 @@ final class DescriptivePredicateTest implements AbstractDescriptivePredicateCont
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private static final String VALID_DESCRIPTION = "null != " + AbstractDescriptivePredicate.TOKEN;
-    private static final Predicate<String> VALID_PREDICATE = t -> null != t;
+    private static final Predicate<String> VALID_PREDICATE = Objects::nonNull;
 
     @Override
     public DescriptivePredicate<String> getNotValueTypeInstance() {

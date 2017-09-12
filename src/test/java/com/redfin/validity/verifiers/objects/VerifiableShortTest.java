@@ -28,57 +28,57 @@ final class VerifiableShortTest implements AbstractVerifiableComparableNumberCon
 
     @Override
     public Short getSubject() {
-        return new Short((short) 0);
+        return 0;
     }
 
     @Override
     public Short getEqualSubject() {
-        return new Short((short) 0);
+        return 0;
     }
 
     @Override
     public Short getNonEqualSubject() {
-        return new Short((short) 1);
+        return 1;
     }
 
     @Override
     public Short getComparableSubject() {
-        return new Short((short) 0);
+        return 0;
     }
 
     @Override
     public Short getNonComparableSubject() {
-        return new Short((short) 1);
+        return 1;
     }
 
     @Override
     public Short getLessThanSubject() {
-        return new Short((short) -1);
+        return -1;
     }
 
     @Override
     public Short getGreaterThanSubject() {
-        return new Short((short) 1);
+        return 1;
     }
 
     @Override
     public Short getZeroSubject() {
-        return new Short((short) 0);
+        return 0;
     }
 
     @Override
     public Short getNonZeroSubject() {
-        return new Short((short) 1);
+        return 1;
     }
 
     @Override
     public Short getPositiveSubject() {
-        return new Short((short) 1);
+        return 1;
     }
 
     @Override
     public Short getNegativeSubject() {
-        return new Short((short) -1);
+        return -1;
     }
 
     @Override

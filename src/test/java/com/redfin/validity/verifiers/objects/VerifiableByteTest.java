@@ -28,57 +28,57 @@ final class VerifiableByteTest implements AbstractVerifiableComparableNumberCont
 
     @Override
     public Byte getSubject() {
-        return new Byte((byte) 0);
+        return 0;
     }
 
     @Override
     public Byte getEqualSubject() {
-        return new Byte((byte) 0);
+        return 0;
     }
 
     @Override
     public Byte getNonEqualSubject() {
-        return new Byte((byte) 1);
+        return 1;
     }
 
     @Override
     public Byte getComparableSubject() {
-        return new Byte((byte) 0);
+        return 0;
     }
 
     @Override
     public Byte getNonComparableSubject() {
-        return new Byte((byte) 1);
+        return 1;
     }
 
     @Override
     public Byte getLessThanSubject() {
-        return new Byte((byte) -1);
+        return -1;
     }
 
     @Override
     public Byte getGreaterThanSubject() {
-        return new Byte((byte) 1);
+        return 1;
     }
 
     @Override
     public Byte getZeroSubject() {
-        return new Byte((byte) 0);
+        return 0;
     }
 
     @Override
     public Byte getNonZeroSubject() {
-        return new Byte((byte) 1);
+        return 1;
     }
 
     @Override
     public Byte getPositiveSubject() {
-        return new Byte((byte) 1);
+        return 1;
     }
 
     @Override
     public Byte getNegativeSubject() {
-        return new Byte((byte) -1);
+        return -1;
     }
 
     @Override

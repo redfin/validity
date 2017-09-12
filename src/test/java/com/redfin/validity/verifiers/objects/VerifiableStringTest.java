@@ -86,7 +86,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testIsEmptyReturnsSubjectForEmptySubject() {
         String subject = "";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isEmpty(),
+        Assertions.assertTrue(subject.equals(verifiable.isEmpty()),
                               "VerifiableString should return given subject for isEmpty with empty subject.");
     }
 
@@ -109,7 +109,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testIsNotEmptyReturnsSubjectForNotEmptySubject() {
         String subject = "hello";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isNotEmpty(),
+        Assertions.assertTrue(subject.equals(verifiable.isNotEmpty()),
                               "VerifiableString should return given subject for isNotEmpty with non-empty subject.");
     }
 
@@ -131,7 +131,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testStartsWithReturnsSubjectForMatchingSubject() {
         String subject = "hello";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.startsWith("h"),
+        Assertions.assertTrue(subject.equals(verifiable.startsWith("h")),
                               "VerifiableString should return given subject for startsWith with matching subject.");
     }
 
@@ -153,7 +153,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testDoesNotStartWithReturnsSubjectForNonMatchingSubject() {
         String subject = "hello";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.doesNotStartWith("world"),
+        Assertions.assertTrue(subject.equals(verifiable.doesNotStartWith("world")),
                               "VerifiableString should return given subject for doesNotStartWith with non-matching subject.");
     }
 
@@ -175,7 +175,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testEndsWithReturnsSubjectForMatchingSubject() {
         String subject = "hello";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.endsWith("o"),
+        Assertions.assertTrue(subject.equals(verifiable.endsWith("o")),
                               "VerifiableString should return given subject for endsWith with matching subject.");
     }
 
@@ -197,7 +197,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testDoesNotEndWithReturnsSubjectForNonMatchingSubject() {
         String subject = "hello";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.doesNotEndWith("h"),
+        Assertions.assertTrue(subject.equals(verifiable.doesNotEndWith("h")),
                               "VerifiableString should return given subject for doesNotEndWith with non-matching subject.");
     }
 
@@ -219,7 +219,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testMatchesReturnsSubjectForMatchingSubject() {
         String subject = "hello";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.matches(".*"),
+        Assertions.assertTrue(subject.equals(verifiable.matches(".*")),
                               "VerifiableString should return given subject for matches with matching subject.");
     }
 
@@ -241,7 +241,7 @@ final class VerifiableStringTest implements AbstractVerifiableComparableContract
     void testDoesNotMatchReturnsSubjectForNonMatchingSubject() {
         String subject = "hello";
         VerifiableString<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.doesNotMatch("h"),
+        Assertions.assertTrue(subject.equals(verifiable.doesNotMatch("h")),
                               "VerifiableString should return given subject for doesNotMatch with non-matching subject.");
     }
 

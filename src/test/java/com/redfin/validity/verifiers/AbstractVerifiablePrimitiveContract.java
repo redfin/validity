@@ -79,7 +79,7 @@ public interface AbstractVerifiablePrimitiveContract<X extends Throwable, T exte
     @Test
     default void testReturnsGivenMessageInstance() {
         String message = "hello";
-        Assertions.assertTrue(message == getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), message).getMessage(),
+        Assertions.assertTrue(message .equals(getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), message).getMessage()),
                               "AbstractVerifiablePrimitive should return the expected validation executor.");
     }
 }

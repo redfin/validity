@@ -61,7 +61,7 @@ public interface AbstractVerifiableComparableNumberContract<X extends Throwable,
     default void testIsZeroReturnsSubjectForZeroSubject() throws X {
         E subject = getZeroSubject();
         T verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isZero(),
+        Assertions.assertTrue(subject.equals(verifiable.isZero()),
                               "Should return the given subject for isZero with a zero subject.");
     }
 
@@ -84,7 +84,7 @@ public interface AbstractVerifiableComparableNumberContract<X extends Throwable,
     default void testIsNotZeroReturnsSubjectForNonZeroSubject() throws X {
         E subject = getNonZeroSubject();
         T verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isNotZero(),
+        Assertions.assertTrue(subject.equals(verifiable.isNotZero()),
                               "Should return the given subject for isNotZero with a non-zero subject.");
     }
 
@@ -107,7 +107,7 @@ public interface AbstractVerifiableComparableNumberContract<X extends Throwable,
     default void testIsStrictlyPositiveReturnsSubjectForPositiveSubject() throws X {
         E subject = getPositiveSubject();
         T verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isStrictlyPositive(),
+        Assertions.assertTrue(subject.equals(verifiable.isStrictlyPositive()),
                               "Should return the given subject for isStrictlyPositive with a positive subject.");
     }
 
@@ -138,7 +138,7 @@ public interface AbstractVerifiableComparableNumberContract<X extends Throwable,
     default void testIsStrictlyNegativeReturnsSubjectForNegativeSubject() throws X {
         E subject = getNegativeSubject();
         T verifiable = getVerifiableInstance(subject);
-        Assertions.assertTrue(subject == verifiable.isStrictlyNegative(),
+        Assertions.assertTrue(subject.equals(verifiable.isStrictlyNegative()),
                               "Should return the given subject for isStrictlyNegative with a negative subject.");
     }
 

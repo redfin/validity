@@ -26,7 +26,7 @@ final class DefaultValidityFailedValidationExecutorTest {
     // Test values & contract implementations
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private interface ValidationExecutorsMessageContract<X extends Throwable> extends FailedValidationExecutorContract<X> {
+    interface ValidationExecutorsMessageContract<X extends Throwable> extends FailedValidationExecutorContract<X> {
 
         String MESSAGE_FORMAT = "%s\n    expected : %s\n     subject : <%s>";
 
@@ -60,7 +60,7 @@ final class DefaultValidityFailedValidationExecutorTest {
         }
     }
 
-    private interface NoStackTraceValidationExecutorsContract<X extends Throwable> extends ValidationExecutorsMessageContract<X> {
+    interface NoStackTraceValidationExecutorsContract<X extends Throwable> extends ValidationExecutorsMessageContract<X> {
 
         final class NoStackRuntimeException extends RuntimeException {
             NoStackRuntimeException(String message) {

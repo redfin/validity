@@ -30,37 +30,37 @@ final class VerifiableCharacterTest implements AbstractVerifiableComparableContr
 
     @Override
     public Character getSubject() {
-        return new Character('b');
+        return 'b';
     }
 
     @Override
     public Character getEqualSubject() {
-        return new Character('b');
+        return 'b';
     }
 
     @Override
     public Character getNonEqualSubject() {
-        return new Character('c');
+        return 'c';
     }
 
     @Override
     public Character getComparableSubject() {
-        return new Character('b');
+        return 'b';
     }
 
     @Override
     public Character getNonComparableSubject() {
-        return new Character('c');
+        return 'c';
     }
 
     @Override
     public Character getLessThanSubject() {
-        return new Character('a');
+        return 'a';
     }
 
     @Override
     public Character getGreaterThanSubject() {
-        return new Character('c');
+        return 'c';
     }
 
     @Override
@@ -95,15 +95,14 @@ final class VerifiableCharacterTest implements AbstractVerifiableComparableContr
         Character subject = 'a';
         VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isUpperCase());
+                                verifiable::isUpperCase);
     }
 
     @Test
     void testIsUpperCaseThrowsForNull() {
-        Character subject = null;
-        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isUpperCase());
+                                verifiable::isUpperCase);
     }
 
     @Test
@@ -111,7 +110,7 @@ final class VerifiableCharacterTest implements AbstractVerifiableComparableContr
         Character subject = 'A';
         VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isLowerCase());
+                                verifiable::isLowerCase);
     }
 
     @Test
@@ -124,10 +123,9 @@ final class VerifiableCharacterTest implements AbstractVerifiableComparableContr
 
     @Test
     void testIsLowerCaseThrowsForNull() {
-        Character subject = null;
-        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isLowerCase());
+                                verifiable::isLowerCase);
     }
 
     @Test
@@ -151,15 +149,14 @@ final class VerifiableCharacterTest implements AbstractVerifiableComparableContr
         Character subject = '\n';
         VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isLetterOrDigit());
+                                verifiable::isLetterOrDigit);
     }
 
     @Test
     void testIsLetterOrDigitThrowsForNull() {
-        Character subject = null;
-        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isLetterOrDigit());
+                                verifiable::isLetterOrDigit);
     }
 
     @Test
@@ -175,15 +172,14 @@ final class VerifiableCharacterTest implements AbstractVerifiableComparableContr
         Character subject = '0';
         VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isAlphabetic());
+                                verifiable::isAlphabetic);
     }
 
     @Test
     void testIsAlphabeticThrowsForNull() {
-        Character subject = null;
-        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isAlphabetic());
+                                verifiable::isAlphabetic);
     }
 
     @Test
@@ -199,14 +195,13 @@ final class VerifiableCharacterTest implements AbstractVerifiableComparableContr
         Character subject = 'a';
         VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isDigit());
+                                verifiable::isDigit);
     }
 
     @Test
     void testIsDigitThrowsForNull() {
-        Character subject = null;
-        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        VerifiableCharacter<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> verifiable.isDigit());
+                                verifiable::isDigit);
     }
 }

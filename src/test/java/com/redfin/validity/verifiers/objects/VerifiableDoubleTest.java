@@ -28,57 +28,57 @@ final class VerifiableDoubleTest implements AbstractVerifiableComparableNumberCo
 
     @Override
     public Double getSubject() {
-        return new Double(0);
+        return 0d;
     }
 
     @Override
     public Double getEqualSubject() {
-        return new Double(0);
+        return 0d;
     }
 
     @Override
     public Double getNonEqualSubject() {
-        return new Double(1);
+        return 1d;
     }
 
     @Override
     public Double getComparableSubject() {
-        return new Double(0);
+        return 0d;
     }
 
     @Override
     public Double getNonComparableSubject() {
-        return new Double(1);
+        return 1d;
     }
 
     @Override
     public Double getLessThanSubject() {
-        return new Double(-1);
+        return (double) -1;
     }
 
     @Override
     public Double getGreaterThanSubject() {
-        return new Double(1);
+        return 1d;
     }
 
     @Override
     public Double getZeroSubject() {
-        return new Double(0);
+        return 0d;
     }
 
     @Override
     public Double getNonZeroSubject() {
-        return new Double(1);
+        return 1d;
     }
 
     @Override
     public Double getPositiveSubject() {
-        return new Double(1);
+        return 1d;
     }
 
     @Override
     public Double getNegativeSubject() {
-        return new Double(-1);
+        return (double) -1;
     }
 
     @Override

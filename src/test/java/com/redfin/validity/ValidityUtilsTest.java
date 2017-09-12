@@ -24,6 +24,7 @@ import com.redfin.validity.predicates.DescriptivePredicate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -75,7 +76,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     // - - - - - - - - - - - - - - - - - - - - - -
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayBoolean() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayBoolean() {
         boolean[] subject = { true };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -83,7 +84,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayByte() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayByte() {
         byte[] subject = { 0 };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -91,7 +92,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayChar() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayChar() {
         char[] subject = { 0 };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -99,7 +100,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayDouble() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayDouble() {
         double[] subject = { 0 };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -107,7 +108,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayFloat() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayFloat() {
         float[] subject = { 0 };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -115,7 +116,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayInt() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayInt() {
         int[] subject = { 0 };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -123,7 +124,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayLong() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayLong() {
         long[] subject = { 0 };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -131,7 +132,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
     }
 
     @Test
-    void testDescribeReturnsExpectedResultForPrimityArrayShort() {
+    void testDescribeReturnsExpectedResultForPrimitiveArrayShort() {
         short[] subject = { 0 };
         Assertions.assertEquals(Arrays.toString(subject),
                                 ValidityUtils.describe(subject),
@@ -213,7 +214,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
 
     @Test
     void testDescribePredicateReturnsExpectedStringForNonDescriptive() {
-        Predicate<String> predicate = t -> null != t;
+        Predicate<String> predicate = Objects::nonNull;
         Assertions.assertEquals(ValidityUtils.unknownPredicatePrefix() + predicate.toString(),
                                 ValidityUtils.describe(predicate),
                                 "Non descriptive predicate should be consistently described.");
@@ -221,7 +222,7 @@ final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> 
 
     @Test
     void testDescribePredicateReturnsExpectedStringForDescriptive() {
-        DescriptivePredicate<String> predicate = new DescriptivePredicate<>(AbstractDescriptivePredicate.TOKEN, t -> null != t);
+        DescriptivePredicate<String> predicate = new DescriptivePredicate<>(AbstractDescriptivePredicate.TOKEN, Objects::nonNull);
         Assertions.assertEquals(predicate.toString(),
                                 ValidityUtils.describe(predicate),
                                 "Descriptive predicate should be described by their own toString method.");

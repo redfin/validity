@@ -28,57 +28,57 @@ final class VerifiableLongTest implements AbstractVerifiableComparableNumberCont
 
     @Override
     public Long getSubject() {
-        return new Long(0);
+        return 0L;
     }
 
     @Override
     public Long getEqualSubject() {
-        return new Long(0);
+        return 0L;
     }
 
     @Override
     public Long getNonEqualSubject() {
-        return new Long(1);
+        return 1L;
     }
 
     @Override
     public Long getComparableSubject() {
-        return new Long(0);
+        return 0L;
     }
 
     @Override
     public Long getNonComparableSubject() {
-        return new Long(1);
+        return 1L;
     }
 
     @Override
     public Long getLessThanSubject() {
-        return new Long(-1);
+        return (long) -1;
     }
 
     @Override
     public Long getGreaterThanSubject() {
-        return new Long(1);
+        return 1L;
     }
 
     @Override
     public Long getZeroSubject() {
-        return new Long(0);
+        return 0L;
     }
 
     @Override
     public Long getNonZeroSubject() {
-        return new Long(1);
+        return 1L;
     }
 
     @Override
     public Long getPositiveSubject() {
-        return new Long(1);
+        return 1L;
     }
 
     @Override
     public Long getNegativeSubject() {
-        return new Long(-1);
+        return (long) -1;
     }
 
     @Override

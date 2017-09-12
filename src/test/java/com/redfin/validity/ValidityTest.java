@@ -27,7 +27,7 @@ final class ValidityTest implements VerifiableFactoryContract<IllegalArgumentExc
 
     @Override
     public Validity getNotValueTypeInstance() {
-        return Validity.require();
+        return Validity.validate();
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,38 +36,38 @@ final class ValidityTest implements VerifiableFactoryContract<IllegalArgumentExc
 
     @Test
     void testRequireReturnsNonNull() {
-        Assertions.assertNotNull(Validity.require(),
-                                 "Validity require should return a non null object.");
+        Assertions.assertNotNull(Validity.validate(),
+                                 "Validity validate should return a non null object.");
     }
 
     @Test
     void testRequireWithMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.require("hello"),
-                                 "Validity require with message should return a non null object.");
+        Assertions.assertNotNull(Validity.withMessage("hello").validate(),
+                                 "Validity validate with message should return a non null object.");
+    }
+
+    @Test
+    void testRequireWithNullMessageReturnsNonNullValidityBuilder() {
+        Assertions.assertNotNull(Validity.withMessage(null),
+                                 "Validity with null message should return a non null object.");
     }
 
     @Test
     void testRequireWithNullMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.require(null),
-                                 "Validity require with null message should return a non null object.");
+        Assertions.assertNotNull(Validity.withMessage(null).validate(),
+                                 "Validity validate with null message should return a non null object.");
     }
 
     @Test
     void testRepeatedAssertsReturnsSameInstance() {
-        Assertions.assertTrue(Validity.require() == Validity.require(),
-                              "Repeated calls to require should return the same instance.");
+        Assertions.assertTrue(Validity.validate() == Validity.validate(),
+                              "Repeated calls to validate should return the same instance.");
     }
 
     @Test
     void testRepeatedAssertsWithMessagesReturnDifferentInstances() {
         String message = "hello";
-        Assertions.assertFalse(Validity.require(message) == Validity.require(message),
-                               "Repeated calls to require with message should return different instances.");
-    }
-
-    @Test
-    void testRequireWithNullMessageReturnsSameInstanceAsAssertWithoutMessage() {
-        Assertions.assertTrue(Validity.require(null) == Validity.require(),
-                              "Calling require with null message should return the same instance as asserts without message.");
+        Assertions.assertFalse(Validity.withMessage(message).validate() == Validity.withMessage(message).validate(),
+                               "Repeated calls to validate with message should return different instances.");
     }
 }

@@ -22,6 +22,8 @@ import com.redfin.validity.ValidityUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 /**
  * A test contract that validates that the class under test is
  * maintaining the contract of its {@link AbstractVerifiableObject} super class.
@@ -138,7 +140,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     @Test
     default void testGetFailedValidationExecutorReturnsGivenMessage() {
         String message = "message";
-        Assertions.assertTrue(message == getVerifiableInstance(getFailedValidationExecutor(), getSubject(), message).getMessage(),
+        Assertions.assertTrue(message.equals(getVerifiableInstance(getFailedValidationExecutor(), getSubject(), message).getMessage()),
                               "An AbstractVerifiableObject should return the given subject.");
     }
 
@@ -239,13 +241,12 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
                                 () -> verifiable.isNotEqualTo(getEqualSubject()));
     }
 
-
     @Test
     default void testSatisfiesReturnsSubjectForSatisfiedPredicate() throws X {
         E subject = getSubject();
         AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
-        Assertions.assertTrue(subject == verifiable.satisfies(t -> null != t),
-                              "An AbstractVerfiableObject should return the given subject for satisfied predicate.");
+        Assertions.assertTrue(subject == verifiable.satisfies(Objects::nonNull),
+                              "An AbstractVerifiableObject should return the given subject for satisfied predicate.");
     }
 
     @Test
@@ -253,7 +254,7 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
         E subject = getSubject();
         AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, "message");
         Assertions.assertThrows(getThrowableClass(),
-                                () -> verifiable.satisfies(t -> null == t));
+                                () -> verifiable.satisfies(Objects::isNull));
     }
 
     @Test

@@ -45,14 +45,20 @@ final class VerifiableFactoryTest {
 
     @Test
     void testCanInstantiateWithValidArguments() {
-        Assertions.assertNotNull(new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR),
-                                 "Should be able to instantiate a VerifiableFactory with valid arguments.");
+        try {
+            new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR);
+        } catch (Throwable thrown) {
+            throw new RuntimeException("Should be able to instantiate a VerifiableFactory with valid arguments", thrown);
+        }
     }
 
     @Test
     void testCanInstantiateWithNullMessage() {
-        Assertions.assertNotNull(new TestVerifiableFactory(null, VALIDATION_EXECUTOR),
-                                 "Should be able to instantiate a VerifiableFactory with a null message.");
+        try {
+            new TestVerifiableFactory(null, VALIDATION_EXECUTOR);
+        } catch (Throwable thrown) {
+            throw new RuntimeException("Should be able to instantiate a VerifiableFactory with a null message", thrown);
+        }
     }
 
     @Test
@@ -66,13 +72,13 @@ final class VerifiableFactoryTest {
 
     @Test
     void testReturnsGivenMessage() {
-        Assertions.assertTrue( VALID_MESSAGE == new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR).getMessage(),
+        Assertions.assertTrue( VALID_MESSAGE.equals(new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR).getMessage()),
                                "A verifiable factory should return the same string message instance it is given");
     }
 
     @Test
     void testReturnsGivenExecutor() {
-        Assertions.assertTrue( VALIDATION_EXECUTOR == new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR).getFailedValidationExecutor(),
+        Assertions.assertTrue( VALIDATION_EXECUTOR.equals(new TestVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR).getFailedValidationExecutor()),
                                "A verifiable factory should return the same FailedValidationExecutor instance it is given");
     }
 }

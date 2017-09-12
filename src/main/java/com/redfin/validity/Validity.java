@@ -53,7 +53,7 @@ public final class Validity extends VerifiableFactory<IllegalArgumentException> 
      * @return a {@link Validity} instance with the default message
      * prefix.
      */
-    public static Validity require() {
+    public static Validity validate() {
         return NO_MESSAGE_INSTANCE;
     }
 
@@ -61,13 +61,34 @@ public final class Validity extends VerifiableFactory<IllegalArgumentException> 
      * @param message the String message to use as a prefix for the validation.
      *                May be null.
      *
-     * @return a {@link Validity} instance with the given message prefix.
-     * If the given message is null this is the same as calling {@link #require()}.
+     * @return a {@link ValidityBuilder} instance with the given message prefix.
      */
-    public static VerifiableFactory<IllegalArgumentException> require(String message) {
-        if (null == message) {
-            return NO_MESSAGE_INSTANCE;
-        } else {
+    public static ValidityBuilder withMessage(String message) {
+        return new ValidityBuilder(message);
+    }
+
+    /**
+     * Helper class to store the given message used when generating the
+     * {@link Validity} instance.
+     */
+    public static final class ValidityBuilder {
+
+        private final String message;
+
+        /**
+         * Create a new {@link ValidityBuilder} instance with the given string message.
+         *
+         * @param message the String message prefix for the build Validity instance.
+         */
+        public ValidityBuilder(String message) {
+            this.message = message;
+        }
+
+        /**
+         * @return a {@link Validity} instance with the message given when this builder
+         * was created.
+         */
+        public Validity validate() {
             return new Validity(message);
         }
     }

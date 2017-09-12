@@ -182,7 +182,7 @@ final class VerifiableArrayTest implements AbstractVerifiableObjectContract<Ille
     }
 
     @Test
-    void testHasLengthOfAtMosthrowsForSubjectWithNonMatchingLength() {
+    void testHasLengthOfAtMostThrowsForSubjectWithNonMatchingLength() {
         VerifiableArray<String, IllegalArgumentException> verifiable = getVerifiableInstance(new String[]{"hello"});
         Assertions.assertThrows(IllegalArgumentException.class,
                                 () -> verifiable.hasLengthOfAtMost(0));

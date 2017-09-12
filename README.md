@@ -20,7 +20,7 @@ To install, you can simply include the dependency from Maven Central:
 <dependency>
     <groupId>com.redfin</groupId>
     <artifactId>validity</artifactId>
-    <version>2.4.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -34,6 +34,16 @@ The validation also does not make any copies of the subject being validated.
 If the subject is mutable, it may have it's inner state changed in a way that would cause validation to fail after it's been validated. It is best practice when validating arguments to make a defensive copy and validating the copy to avoid an invariant being broken.
 An example of this would be if a list is handed to a method that verifies the list is not empty but then an external pointer to that list calls the clear method on it.
 This is not a concern when validating immutable types or primitive types.
+
+Be careful when using primitive boolean validation that they return the given subject, not a true value when validation passes.
+For example, `validate.that(false).isFalse()` will return `false`, not true.
+If the validation were to fail then it wouldn't return false, but would rather throw an exception.
+
+For best effect, you should statically import the two static `Validity` method entry points.
+```java
+import static com.redfin.validity.Validity.validate;
+import static com.redfin.validity.Validity.withMessage;
+```
 
 ## Customization
 
@@ -60,12 +70,15 @@ t -> null != t
 ### example
 
 ```java
+
+import static com.redfin.validity.Validity.validate;
+
 public final class Foo {
 
     private final int i;
 
     public Foo(int i) {
-        this.i = Validity.require().that(i).isStrictlyPositive();
+        this.i = validate().that(i).isStrictlyPositive();
     }
 }
 

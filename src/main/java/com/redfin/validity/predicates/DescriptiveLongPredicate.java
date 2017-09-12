@@ -43,7 +43,7 @@ public final class DescriptiveLongPredicate extends AbstractDescriptivePredicate
      * and should not contain the {@link AbstractDescriptivePredicate#VARIABLE} as a variable name
      * already in the description as that can lead to confusion.
      *
-     * @param description the String token-ized description for this instance.
+     * @param description the String tokenized description for this instance.
      *                    May not be null and must contain the token {@literal "{}"}.
      *                    Note including a single {@literal "t"} in the description as a variable
      *                    may lead to confusion as that is the name of the argument used in the toString

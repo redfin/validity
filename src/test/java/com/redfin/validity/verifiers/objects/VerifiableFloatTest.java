@@ -28,57 +28,57 @@ final class VerifiableFloatTest implements AbstractVerifiableComparableNumberCon
 
     @Override
     public Float getSubject() {
-        return new Float(0);
+        return 0f;
     }
 
     @Override
     public Float getEqualSubject() {
-        return new Float(0);
+        return 0f;
     }
 
     @Override
     public Float getNonEqualSubject() {
-        return new Float(1);
+        return 1f;
     }
 
     @Override
     public Float getComparableSubject() {
-        return new Float(0);
+        return 0f;
     }
 
     @Override
     public Float getNonComparableSubject() {
-        return new Float(1);
+        return 1f;
     }
 
     @Override
     public Float getLessThanSubject() {
-        return new Float(-1);
+        return (float) -1;
     }
 
     @Override
     public Float getGreaterThanSubject() {
-        return new Float(1);
+        return 1f;
     }
 
     @Override
     public Float getZeroSubject() {
-        return new Float(0);
+        return 0f;
     }
 
     @Override
     public Float getNonZeroSubject() {
-        return new Float(1);
+        return 1f;
     }
 
     @Override
     public Float getPositiveSubject() {
-        return new Float(1);
+        return 1f;
     }
 
     @Override
     public Float getNegativeSubject() {
-        return new Float(-1);
+        return (float) -1;
     }
 
     @Override

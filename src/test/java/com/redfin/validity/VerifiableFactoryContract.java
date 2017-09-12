@@ -54,6 +54,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@SuppressWarnings("ConstantConditions")
 interface VerifiableFactoryContract<X extends Throwable> extends NotValueTypeContract<VerifiableFactory<X>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

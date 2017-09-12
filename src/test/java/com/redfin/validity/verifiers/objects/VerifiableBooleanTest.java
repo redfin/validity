@@ -30,17 +30,17 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
 
     @Override
     public Boolean getSubject() {
-        return new Boolean(true);
+        return true;
     }
 
     @Override
     public Boolean getEqualSubject() {
-        return new Boolean(true);
+        return true;
     }
 
     @Override
     public Boolean getNonEqualSubject() {
-        return new Boolean(false);
+        return false;
     }
 
     @Override
@@ -64,16 +64,14 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
 
     @Test
     void testIsTrueReturnsSubjectForTrue() {
-        Boolean subject = new Boolean(true);
-        Assertions.assertTrue(subject == getVerifiableInstance(subject).isTrue(),
+        Assertions.assertTrue(getVerifiableInstance(true).isTrue(),
                               "VerifiableBoolean should return subject for isTrue with true subject.");
     }
 
     @Test
     void testIsTrueThrowsForFalse() {
-        Boolean subject = new Boolean(false);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> getVerifiableInstance(subject).isTrue());
+                                () -> getVerifiableInstance(false).isTrue());
     }
 
     @Test
@@ -84,16 +82,14 @@ final class VerifiableBooleanTest implements AbstractVerifiableObjectContract<Il
 
     @Test
     void testIsFalseReturnsSubjectForFalse() {
-        Boolean subject = new Boolean(false);
-        Assertions.assertTrue(subject == getVerifiableInstance(subject).isFalse(),
+        Assertions.assertFalse(getVerifiableInstance(false).isFalse(),
                               "VerifiableBoolean should return subject for isFalse with false subject.");
     }
 
     @Test
     void testIsFalseThrowsForTrue() {
-        Boolean subject = new Boolean(true);
         Assertions.assertThrows(IllegalArgumentException.class,
-                                () -> getVerifiableInstance(subject).isFalse());
+                                () -> getVerifiableInstance(true).isFalse());
     }
 
     @Test
