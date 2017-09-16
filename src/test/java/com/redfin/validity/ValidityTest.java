@@ -19,15 +19,15 @@ package com.redfin.validity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-final class ValidityTest implements VerifiableFactoryContract<IllegalArgumentException> {
+final class ValidityTest implements NonInstantiableContract<Validity> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Override
-    public Validity getNotValueTypeInstance() {
-        return Validity.validate();
+    public Class<Validity> getNonInstantiableClassObject() {
+        return Validity.class;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,33 +41,14 @@ final class ValidityTest implements VerifiableFactoryContract<IllegalArgumentExc
     }
 
     @Test
-    void testRequireWithMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.withMessage("hello").validate(),
-                                 "Validity validate with message should return a non null object.");
-    }
-
-    @Test
-    void testRequireWithNullMessageReturnsNonNullValidityBuilder() {
-        Assertions.assertNotNull(Validity.withMessage(null),
-                                 "Validity with null message should return a non null object.");
-    }
-
-    @Test
-    void testRequireWithNullMessageReturnsNonNull() {
-        Assertions.assertNotNull(Validity.withMessage(null).validate(),
-                                 "Validity validate with null message should return a non null object.");
-    }
-
-    @Test
-    void testRepeatedAssertsReturnsSameInstance() {
+    void testRepeatedCallsToValidateReturnTheSameInstance() {
         Assertions.assertTrue(Validity.validate() == Validity.validate(),
                               "Repeated calls to validate should return the same instance.");
     }
 
     @Test
-    void testRepeatedAssertsWithMessagesReturnDifferentInstances() {
-        String message = "hello";
-        Assertions.assertFalse(Validity.withMessage(message).validate() == Validity.withMessage(message).validate(),
-                               "Repeated calls to validate with message should return different instances.");
+    void testValidateReturnsFactoryWithNullMessage() {
+        Assertions.assertNull(Validity.validate().getMessage(),
+                              "Validity validate should return a factory with a null message.");
     }
 }

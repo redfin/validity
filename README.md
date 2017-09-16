@@ -20,7 +20,7 @@ To install, you can simply include the dependency from Maven Central:
 <dependency>
     <groupId>com.redfin</groupId>
     <artifactId>validity</artifactId>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
 </dependency>
 ```
 
@@ -39,18 +39,18 @@ Be careful when using primitive boolean validation that they return the given su
 For example, `validate.that(false).isFalse()` will return `false`, not true.
 If the validation were to fail then it wouldn't return false, but would rather throw an exception.
 
-For best effect, you should statically import the two static `Validity` method entry points.
+For best effect, you should statically import the static `Validity` method entry point.
 ```java
 import static com.redfin.validity.Validity.validate;
-import static com.redfin.validity.Validity.withMessage;
 ```
 
 ## Customization
 
 The verifiable types are implemented with generics so that if a company or project wants to use the library but have different behavior than the default, they can.
 
-A static class (like the `Validity` class itself) can be created that returns e a `VerifiableFactory` class with different `FailedValidationExecutor` implementations that handle the creation and throwing of Throwable's on failure. Implementations of that interface are where the stack trimming portions of the library are implemented.
-The `VerifiableFactory` class can be sub-classed to add new, custom, verifiable types or to customize the entry point for specific throwable types on validation failure.
+A static class (like the `Validity` class itself) can be created that returns a sub-class of the `AbstractVerifiableFactory` class with different `FailedValidationExecutor` implementations that handle the creation and throwing of Throwable's on failure.
+Implementations of that interface are where the stack trimming portions of the library are implemented.
+The `AbstractVerifiableFactory` class can be sub-classed to add new, custom, verifiable types or to customize the entry point for specific throwable types on validation failure.
 
 ## Descriptive Predicates
 
@@ -70,7 +70,6 @@ t -> null != t
 ### example
 
 ```java
-
 import static com.redfin.validity.Validity.validate;
 
 public final class Foo {
@@ -78,7 +77,8 @@ public final class Foo {
     private final int i;
 
     public Foo(int i) {
-        this.i = validate().that(i).isStrictlyPositive();
+        this.i = validate().that(i)
+                           .isStrictlyPositive();
     }
 }
 
@@ -102,4 +102,22 @@ java.lang.IllegalArgumentException: Subject failed validation
     at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
     at java.lang.reflect.Method.invoke(Method.java:498)
     ... more lines below, truncated for space
+```
+
+### example 2 (custom message prefix)
+You can add in a custom prefix to the exception which would replace the "Subject failed validation" in the stack trace above.
+You do this by adding the `withMessage` message to the factory instance you get from Validity before adding the subject that is to be validated.
+```java
+import static com.redfin.validity.Validity.validate;
+
+public final class Foo {
+
+    private final int i;
+
+    public Foo(int i) {
+        this.i = validate().withMessage("A Foo instance needs a positive integer")
+                           .that(i)
+                           .isStrictlyPositive();
+    }
+}
 ```

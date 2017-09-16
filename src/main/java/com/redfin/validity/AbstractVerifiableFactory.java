@@ -56,8 +56,12 @@ import java.util.Collection;
  * An abstract class that acts as a factory. It holds the information passed in
  * until a test subject for validation is given. At that point the correct
  * type of verifiable is returned depending upon the type of the subject.
+ *
+ * @param <X> the type to be thrown from failed validation.
+ * @param <F> the type of the implementing sub-class.
  */
-public abstract class VerifiableFactory<X extends Throwable> {
+public abstract class AbstractVerifiableFactory<X extends Throwable,
+        F extends AbstractVerifiableFactory<X, F>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields
@@ -71,7 +75,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /**
-     * Create a new {@link VerifiableFactory} instance with the given message and failed validation
+     * Create a new {@link AbstractVerifiableFactory} instance with the given message and failed validation
      * executor.
      *
      * @param message                  the String message to pre-pend the failure message with, if necessary.
@@ -79,15 +83,43 @@ public abstract class VerifiableFactory<X extends Throwable> {
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to use in case
      *                                 of failed validation.
      *                                 May not be null.
+     *
      * @throws NullPointerException if failedValidationExecutor is null.
      */
-    public VerifiableFactory(String message, FailedValidationExecutor<X> failedValidationExecutor) {
+    public AbstractVerifiableFactory(String message, FailedValidationExecutor<X> failedValidationExecutor) {
         this.message = message;
         if (null == failedValidationExecutor) {
             throw new NullPointerException(ValidityUtils.nullArgumentMessage("failedValidationExecutor"));
         }
         this.failedValidationExecutor = failedValidationExecutor;
     }
+
+    /**
+     * @param message the String message prefix for the verifiable factory that is
+     *                to be returned.
+     *
+     * @return a new instance of the verifiable factory with the given message and the
+     * current failed validation executor.
+     */
+    public F withMessage(String message) {
+        return getFactory(message, failedValidationExecutor);
+    }
+
+    /**
+     * Get an instance of the verifiable factory with the given message
+     * and failed validation executor. It is not required that it be a
+     * new instance, but it must have the given message and validation executor.
+     *
+     * @param message the String message for the verifiable factory.
+     * @param failedValidationExecutor the failed validation executor for the factory.
+     *                                 May not be null.
+     * @return an instance of the implementing subclass verifiable factory with
+     * the given parameters.
+     *
+     * @throws IllegalArgumentException if failedValidationExecutor is null.
+     */
+    protected abstract F getFactory(String message,
+                                    FailedValidationExecutor<X> failedValidationExecutor);
 
     /**
      * @return the message for this verifiable factory.
@@ -118,7 +150,8 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
-     * @param <E> the type of the elements in the array.
+     * @param <E>     the type of the elements in the array.
+     *
      * @return a {@link VerifiableArray} instance for the given subject.
      */
     public <E> VerifiableArray<E, X> that(E[] subject) {
@@ -127,6 +160,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableBooleanArray} instance for the given subject.
      */
     public VerifiableBooleanArray<X> that(boolean[] subject) {
@@ -135,6 +169,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableByteArray} instance for the given subject.
      */
     public VerifiableByteArray<X> that(byte[] subject) {
@@ -143,6 +178,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableCharArray} instance for the given subject.
      */
     public VerifiableCharArray<X> that(char[] subject) {
@@ -151,6 +187,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableDoubleArray} instance for the given subject.
      */
     public VerifiableDoubleArray<X> that(double[] subject) {
@@ -159,6 +196,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableFloatArray} instance for the given subject.
      */
     public VerifiableFloatArray<X> that(float[] subject) {
@@ -167,6 +205,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableIntArray} instance for the given subject.
      */
     public VerifiableIntArray<X> that(int[] subject) {
@@ -175,6 +214,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableLongArray} instance for the given subject.
      */
     public VerifiableLongArray<X> that(long[] subject) {
@@ -183,6 +223,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableShortArray} instance for the given subject.
      */
     public VerifiableShortArray<X> that(short[] subject) {
@@ -195,6 +236,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveBoolean} instance for the given subject.
      */
     public VerifiablePrimitiveBoolean<X> that(boolean subject) {
@@ -203,6 +245,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveByte} instance for the given subject.
      */
     public VerifiablePrimitiveByte<X> that(byte subject) {
@@ -211,6 +254,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveChar} instance for the given subject.
      */
     public VerifiablePrimitiveChar<X> that(char subject) {
@@ -219,6 +263,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveDouble} instance for the given subject.
      */
     public VerifiablePrimitiveDouble<X> that(double subject) {
@@ -227,6 +272,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveFloat} instance for the given subject.
      */
     public VerifiablePrimitiveFloat<X> that(float subject) {
@@ -235,6 +281,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveInt} instance for the given subject.
      */
     public VerifiablePrimitiveInt<X> that(int subject) {
@@ -243,6 +290,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveLong} instance for the given subject.
      */
     public VerifiablePrimitiveLong<X> that(long subject) {
@@ -251,6 +299,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiablePrimitiveShort} instance for the given subject.
      */
     public VerifiablePrimitiveShort<X> that(short subject) {
@@ -267,6 +316,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableBoolean} instance for the given subject.
      */
     public VerifiableBoolean<X> that(Boolean subject) {
@@ -275,6 +325,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableByte} instance for the given subject.
      */
     public VerifiableByte<X> that(Byte subject) {
@@ -283,6 +334,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableCharacter} instance for the given subject.
      */
     public VerifiableCharacter<X> that(Character subject) {
@@ -291,6 +343,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableDouble} instance for the given subject.
      */
     public VerifiableDouble<X> that(Double subject) {
@@ -299,6 +352,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableFloat} instance for the given subject.
      */
     public VerifiableFloat<X> that(Float subject) {
@@ -307,6 +361,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableInteger} instance for the given subject.
      */
     public VerifiableInteger<X> that(Integer subject) {
@@ -315,6 +370,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableLong} instance for the given subject.
      */
     public VerifiableLong<X> that(Long subject) {
@@ -323,6 +379,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableShort} instance for the given subject.
      */
     public VerifiableShort<X> that(Short subject) {
@@ -335,6 +392,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableDuration} instance for the given subject.
      */
     public VerifiableDuration<X> that(Duration subject) {
@@ -343,6 +401,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableInstant} instance for the given subject.
      */
     public VerifiableInstant<X> that(Instant subject) {
@@ -355,7 +414,8 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
-     * @param <T> the class being validated.
+     * @param <T>     the class being validated.
+     *
      * @return a {@link VerifiableClass} instance for the given subject.
      */
     public <T> VerifiableClass<T, X> that(Class<T> subject) {
@@ -364,8 +424,9 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
-     * @param <E> the type of the objects in the collection.
-     * @param <T> the type of the Collection (e.g. list, map, etc).
+     * @param <E>     the type of the objects in the collection.
+     * @param <T>     the type of the Collection (e.g. list, map, etc).
+     *
      * @return a {@link VerifiableCollection} instance for the given subject.
      */
     public <E, T extends Collection<E>> VerifiableCollection<E, T, X> that(T subject) {
@@ -374,6 +435,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @param subject the object to perform validation on.
+     *
      * @return a {@link VerifiableString} instance for the given subject.
      */
     public VerifiableString<X> that(String subject) {
@@ -386,6 +448,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
      *
      * @param subject the object to perform validation on.
      * @param <T>     the type of the subject.
+     *
      * @return a {@link VerifiableObject} instance for the given subject.
      */
     public <T> VerifiableObject<T, X> that(T subject) {
@@ -398,7 +461,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @throws UnsupportedOperationException always.
-     * @deprecated VerifiableFactory objects cannot be tested for equality.
+     * @deprecated AbstractVerifiableFactory objects cannot be tested for equality.
      */
     @Deprecated
     @Override
@@ -408,7 +471,7 @@ public abstract class VerifiableFactory<X extends Throwable> {
 
     /**
      * @throws UnsupportedOperationException always.
-     * @deprecated VerifiableFactory objects cannot be hashed.
+     * @deprecated AbstractVerifiableFactory objects cannot be hashed.
      */
     @Deprecated
     @Override

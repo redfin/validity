@@ -17,11 +17,9 @@
 package com.redfin.validity;
 
 /**
- * The entry point for the Validity library. This is a specific sub-class
- * of the {@link VerifiableFactory} that throws {@link IllegalArgumentException}s on
- * validation failure.
+ * The entry point for the Validity library.
  */
-public final class Validity extends VerifiableFactory<IllegalArgumentException> {
+public final class Validity  {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constants
@@ -34,15 +32,12 @@ public final class Validity extends VerifiableFactory<IllegalArgumentException> 
      * message. If a message is, given, though, a new instance is required.
      */
 
-    private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE = new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
-    private static final Validity NO_MESSAGE_INSTANCE = new Validity(null);
+    private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE;
+    private static final ValidityVerifiableFactory NO_MESSAGE_INSTANCE;
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Instance Methods
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    private Validity(String message) {
-        super(message, VERIFY_FAILURE);
+    static {
+        VERIFY_FAILURE = new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
+        NO_MESSAGE_INSTANCE = new ValidityVerifiableFactory(null, VERIFY_FAILURE);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,43 +48,19 @@ public final class Validity extends VerifiableFactory<IllegalArgumentException> 
      * @return a {@link Validity} instance with the default message
      * prefix.
      */
-    public static Validity validate() {
+    public static ValidityVerifiableFactory validate() {
         return NO_MESSAGE_INSTANCE;
     }
 
-    /**
-     * @param message the String message to use as a prefix for the validation.
-     *                May be null.
-     *
-     * @return a {@link ValidityBuilder} instance with the given message prefix.
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Instance Methods
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    /*
+     * Make sure you cannot instantiate the static Validity class even with reflection.
      */
-    public static ValidityBuilder withMessage(String message) {
-        return new ValidityBuilder(message);
-    }
 
-    /**
-     * Helper class to store the given message used when generating the
-     * {@link Validity} instance.
-     */
-    public static final class ValidityBuilder {
-
-        private final String message;
-
-        /**
-         * Create a new {@link ValidityBuilder} instance with the given string message.
-         *
-         * @param message the String message prefix for the build Validity instance.
-         */
-        public ValidityBuilder(String message) {
-            this.message = message;
-        }
-
-        /**
-         * @return a {@link Validity} instance with the message given when this builder
-         * was created.
-         */
-        public Validity validate() {
-            return new Validity(message);
-        }
+    private Validity() {
+        throw new AssertionError(ValidityUtils.nonInstantiableMessage());
     }
 }
