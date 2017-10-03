@@ -61,7 +61,7 @@ import java.util.Collection;
  * @param <F> the type of the implementing sub-class.
  */
 public abstract class AbstractVerifiableFactory<X extends Throwable,
-        F extends AbstractVerifiableFactory<X, F>> {
+            F extends AbstractVerifiableFactory<X, F>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields

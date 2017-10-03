@@ -20,7 +20,8 @@ import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.verifiers.AbstractVerifiableComparableNumberContract;
 
-final class VerifiableByteTest implements AbstractVerifiableComparableNumberContract<IllegalArgumentException, Byte, VerifiableByte<IllegalArgumentException>> {
+final class VerifiableByteTest
+ implements AbstractVerifiableComparableNumberContract<IllegalArgumentException, Byte, VerifiableByte<IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

@@ -27,7 +27,8 @@ import java.lang.annotation.Annotation;
  * @param <T> the type of the class object being verified.
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableClass<T, X extends Throwable> extends AbstractVerifiableObject<Class<T>, X> {
+public final class VerifiableClass<T, X extends Throwable>
+           extends AbstractVerifiableObject<Class<T>, X> {
 
     /**
      * Create a new {@link VerifiableClass} instance with the given values.

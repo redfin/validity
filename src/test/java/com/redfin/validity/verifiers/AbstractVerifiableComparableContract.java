@@ -29,7 +29,8 @@ import org.junit.jupiter.api.Test;
  * @param <E> the generic type of the class under test.
  * @param <T> the type of the class under test.
  */
-public interface AbstractVerifiableComparableContract<X extends Throwable, E extends Comparable<E>, T extends AbstractVerifiableComparable<E, X>> extends NotValueTypeContract<T>, AbstractVerifiableObjectContract<X, E, T> {
+public interface AbstractVerifiableComparableContract<X extends Throwable, E extends Comparable<E>, T extends AbstractVerifiableComparable<E, X>>
+         extends NotValueTypeContract<T>, AbstractVerifiableObjectContract<X, E, T> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test contract requirements

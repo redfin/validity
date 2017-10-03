@@ -24,7 +24,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableObject;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableBoolean<X extends Throwable> extends AbstractVerifiableObject<Boolean, X> {
+public final class VerifiableBoolean<X extends Throwable>
+           extends AbstractVerifiableObject<Boolean, X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods

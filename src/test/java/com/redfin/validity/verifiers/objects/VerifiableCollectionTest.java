@@ -24,7 +24,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-final class VerifiableCollectionTest implements AbstractVerifiableObjectContract<IllegalArgumentException, List<String>, VerifiableCollection<String, List<String>, IllegalArgumentException>> {
+final class VerifiableCollectionTest
+ implements AbstractVerifiableObjectContract<IllegalArgumentException, List<String>, VerifiableCollection<String, List<String>, IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

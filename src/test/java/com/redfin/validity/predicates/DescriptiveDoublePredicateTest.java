@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.function.DoublePredicate;
 
-final class DescriptiveDoublePredicateTest implements AbstractDescriptivePredicateContract<DescriptiveDoublePredicate> {
+final class DescriptiveDoublePredicateTest
+ implements AbstractDescriptivePredicateContract<DescriptiveDoublePredicate> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

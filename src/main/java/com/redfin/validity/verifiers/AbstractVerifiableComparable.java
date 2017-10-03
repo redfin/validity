@@ -26,7 +26,8 @@ import com.redfin.validity.ValidityUtils;
  *            Must be a {@link Comparable} type.
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X extends Throwable> extends AbstractVerifiableObject<T, X> {
+public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X extends Throwable>
+              extends AbstractVerifiableObject<T, X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods

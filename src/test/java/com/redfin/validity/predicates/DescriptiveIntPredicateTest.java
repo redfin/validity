@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.function.IntPredicate;
 
-final class DescriptiveIntPredicateTest implements AbstractDescriptivePredicateContract<DescriptiveIntPredicate> {
+final class DescriptiveIntPredicateTest
+ implements AbstractDescriptivePredicateContract<DescriptiveIntPredicate> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

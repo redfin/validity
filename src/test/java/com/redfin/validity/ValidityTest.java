@@ -19,7 +19,8 @@ package com.redfin.validity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-final class ValidityTest implements NonInstantiableContract<Validity> {
+final class ValidityTest
+ implements NonInstantiableContract<Validity> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations
@@ -35,7 +36,7 @@ final class ValidityTest implements NonInstantiableContract<Validity> {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @Test
-    void testRequireReturnsNonNull() {
+    void testValidateReturnsNonNull() {
         Assertions.assertNotNull(Validity.validate(),
                                  "Validity validate should return a non null object.");
     }
@@ -50,5 +51,23 @@ final class ValidityTest implements NonInstantiableContract<Validity> {
     void testValidateReturnsFactoryWithNullMessage() {
         Assertions.assertNull(Validity.validate().getMessage(),
                               "Validity validate should return a factory with a null message.");
+    }
+
+    @Test
+    void testExpectReturnsNonNull() {
+        Assertions.assertNotNull(Validity.expect(),
+                                 "Validity expect should return a non null object.");
+    }
+
+    @Test
+    void testRepeatedCallsToExpectReturnTheSameInstance() {
+        Assertions.assertTrue(Validity.expect() == Validity.expect(),
+                              "Repeated calls to expect should return the same instance.");
+    }
+
+    @Test
+    void testExpectReturnsFactoryWithNullMessage() {
+        Assertions.assertNull(Validity.expect().getMessage(),
+                              "Validity expect should return a factory with a null message.");
     }
 }

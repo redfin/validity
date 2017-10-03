@@ -23,7 +23,9 @@ import java.util.function.DoublePredicate;
  * A class implementing the {@link DoublePredicate} interface.
  * This allows for the {@link DoublePredicate} behavior but with a nice, human-readable toString output.
  */
-public final class DescriptiveDoublePredicate extends AbstractDescriptivePredicate implements DoublePredicate {
+public final class DescriptiveDoublePredicate
+           extends AbstractDescriptivePredicate
+        implements DoublePredicate {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields

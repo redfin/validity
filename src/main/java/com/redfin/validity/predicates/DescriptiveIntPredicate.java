@@ -23,7 +23,9 @@ import java.util.function.IntPredicate;
  * A class implementing the {@link IntPredicate} interface.
  * This allows for the {@link IntPredicate} behavior but with a nice, human-readable toString output.
  */
-public final class DescriptiveIntPredicate extends AbstractDescriptivePredicate implements IntPredicate {
+public final class DescriptiveIntPredicate
+           extends AbstractDescriptivePredicate
+        implements IntPredicate {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields

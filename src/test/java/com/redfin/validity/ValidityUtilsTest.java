@@ -30,7 +30,8 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
-final class ValidityUtilsTest implements NonInstantiableContract<ValidityUtils> {
+final class ValidityUtilsTest
+ implements NonInstantiableContract<ValidityUtils> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

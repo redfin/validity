@@ -20,7 +20,7 @@ To install, you can simply include the dependency from Maven Central:
 <dependency>
     <groupId>com.redfin</groupId>
     <artifactId>validity</artifactId>
-    <version>4.0.1</version>
+    <version>4.1.0</version>
 </dependency>
 ```
 
@@ -39,8 +39,11 @@ Be careful when using primitive boolean validation that they return the given su
 For example, `validate.that(false).isFalse()` will return `false`, not true.
 If the validation were to fail then it wouldn't return false, but would rather throw an exception.
 
-For best effect, you should statically import the static `Validity` method entry point.
+For best effect, you should statically import the static `Validity` method entry points.
+Note that the `validate()` method will throw `IllegalArgumentException`s upon validation failure.
+Failures after calling the `expect()` method will throw `IllegalStateException`s.
 ```java
+import static com.redfin.validity.Validity.expect;
 import static com.redfin.validity.Validity.validate;
 ```
 

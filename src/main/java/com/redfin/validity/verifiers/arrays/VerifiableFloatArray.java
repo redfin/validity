@@ -27,7 +27,8 @@ import java.util.Objects;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableFloatArray<X extends Throwable> extends AbstractVerifiableObject<float[], X> {
+public final class VerifiableFloatArray<X extends Throwable>
+           extends AbstractVerifiableObject<float[], X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods

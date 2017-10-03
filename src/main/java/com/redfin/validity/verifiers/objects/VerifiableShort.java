@@ -24,7 +24,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableComparableNumber;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableShort<X extends Throwable> extends AbstractVerifiableComparableNumber<Short, X> {
+public final class VerifiableShort<X extends Throwable>
+           extends AbstractVerifiableComparableNumber<Short, X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constants

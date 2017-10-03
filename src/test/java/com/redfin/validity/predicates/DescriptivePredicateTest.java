@@ -23,7 +23,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-final class DescriptivePredicateTest implements AbstractDescriptivePredicateContract<DescriptivePredicate> {
+final class DescriptivePredicateTest
+ implements AbstractDescriptivePredicateContract<DescriptivePredicate> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

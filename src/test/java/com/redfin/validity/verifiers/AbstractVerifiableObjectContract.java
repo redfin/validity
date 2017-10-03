@@ -32,7 +32,8 @@ import java.util.Objects;
  * @param <E> the generic type of the class under test.
  * @param <T> the type of the class under test.
  */
-public interface AbstractVerifiableObjectContract<X extends Throwable, E, T extends AbstractVerifiableObject<E, X>> extends NotValueTypeContract<T> {
+public interface AbstractVerifiableObjectContract<X extends Throwable, E, T extends AbstractVerifiableObject<E, X>>
+         extends NotValueTypeContract<T> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test contract requirements

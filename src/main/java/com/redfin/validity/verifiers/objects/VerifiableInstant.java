@@ -26,7 +26,8 @@ import java.time.Instant;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableInstant<X extends Throwable> extends AbstractVerifiableComparable<Instant, X> {
+public final class VerifiableInstant<X extends Throwable>
+           extends AbstractVerifiableComparable<Instant, X> {
 
     /**
      * Create a new {@link AbstractVerifiableComparable} instance with the given values.

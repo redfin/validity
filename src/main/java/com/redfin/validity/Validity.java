@@ -33,11 +33,15 @@ public final class Validity  {
      */
 
     private static final FailedValidationExecutor<IllegalArgumentException> VERIFY_FAILURE;
-    private static final ValidityVerifiableFactory NO_MESSAGE_INSTANCE;
+    private static final FailedValidationExecutor<IllegalStateException> EXPECT_FAILURE;
+    private static final ValidityVerifiableFactory NO_MESSAGE_VERIFY_INSTANCE;
+    private static final ExpectVerifiableFactory NO_MESSAGE_EXPECT_INSTANCE;
 
     static {
         VERIFY_FAILURE = new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
-        NO_MESSAGE_INSTANCE = new ValidityVerifiableFactory(null, VERIFY_FAILURE);
+        NO_MESSAGE_VERIFY_INSTANCE = new ValidityVerifiableFactory(null, VERIFY_FAILURE);
+        EXPECT_FAILURE = new DefaultValidityFailedValidationExecutor<>(IllegalStateException::new);
+        NO_MESSAGE_EXPECT_INSTANCE = new ExpectVerifiableFactory(null, EXPECT_FAILURE);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,10 +50,18 @@ public final class Validity  {
 
     /**
      * @return a {@link Validity} instance with the default message
-     * prefix.
+     * prefix that throws {@link IllegalArgumentException}s on failure.
      */
     public static ValidityVerifiableFactory validate() {
-        return NO_MESSAGE_INSTANCE;
+        return NO_MESSAGE_VERIFY_INSTANCE;
+    }
+
+    /**
+     * @return a {@link Validity} instance with the default message prefix
+     * that throws {@link IllegalStateException}s on failure.
+     */
+    public static ExpectVerifiableFactory expect() {
+        return NO_MESSAGE_EXPECT_INSTANCE;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

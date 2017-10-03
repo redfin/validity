@@ -29,7 +29,8 @@ import java.util.function.Function;
  * @param <X> the type of {@link Throwable} the {@link #fail(String, Object, String)} method
  *            will throw.
  */
-public final class DefaultValidityFailedValidationExecutor<X extends Throwable> implements FailedValidationExecutor<X> {
+public final class DefaultValidityFailedValidationExecutor<X extends Throwable>
+        implements FailedValidationExecutor<X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constants

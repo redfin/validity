@@ -27,7 +27,8 @@ import java.time.Duration;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableDuration<X extends Throwable> extends AbstractVerifiableComparable<Duration, X> {
+public final class VerifiableDuration<X extends Throwable>
+           extends AbstractVerifiableComparable<Duration, X> {
 
     /**
      * Create a new {@link AbstractVerifiableObject} instance with the given values.

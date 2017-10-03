@@ -23,7 +23,8 @@ import com.redfin.validity.verifiers.AbstractVerifiablePrimitiveContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-final class VerifiablePrimitiveBooleanTest implements AbstractVerifiablePrimitiveContract<IllegalArgumentException, VerifiablePrimitiveBoolean<IllegalArgumentException>> {
+final class VerifiablePrimitiveBooleanTest
+ implements AbstractVerifiablePrimitiveContract<IllegalArgumentException, VerifiablePrimitiveBoolean<IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

@@ -25,7 +25,9 @@ import java.util.function.Predicate;
  *
  * @param <T> the type that this predicate will test.
  */
-public final class DescriptivePredicate<T> extends AbstractDescriptivePredicate implements Predicate<T> {
+public final class DescriptivePredicate<T>
+           extends AbstractDescriptivePredicate
+        implements Predicate<T> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields

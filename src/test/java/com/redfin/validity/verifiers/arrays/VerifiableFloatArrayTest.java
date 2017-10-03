@@ -22,7 +22,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-final class VerifiableFloatArrayTest implements AbstractVerifiableObjectContract<IllegalArgumentException, float[], VerifiableFloatArray<IllegalArgumentException>> {
+final class VerifiableFloatArrayTest
+ implements AbstractVerifiableObjectContract<IllegalArgumentException, float[], VerifiableFloatArray<IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

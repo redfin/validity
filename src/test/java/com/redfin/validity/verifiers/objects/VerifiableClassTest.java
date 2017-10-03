@@ -23,7 +23,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-final class VerifiableClassTest implements AbstractVerifiableObjectContract<IllegalArgumentException, Class<IllegalArgumentException>, VerifiableClass<IllegalArgumentException, IllegalArgumentException>> {
+final class VerifiableClassTest
+ implements AbstractVerifiableObjectContract<IllegalArgumentException, Class<IllegalArgumentException>, VerifiableClass<IllegalArgumentException, IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

@@ -29,7 +29,8 @@ import org.junit.jupiter.api.Test;
  * @param <X> the throwable type of the class under test.
  * @param <T> the type of the class under test.
  */
-public interface AbstractVerifiablePrimitiveContract<X extends Throwable, T extends AbstractVerifiablePrimitive<X>> extends NotValueTypeContract<T> {
+public interface AbstractVerifiablePrimitiveContract<X extends Throwable, T extends AbstractVerifiablePrimitive<X>>
+         extends NotValueTypeContract<T> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test contract requirements

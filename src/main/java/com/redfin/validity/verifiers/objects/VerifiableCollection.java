@@ -26,7 +26,8 @@ import java.util.Collection;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableCollection<E, T extends Collection<E>, X extends Throwable> extends AbstractVerifiableObject<T, X> {
+public final class VerifiableCollection<E, T extends Collection<E>, X extends Throwable>
+           extends AbstractVerifiableObject<T, X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods

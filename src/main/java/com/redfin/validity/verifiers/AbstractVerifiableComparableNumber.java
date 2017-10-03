@@ -24,7 +24,8 @@ import com.redfin.validity.FailedValidationExecutor;
  * @param <T> the type of the subject being validated.
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public abstract class AbstractVerifiableComparableNumber<T extends Number & Comparable<T>, X extends Throwable> extends AbstractVerifiableComparable<T, X> {
+public abstract class AbstractVerifiableComparableNumber<T extends Number & Comparable<T>, X extends Throwable>
+              extends AbstractVerifiableComparable<T, X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods

@@ -22,7 +22,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-final class VerifiableCharArrayTest implements AbstractVerifiableObjectContract<IllegalArgumentException, char[], VerifiableCharArray<IllegalArgumentException>> {
+final class VerifiableCharArrayTest
+ implements AbstractVerifiableObjectContract<IllegalArgumentException, char[], VerifiableCharArray<IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

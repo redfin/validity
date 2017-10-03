@@ -20,7 +20,8 @@ import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.verifiers.AbstractVerifiableComparableNumberContract;
 
-final class VerifiableFloatTest implements AbstractVerifiableComparableNumberContract<IllegalArgumentException, Float, VerifiableFloat<IllegalArgumentException>> {
+final class VerifiableFloatTest
+ implements AbstractVerifiableComparableNumberContract<IllegalArgumentException, Float, VerifiableFloat<IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

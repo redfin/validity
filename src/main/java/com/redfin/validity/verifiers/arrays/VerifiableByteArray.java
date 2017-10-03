@@ -27,7 +27,8 @@ import java.util.Objects;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiableByteArray<X extends Throwable> extends AbstractVerifiableObject<byte[], X> {
+public final class VerifiableByteArray<X extends Throwable>
+           extends AbstractVerifiableObject<byte[], X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods

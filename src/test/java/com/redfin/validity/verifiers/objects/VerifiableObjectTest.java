@@ -20,7 +20,8 @@ import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 
-final class VerifiableObjectTest implements AbstractVerifiableObjectContract<IllegalArgumentException, Object, VerifiableObject<Object, IllegalArgumentException>> {
+final class VerifiableObjectTest
+ implements AbstractVerifiableObjectContract<IllegalArgumentException, Object, VerifiableObject<Object, IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

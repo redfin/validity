@@ -26,7 +26,8 @@ import java.util.function.DoublePredicate;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiablePrimitiveDouble<X extends Throwable> extends AbstractVerifiablePrimitive<X> {
+public final class VerifiablePrimitiveDouble<X extends Throwable>
+           extends AbstractVerifiablePrimitive<X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields

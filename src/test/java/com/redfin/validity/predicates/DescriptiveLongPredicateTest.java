@@ -21,7 +21,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.function.LongPredicate;
 
-final class DescriptiveLongPredicateTest implements AbstractDescriptivePredicateContract<DescriptiveLongPredicate> {
+final class DescriptiveLongPredicateTest
+ implements AbstractDescriptivePredicateContract<DescriptiveLongPredicate> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

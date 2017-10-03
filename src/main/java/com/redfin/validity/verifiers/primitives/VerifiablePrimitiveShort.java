@@ -26,7 +26,8 @@ import java.util.function.IntPredicate;
  *
  * @param <X> the type of {@link Throwable} to be thrown on validation failure.
  */
-public final class VerifiablePrimitiveShort<X extends Throwable> extends AbstractVerifiablePrimitive<X> {
+public final class VerifiablePrimitiveShort<X extends Throwable>
+           extends AbstractVerifiablePrimitive<X> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields

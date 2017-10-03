@@ -23,7 +23,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableComparableContract;
 import java.time.Duration;
 import java.time.Instant;
 
-final class VerifiableInstantTest implements AbstractVerifiableComparableContract<IllegalArgumentException, Instant, VerifiableInstant<IllegalArgumentException>> {
+final class VerifiableInstantTest
+ implements AbstractVerifiableComparableContract<IllegalArgumentException, Instant, VerifiableInstant<IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

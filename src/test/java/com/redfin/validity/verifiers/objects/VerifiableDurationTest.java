@@ -24,7 +24,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 
-final class VerifiableDurationTest implements AbstractVerifiableComparableContract<IllegalArgumentException, Duration, VerifiableDuration<IllegalArgumentException>> {
+final class VerifiableDurationTest
+ implements AbstractVerifiableComparableContract<IllegalArgumentException, Duration, VerifiableDuration<IllegalArgumentException>> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test values & contract implementations

@@ -27,7 +27,8 @@ import org.junit.jupiter.api.Test;
  *
  * @param <T> the type of the sub class being tested.
  */
-interface AbstractDescriptivePredicateContract <T extends AbstractDescriptivePredicate> extends NotValueTypeContract<T> {
+interface AbstractDescriptivePredicateContract <T extends AbstractDescriptivePredicate>
+  extends NotValueTypeContract<T> {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test contract requirements

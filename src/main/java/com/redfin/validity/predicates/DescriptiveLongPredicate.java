@@ -23,7 +23,9 @@ import java.util.function.LongPredicate;
  * A class implementing the {@link LongPredicate} interface.
  * This allows for the {@link LongPredicate} behavior but with a nice, human-readable toString output.
  */
-public final class DescriptiveLongPredicate extends AbstractDescriptivePredicate implements LongPredicate {
+public final class DescriptiveLongPredicate
+           extends AbstractDescriptivePredicate
+        implements LongPredicate {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Fields
