@@ -16,6 +16,8 @@
 
 package com.redfin.validity;
 
+import java.util.function.Supplier;
+
 /**
  * A default implementation of the {@link AbstractVerifiableFactory} for the Validity library
  * for throwing IllegalStateExceptions.
@@ -27,23 +29,23 @@ public final class ExpectVerifiableFactory
      * Create a new {@link AbstractVerifiableFactory} instance with the given message and failed validation
      * executor.
      *
-     * @param message                  the String message to pre-pend the failure message with, if necessary.
-     *                                 May be null.
+     * @param messageSupplier          the {@link Supplier} of the String message to pre-pend the failure message with, if necessary.
+     *                                 May not be null.
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to use in case
      *                                 of failed validation.
      *                                 May not be null.
      *
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @throws NullPointerException if messageSupplier or failedValidationExecutor is null.
      */
-    public ExpectVerifiableFactory(String message,
+    public ExpectVerifiableFactory(Supplier<String> messageSupplier,
                                    FailedValidationExecutor<IllegalStateException> failedValidationExecutor) {
-        super(message, failedValidationExecutor);
+        super(messageSupplier, failedValidationExecutor);
     }
 
     @Override
-    protected ExpectVerifiableFactory getFactory(String message,
+    protected ExpectVerifiableFactory getFactory(Supplier<String> messageSupplier,
                                                  FailedValidationExecutor<IllegalStateException> failedValidationExecutor) {
-        return new ExpectVerifiableFactory(message,
+        return new ExpectVerifiableFactory(messageSupplier,
                                            failedValidationExecutor);
     }
 }

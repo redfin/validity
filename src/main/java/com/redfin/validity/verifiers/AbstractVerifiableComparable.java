@@ -19,6 +19,8 @@ package com.redfin.validity.verifiers;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 
+import java.util.function.Supplier;
+
 /**
  * Base class for verifiable objects that are {@link Comparable}.
  *
@@ -41,12 +43,15 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public AbstractVerifiableComparable(FailedValidationExecutor<X> failedValidationExecutor, T subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public AbstractVerifiableComparable(FailedValidationExecutor<X> failedValidationExecutor,
+                                        T subject,
+                                        Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     /**
@@ -54,7 +59,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
      * not be what you are looking for with comparable types. See {@link #isNotComparableTo(Comparable)}.
      *
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is equal to other.
+     *
      * @throws X if the subject is null or if it is not equal to other.
      */
     public T isEqualTo(T other) throws X {
@@ -66,7 +73,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
      * not be what you are looking for with comparable types. See {@link #isNotComparableTo(Comparable)}.
      *
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is not equal to other.
+     *
      * @throws X if the subject is null or if it is equal to other.
      */
     public T isNotEqualTo(T other) throws X {
@@ -80,7 +89,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
      *
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is comparable to other.
+     *
      * @throws X                    if the subject is null or not comparable to other.
      * @throws NullPointerException if other is null.
      */
@@ -102,7 +113,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
      *
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is not comparable to other.
+     *
      * @throws X                    if the subject is null or is comparable to other.
      * @throws NullPointerException if other is null.
      */
@@ -120,7 +133,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
     /**
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is greater than other.
+     *
      * @throws X                    if the subject is null or not greater than other.
      * @throws NullPointerException if other is null.
      */
@@ -138,7 +153,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
     /**
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is greater than or equal to other.
+     *
      * @throws X                    if the subject is null or is not greater than or equal to other.
      * @throws NullPointerException if other is null.
      */
@@ -156,7 +173,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
     /**
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is greater than or equal to other.
+     *
      * @throws X                    if the subject is null or is not greater than or equal to other.
      * @throws NullPointerException if other is null.
      */
@@ -167,7 +186,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
     /**
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is less than other.
+     *
      * @throws X                    if the subject is null or is not less than other.
      * @throws NullPointerException if other is null.
      */
@@ -185,7 +206,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
     /**
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is less than or equal to other.
+     *
      * @throws X                    if the subject is null or is not less than or equal to to other.
      * @throws NullPointerException if other is null.
      */
@@ -203,7 +226,9 @@ public abstract class AbstractVerifiableComparable<T extends Comparable<T>, X ex
     /**
      * @param other the object to compare the subject against.
      *              May not be null.
+     *
      * @return the subject if it is less than or equal to other.
+     *
      * @throws X                    if the subject is null or is not less than or equal to other.
      * @throws NullPointerException if other is null.
      */

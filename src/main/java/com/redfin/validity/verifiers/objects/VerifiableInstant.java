@@ -20,6 +20,7 @@ import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.verifiers.AbstractVerifiableComparable;
 
 import java.time.Instant;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying {@link Instant} subjects.
@@ -37,12 +38,14 @@ public final class VerifiableInstant<X extends Throwable>
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
      *
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableInstant(FailedValidationExecutor<X> failedValidationExecutor, Instant subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableInstant(FailedValidationExecutor<X> failedValidationExecutor,
+                             Instant subject,
+                             Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 }

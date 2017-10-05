@@ -22,6 +22,7 @@ import com.redfin.validity.verifiers.AbstractVerifiableComparableContract;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.function.Supplier;
 
 final class VerifiableInstantTest
  implements AbstractVerifiableComparableContract<IllegalArgumentException, Instant, VerifiableInstant<IllegalArgumentException>> {
@@ -52,8 +53,10 @@ final class VerifiableInstantTest
     }
 
     @Override
-    public VerifiableInstant<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Instant subject, String message) {
-        return new VerifiableInstant<>(failedValidationExecutor, subject, message);
+    public VerifiableInstant<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                             Instant subject,
+                                                                             Supplier<String> messageSupplier) {
+        return new VerifiableInstant<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     @Override

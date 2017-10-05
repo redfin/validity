@@ -23,6 +23,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 final class VerifiableClassTest
  implements AbstractVerifiableObjectContract<IllegalArgumentException, Class<IllegalArgumentException>, VerifiableClass<IllegalArgumentException, IllegalArgumentException>> {
 
@@ -56,12 +58,14 @@ final class VerifiableClassTest
     }
 
     @Override
-    public VerifiableClass<IllegalArgumentException, IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Class<IllegalArgumentException> subject, String message) {
-        return new VerifiableClass<>(failedValidationExecutor, subject, message);
+    public VerifiableClass<IllegalArgumentException, IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                                                     Class<IllegalArgumentException> subject,
+                                                                                                     Supplier<String> messageSupplier) {
+        return new VerifiableClass<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     private <T> VerifiableClass<T, IllegalArgumentException> getInstance(Class<T> clazz) {
-        return new VerifiableClass<>(getFailedValidationExecutor(), clazz, "message");
+        return new VerifiableClass<>(getFailedValidationExecutor(), clazz, () -> "message");
     }
 
     @Tag("foo")

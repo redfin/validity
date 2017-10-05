@@ -17,6 +17,7 @@
 package com.redfin.validity;
 
 import com.redfin.validity.predicates.AbstractDescriptivePredicate;
+
 import java.util.Arrays;
 import java.util.function.DoublePredicate;
 import java.util.function.IntPredicate;
@@ -68,7 +69,9 @@ public final class ValidityUtils {
     /**
      * @param argumentName the String argument name that was null.
      *                     May not be null.
+     *
      * @return the String message for exceptions for null arguments.
+     *
      * @throws NullPointerException if argumentName is null.
      */
     public static String nullArgumentMessage(String argumentName) {
@@ -96,6 +99,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(boolean[] value) {
@@ -104,6 +108,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(byte[] value) {
@@ -112,6 +117,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(char[] value) {
@@ -120,6 +126,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(double[] value) {
@@ -128,6 +135,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(float[] value) {
@@ -136,6 +144,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(int[] value) {
@@ -144,6 +153,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(long[] value) {
@@ -152,6 +162,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(short[] value) {
@@ -164,6 +175,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(IntPredicate value) {
@@ -172,6 +184,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(LongPredicate value) {
@@ -180,6 +193,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(DoublePredicate value) {
@@ -188,6 +202,7 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(Predicate<?> value) {
@@ -213,6 +228,7 @@ public final class ValidityUtils {
      * the empty string, the string "null" versus an actual null string, etc.
      *
      * @param value the value to convert into a String.
+     *
      * @return a String representation of the given value.
      */
     public static String describe(String value) {
@@ -221,7 +237,8 @@ public final class ValidityUtils {
 
     /**
      * @param value the value to convert into a String.
-     * @param <T> the type of the object to describe.
+     * @param <T>   the type of the object to describe.
+     *
      * @return a String representation of the given value.
      */
     public static <T> String describe(T value) {

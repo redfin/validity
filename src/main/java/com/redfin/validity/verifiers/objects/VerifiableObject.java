@@ -19,6 +19,8 @@ package com.redfin.validity.verifiers.objects;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
 
+import java.util.function.Supplier;
+
 /**
  * A concrete implementation of the {@link AbstractVerifiableObject} abstract class.
  *
@@ -40,11 +42,14 @@ public final class VerifiableObject<T, X extends Throwable>
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableObject(FailedValidationExecutor<X> failedValidationExecutor, T subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableObject(FailedValidationExecutor<X> failedValidationExecutor,
+                            T subject,
+                            Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 }

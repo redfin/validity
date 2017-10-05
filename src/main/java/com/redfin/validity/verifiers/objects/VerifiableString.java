@@ -20,6 +20,8 @@ import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableComparable;
 
+import java.util.function.Supplier;
+
 /**
  * Concrete class for verifying String subjects.
  *
@@ -40,16 +42,20 @@ public final class VerifiableString<X extends Throwable>
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableString(FailedValidationExecutor<X> failedValidationExecutor, String subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableString(FailedValidationExecutor<X> failedValidationExecutor,
+                            String subject,
+                            Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     /**
      * @return the subject if it is empty.
+     *
      * @throws X if the subject is null or not empty.
      */
     public String isEmpty() throws X {
@@ -62,6 +68,7 @@ public final class VerifiableString<X extends Throwable>
 
     /**
      * @return the subject if it is not empty.
+     *
      * @throws X if the subject is null or empty.
      */
     public String isNotEmpty() throws X {
@@ -74,7 +81,9 @@ public final class VerifiableString<X extends Throwable>
 
     /**
      * @param prefix the String prefix the subject should start with.
+     *
      * @return the subject if it starts with the prefix.
+     *
      * @throws X if the subject is null or does not start with the prefix.
      */
     public String startsWith(String prefix) throws X {
@@ -87,7 +96,9 @@ public final class VerifiableString<X extends Throwable>
 
     /**
      * @param prefix the String prefix the subject should not start with.
+     *
      * @return the subject if it does not start with the prefix.
+     *
      * @throws X if the subject is null or does start with the prefix.
      */
     public String doesNotStartWith(String prefix) throws X {
@@ -100,7 +111,9 @@ public final class VerifiableString<X extends Throwable>
 
     /**
      * @param suffix the String suffix the subject should end with.
+     *
      * @return the subject if it ends with the suffix.
+     *
      * @throws X if the subject is null or does not end with the suffix.
      */
     public String endsWith(String suffix) throws X {
@@ -113,7 +126,9 @@ public final class VerifiableString<X extends Throwable>
 
     /**
      * @param suffix the String suffix the subject should not end with.
+     *
      * @return the subject if it does not end with the suffix.
+     *
      * @throws X if the subject is null or does end with the suffix.
      */
     public String doesNotEndWith(String suffix) throws X {
@@ -126,7 +141,9 @@ public final class VerifiableString<X extends Throwable>
 
     /**
      * @param regex the String regex the subject should match.
+     *
      * @return the subject if it does match the regex.
+     *
      * @throws X if the subject is null or does not match the regex.
      */
     public String matches(String regex) throws X {
@@ -139,7 +156,9 @@ public final class VerifiableString<X extends Throwable>
 
     /**
      * @param regex the String regex the subject should not match.
+     *
      * @return the subject if it does not match the regex.
+     *
      * @throws X if the subject is null or does match the regex.
      */
     public String doesNotMatch(String regex) throws X {

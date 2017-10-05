@@ -36,7 +36,7 @@ final class DefaultValidityFailedValidationExecutorTest {
             String subject = "subject";
             String message = "message";
             X throwable = Assertions.assertThrows(getThrowableClass(),
-                                                  () -> getFailedValidationExecutor().fail(expected, subject, message));
+                                                  () -> getFailedValidationExecutor().fail(expected, subject, () -> message));
             Assertions.assertEquals(String.format(MESSAGE_FORMAT,
                                                   message,
                                                   expected,
@@ -50,7 +50,7 @@ final class DefaultValidityFailedValidationExecutorTest {
             String expected = "expected";
             String subject = "subject";
             X throwable = Assertions.assertThrows(getThrowableClass(),
-                                                  () -> getFailedValidationExecutor().fail(expected, subject, null));
+                                                  () -> getFailedValidationExecutor().fail(expected, subject, () -> null));
             Assertions.assertEquals(String.format(MESSAGE_FORMAT,
                                                   "Subject failed validation",
                                                   expected,
@@ -81,7 +81,7 @@ final class DefaultValidityFailedValidationExecutorTest {
             String subject = "subject";
             String message = "message";
             Assertions.assertThrows(NoStackRuntimeException.class,
-                                    () -> getNoStackFailedValidationExecutor().fail(expected, subject, message));
+                                    () -> getNoStackFailedValidationExecutor().fail(expected, subject, () -> message));
         }
     }
 
@@ -119,7 +119,7 @@ final class DefaultValidityFailedValidationExecutorTest {
         @Test
         void testFailedValidationExecutorThrowsExceptionForNullThrowableCreation() {
             NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
-                                                                     () -> new DefaultValidityFailedValidationExecutor<>(str -> null).fail("", "", ""));
+                                                                     () -> new DefaultValidityFailedValidationExecutor<>(str -> null).fail("", "", () -> ""));
             Assertions.assertEquals(ValidityUtils.nullThrowableFromFunction(),
                                     exception.getMessage(),
                                     "Failed validation executors should throw the expected exception for a null throwable created.");

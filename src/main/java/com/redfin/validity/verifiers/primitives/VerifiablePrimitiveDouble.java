@@ -19,7 +19,9 @@ package com.redfin.validity.verifiers.primitives;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiablePrimitive;
+
 import java.util.function.DoublePredicate;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying primitive double subjects.
@@ -46,18 +48,23 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
      *                                 on validation failure.
      *                                 May not be null.
      * @param subject                  the subject to be validated.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiablePrimitiveDouble(FailedValidationExecutor<X> failedValidationExecutor, double subject, String message) {
-        super(failedValidationExecutor, message);
+    public VerifiablePrimitiveDouble(FailedValidationExecutor<X> failedValidationExecutor,
+                                     double subject,
+                                     Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, messageSupplier);
         this.subject = subject;
     }
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is equal to other.
+     *
      * @throws X if the subject is null or if it is not equal to other.
      */
     public double isEqualTo(double other) throws X {
@@ -69,7 +76,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is not equal to other.
+     *
      * @throws X if the subject is null or if it is equal to other.
      */
     public double isNotEqualTo(double other) throws X {
@@ -81,6 +90,7 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @return the subject if it is comparable to zero.
+     *
      * @throws X if the subject is not zero.
      */
     public double isZero() throws X {
@@ -92,6 +102,7 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @return the subject if it is not comparable to zero.
+     *
      * @throws X if the subject is zero.
      */
     public double isNotZero() throws X {
@@ -103,6 +114,7 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @return the subject if it is greater than zero.
+     *
      * @throws X if the subject is less than or equal to zero.
      */
     public double isStrictlyPositive() throws X {
@@ -111,6 +123,7 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @return the subject if it is less than zero.
+     *
      * @throws X if the subject is greater than or equal to zero.
      */
     public double isStrictlyNegative() throws X {
@@ -119,7 +132,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is greater than other.
+     *
      * @throws X if the subject is null or not greater than other.
      */
     public double isGreaterThan(double other) throws X {
@@ -131,7 +146,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is greater than or equal to other.
+     *
      * @throws X if the subject is null or is not greater than or equal to other.
      */
     public double isGreaterThanOrEqualTo(double other) throws X {
@@ -143,7 +160,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is greater than or equal to other.
+     *
      * @throws X if the subject is null or is not greater than or equal to other.
      */
     public double isAtLeast(double other) throws X {
@@ -152,7 +171,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is less than other.
+     *
      * @throws X if the subject is null or is not less than other.
      */
     public double isLessThan(double other) throws X {
@@ -164,7 +185,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is less than or equal to other.
+     *
      * @throws X if the subject is null or is not less than or equal to to other.
      */
     public double isLessThanOrEqualTo(double other) throws X {
@@ -176,7 +199,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is less than or equal to other.
+     *
      * @throws X if the subject is null or is not less than or equal to other.
      */
     public double isAtMost(double other) throws X {
@@ -190,7 +215,9 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
      *
      * @param expected the {@link DoublePredicate} to use to test the subject.
      *                 May not be null.
+     *
      * @return the subject if it satisfies the predicate.
+     *
      * @throws X                    if the subject does not satisfy the predicate.
      * @throws NullPointerException if expected is null.
      */
@@ -206,11 +233,12 @@ public final class VerifiablePrimitiveDouble<X extends Throwable>
 
     /**
      * @param expected the String description of the expected value.
+     *
      * @throws NullPointerException if expected is null.
      * @throws X                    always, unless expected is null.
      */
     protected void fail(String expected) throws X {
-        getFailedValidationExecutor().fail(expected, subject, getMessage());
+        getFailedValidationExecutor().fail(expected, subject, getMessageSupplier());
     }
 
     @Override

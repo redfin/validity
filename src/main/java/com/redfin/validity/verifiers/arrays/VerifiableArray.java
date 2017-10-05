@@ -19,7 +19,9 @@ package com.redfin.validity.verifiers.arrays;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
+
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying object array subjects. This will also be the
@@ -42,12 +44,15 @@ public final class VerifiableArray<E, X extends Throwable>
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableArray(FailedValidationExecutor<X> failedValidationExecutor, E[] subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableArray(FailedValidationExecutor<X> failedValidationExecutor,
+                           E[] subject,
+                           Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     @Override
@@ -70,6 +75,7 @@ public final class VerifiableArray<E, X extends Throwable>
 
     /**
      * @return the subject if it is empty.
+     *
      * @throws X if the subject is null or is not empty.
      */
     public E[] isEmpty() throws X {
@@ -82,6 +88,7 @@ public final class VerifiableArray<E, X extends Throwable>
 
     /**
      * @return the subject if it is not empty.
+     *
      * @throws X if the subject is null or is empty.
      */
     public E[] isNotEmpty() throws X {
@@ -94,7 +101,9 @@ public final class VerifiableArray<E, X extends Throwable>
 
     /**
      * @param n the value to check against the subject length.
+     *
      * @return the subject if its length equals "n".
+     *
      * @throws X if the subject is null or if it's length isn't "n".
      */
     public E[] hasLengthOf(int n) throws X {
@@ -107,7 +116,9 @@ public final class VerifiableArray<E, X extends Throwable>
 
     /**
      * @param n the value to check against the subject length.
+     *
      * @return the subject if its length is greater than or equal to "n".
+     *
      * @throws X if the subject is null or has length less than "n".
      */
     public E[] hasLengthOfAtLeast(int n) throws X {
@@ -120,7 +131,9 @@ public final class VerifiableArray<E, X extends Throwable>
 
     /**
      * @param n the value to check against the subject length.
+     *
      * @return the subject if its length is less than or equal to "n".
+     *
      * @throws X if the subject is null or has length greater than "n".
      */
     public E[] hasLengthOfAtMost(int n) throws X {

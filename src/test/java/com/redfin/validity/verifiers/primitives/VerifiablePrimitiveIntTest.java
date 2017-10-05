@@ -23,6 +23,8 @@ import com.redfin.validity.verifiers.AbstractVerifiablePrimitiveContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 final class VerifiablePrimitiveIntTest
  implements AbstractVerifiablePrimitiveContract<IllegalArgumentException, VerifiablePrimitiveInt<IllegalArgumentException>> {
 
@@ -41,12 +43,13 @@ final class VerifiablePrimitiveIntTest
     }
 
     @Override
-    public VerifiablePrimitiveInt<IllegalArgumentException> getAbstractVerifiablePrimitive(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, String message) {
-        return new VerifiablePrimitiveInt<>(failedValidationExecutor, 0, message);
+    public VerifiablePrimitiveInt<IllegalArgumentException> getAbstractVerifiablePrimitive(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                                           Supplier<String> messageSupplier) {
+        return new VerifiablePrimitiveInt<>(failedValidationExecutor, 0, messageSupplier);
     }
 
     private VerifiablePrimitiveInt<IllegalArgumentException> getInstance(int subject) {
-        return new VerifiablePrimitiveInt<>(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, "message");
+        return new VerifiablePrimitiveInt<>(getAbstractVerifiablePrimitiveFailedValidationExecutor(), subject, () -> "message");
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

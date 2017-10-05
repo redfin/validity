@@ -74,7 +74,7 @@ interface AbstractVerifiableFactoryContract<X extends Throwable,
     default void testWithMessageFactoryReturnsGivenMessage() {
         String message = "world";
         Assertions.assertEquals(message,
-                                getNotValueTypeInstance().withMessage(message).getMessage(),
+                                getNotValueTypeInstance().withMessage(message).getMessageSupplier().get(),
                                 "AbstractVerifiableFactory should return given message.");
     }
 

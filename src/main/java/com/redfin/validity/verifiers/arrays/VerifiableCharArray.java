@@ -19,8 +19,10 @@ package com.redfin.validity.verifiers.arrays;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
+
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying primitive char array subjects.
@@ -42,17 +44,22 @@ public final class VerifiableCharArray<X extends Throwable>
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableCharArray(FailedValidationExecutor<X> failedValidationExecutor, char[] subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableCharArray(FailedValidationExecutor<X> failedValidationExecutor,
+                               char[] subject,
+                               Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is equal to other.
+     *
      * @throws X if the subject is null or if it is not equal to other.
      */
     public char[] isEqualTo(char[] other) throws X {
@@ -65,7 +72,9 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is not equal to other.
+     *
      * @throws X if the subject is null or if it is equal to other.
      */
     public char[] isNotEqualTo(char[] other) throws X {
@@ -78,6 +87,7 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @return the subject if it is empty.
+     *
      * @throws X if the subject is null or is not empty.
      */
     public char[] isEmpty() throws X {
@@ -90,6 +100,7 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @return the subject if it is not empty.
+     *
      * @throws X if the subject is null or is empty.
      */
     public char[] isNotEmpty() throws X {
@@ -102,7 +113,9 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @param n the value to check against the subject length.
+     *
      * @return the subject if its length equals "n".
+     *
      * @throws X if the subject is null or if it's length isn't "n".
      */
     public char[] hasLengthOf(int n) throws X {
@@ -115,7 +128,9 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @param n the value to check against the subject length.
+     *
      * @return the subject if its length is greater than or equal to "n".
+     *
      * @throws X if the subject is null or has length less than "n".
      */
     public char[] hasLengthOfAtLeast(int n) throws X {
@@ -128,7 +143,9 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @param n the value to check against the subject length.
+     *
      * @return the subject if its length is less than or equal to "n".
+     *
      * @throws X if the subject is null or has length greater than "n".
      */
     public char[] hasLengthOfAtMost(int n) throws X {
@@ -141,7 +158,9 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @param value the value to look for in the array.
+     *
      * @return the subject if it contains the value.
+     *
      * @throws X if the subject is null or does not contain the value.
      */
     public char[] contains(char value) throws X {
@@ -154,7 +173,9 @@ public final class VerifiableCharArray<X extends Throwable>
 
     /**
      * @param value the value to look for in the array.
+     *
      * @return the subject if it does not contain the value.
+     *
      * @throws X if the subject is null or does contain the value.
      */
     public char[] doesNotContain(char value) throws X {

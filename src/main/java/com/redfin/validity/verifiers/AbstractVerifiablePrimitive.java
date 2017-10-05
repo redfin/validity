@@ -19,6 +19,8 @@ package com.redfin.validity.verifiers;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 
+import java.util.function.Supplier;
+
 /**
  * Base class for all verifiable primitive objects. Stores the message and
  * validation executor, disallows use as a value type (equals and hashCode).
@@ -32,7 +34,7 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     private final FailedValidationExecutor<X> failedValidationExecutor;
-    private final String message;
+    private final Supplier<String> messageSupplier;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods
@@ -44,16 +46,21 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to be called
      *                                 on validation failure.
      *                                 May not be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public AbstractVerifiablePrimitive(FailedValidationExecutor<X> failedValidationExecutor, String message) {
+    public AbstractVerifiablePrimitive(FailedValidationExecutor<X> failedValidationExecutor,
+                                       Supplier<String> messageSupplier) {
         if (null == failedValidationExecutor) {
             throw new NullPointerException(ValidityUtils.nullArgumentMessage("failedValidationExecutor"));
         }
+        if (null == messageSupplier) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("messageSupplier"));
+        }
         this.failedValidationExecutor = failedValidationExecutor;
-        this.message = message;
+        this.messageSupplier = messageSupplier;
     }
 
     /**
@@ -64,11 +71,11 @@ public abstract class AbstractVerifiablePrimitive<X extends Throwable> {
     }
 
     /**
-     * @return the String message to pre-pend on validation failures.
-     * May be null.
+     * @return the {@link Supplier} of the String message to pre-pend on validation failures.
+     * May not be null.
      */
-    protected String getMessage() {
-        return message;
+    protected Supplier<String> getMessageSupplier() {
+        return messageSupplier;
     }
 
     /**

@@ -22,6 +22,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 final class VerifiableCharArrayTest
  implements AbstractVerifiableObjectContract<IllegalArgumentException, char[], VerifiableCharArray<IllegalArgumentException>> {
 
@@ -60,8 +62,10 @@ final class VerifiableCharArrayTest
     }
 
     @Override
-    public VerifiableCharArray<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, char[] subject, String message) {
-        return new VerifiableCharArray<>(failedValidationExecutor, subject, message);
+    public VerifiableCharArray<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                               char[] subject,
+                                                                               Supplier<String> messageSupplier) {
+        return new VerifiableCharArray<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

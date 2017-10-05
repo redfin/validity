@@ -22,6 +22,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableComparableContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 final class VerifiableStringTest
  implements AbstractVerifiableComparableContract<IllegalArgumentException, String, VerifiableString<IllegalArgumentException>> {
 
@@ -65,8 +67,10 @@ final class VerifiableStringTest
     }
 
     @Override
-    public VerifiableString<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, String subject, String message) {
-        return new VerifiableString<>(failedValidationExecutor, subject, message);
+    public VerifiableString<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                            String subject,
+                                                                            Supplier<String> messageSupplier) {
+        return new VerifiableString<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     @Override

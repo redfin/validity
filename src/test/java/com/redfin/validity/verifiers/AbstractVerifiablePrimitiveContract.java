@@ -22,6 +22,8 @@ import com.redfin.validity.ValidityUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 /**
  * A test contract that validates that the class under test is
  * maintaining the contract of its {@link AbstractVerifiablePrimitive} super class.
@@ -40,10 +42,11 @@ public interface AbstractVerifiablePrimitiveContract<X extends Throwable, T exte
 
     /**
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to use to instantiate the object.
-     * @param message                  the String message for the object.
+     * @param messageSupplier          the {@link Supplier} of the String message for the object.
      * @return an instance of {@link AbstractVerifiablePrimitive}.
      */
-    T getAbstractVerifiablePrimitive(FailedValidationExecutor<X> failedValidationExecutor, String message);
+    T getAbstractVerifiablePrimitive(FailedValidationExecutor<X> failedValidationExecutor,
+                                     Supplier<String> messageSupplier);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Test cases
@@ -51,20 +54,29 @@ public interface AbstractVerifiablePrimitiveContract<X extends Throwable, T exte
 
     @Test
     default void testCanInstantiateWithValidArguments() {
-        Assertions.assertNotNull(getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), "hello"),
+        Assertions.assertNotNull(getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), () -> "hello"),
                                  "Should be able to instantiate an abstract verifiable primitive with valid arguments.");
     }
 
     @Test
     default void testCanInstantiateWithNullMessage() {
-        Assertions.assertNotNull(getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), null),
+        Assertions.assertNotNull(getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), () -> null),
                                  "Should be able to instantiate an abstract verifiable primitive with a null message.");
+    }
+
+    @Test
+    default void testThrowsExpectedExceptionForNullMessageSupplier() {
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
+                                                                 () -> getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), null));
+        Assertions.assertEquals(ValidityUtils.nullArgumentMessage("messageSupplier"),
+                                exception.getMessage(),
+                                "Should throw the expected exception when you try to construct an AbstractVerifiablePrimitive with a message supplier.");
     }
 
     @Test
     default void testThrowsExpectedExceptionForNullFailedValidationExecutor() {
         NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
-                                                                 () -> getAbstractVerifiablePrimitive(null, "hello"));
+                                                                 () -> getAbstractVerifiablePrimitive(null, () -> "hello"));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("failedValidationExecutor"),
                                 exception.getMessage(),
                                 "Should throw the expected exception when you try to construct an AbstractVerifiablePrimitive with a null validation executor.");
@@ -73,14 +85,14 @@ public interface AbstractVerifiablePrimitiveContract<X extends Throwable, T exte
     @Test
     default void testReturnsGivenFailedValidationExecutorInstance() {
         FailedValidationExecutor<X> executor = getAbstractVerifiablePrimitiveFailedValidationExecutor();
-        Assertions.assertTrue(executor == getAbstractVerifiablePrimitive(executor, "hello").getFailedValidationExecutor(),
+        Assertions.assertTrue(executor == getAbstractVerifiablePrimitive(executor, () -> "hello").getFailedValidationExecutor(),
                               "AbstractVerifiablePrimitive should return the expected validation executor.");
     }
 
     @Test
     default void testReturnsGivenMessageInstance() {
         String message = "hello";
-        Assertions.assertTrue(message .equals(getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), message).getMessage()),
-                              "AbstractVerifiablePrimitive should return the expected validation executor.");
+        Assertions.assertTrue(message.equals(getAbstractVerifiablePrimitive(getAbstractVerifiablePrimitiveFailedValidationExecutor(), () -> message).getMessageSupplier().get()),
+                              "AbstractVerifiablePrimitive should return the expected message.");
     }
 }

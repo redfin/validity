@@ -19,7 +19,9 @@ package com.redfin.validity.verifiers.objects;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
+
 import java.util.Collection;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying Collection subjects.
@@ -41,16 +43,20 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableCollection(FailedValidationExecutor<X> failedValidationExecutor, T subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableCollection(FailedValidationExecutor<X> failedValidationExecutor,
+                                T subject,
+                                Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     /**
      * @return the subject if it is empty.
+     *
      * @throws X if the subject is null or is not empty.
      */
     public T isEmpty() throws X {
@@ -63,6 +69,7 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
 
     /**
      * @return the subject if it is not empty.
+     *
      * @throws X if the subject is null or is empty.
      */
     public T isNotEmpty() throws X {
@@ -75,7 +82,9 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
 
     /**
      * @param n the value to check against the subject size.
+     *
      * @return the subject if its size equals "n".
+     *
      * @throws X if the subject is null or if it's size isn't "n".
      */
     public T hasSizeOf(int n) throws X {
@@ -88,7 +97,9 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
 
     /**
      * @param n the value to check against the subject size.
+     *
      * @return the subject if its size is greater than or equal to "n".
+     *
      * @throws X if the subject is null or has size less than "n".
      */
     public T hasSizeOfAtLeast(int n) throws X {
@@ -101,7 +112,9 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
 
     /**
      * @param n the value to check against the subject size.
+     *
      * @return the subject if its size is less than or equal to "n".
+     *
      * @throws X if the subject is null or has size greater than "n".
      */
     public T hasSizeOfAtMost(int n) throws X {
@@ -114,7 +127,9 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
 
     /**
      * @param e the object to check if the subject contains.
+     *
      * @return the subject if it contains "e".
+     *
      * @throws X if the subject is null or does not contain "e".
      */
     public T contains(E e) throws X {
@@ -127,7 +142,9 @@ public final class VerifiableCollection<E, T extends Collection<E>, X extends Th
 
     /**
      * @param e the object to check if the subject contains.
+     *
      * @return the subject if it does not contain "e".
+     *
      * @throws X if the subject is null or does contain "e".
      */
     public T doesNotContain(E e) throws X {

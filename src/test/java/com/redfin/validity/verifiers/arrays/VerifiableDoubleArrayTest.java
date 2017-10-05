@@ -22,6 +22,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 final class VerifiableDoubleArrayTest
  implements AbstractVerifiableObjectContract<IllegalArgumentException, double[], VerifiableDoubleArray<IllegalArgumentException>> {
 
@@ -60,8 +62,10 @@ final class VerifiableDoubleArrayTest
     }
 
     @Override
-    public VerifiableDoubleArray<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, double[] subject, String message) {
-        return new VerifiableDoubleArray<>(failedValidationExecutor, subject, message);
+    public VerifiableDoubleArray<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                                 double[] subject,
+                                                                                 Supplier<String> messageSupplier) {
+        return new VerifiableDoubleArray<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

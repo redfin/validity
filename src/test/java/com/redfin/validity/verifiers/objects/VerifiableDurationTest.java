@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.function.Supplier;
 
 final class VerifiableDurationTest
  implements AbstractVerifiableComparableContract<IllegalArgumentException, Duration, VerifiableDuration<IllegalArgumentException>> {
@@ -54,8 +55,10 @@ final class VerifiableDurationTest
     }
 
     @Override
-    public VerifiableDuration<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Duration subject, String message) {
-        return new VerifiableDuration<>(failedValidationExecutor, subject, message);
+    public VerifiableDuration<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                              Duration subject,
+                                                                              Supplier<String> messageSupplier) {
+        return new VerifiableDuration<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     @Override
@@ -198,5 +201,65 @@ final class VerifiableDurationTest
         VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                                 verifiable::isStrictlyNegative);
+    }
+
+    @Test
+    void testIsGreaterThanOrEqualToZeroReturnsSubjectForPositiveSubject() {
+        Duration subject = Duration.ofMinutes(1);
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isGreaterThanOrEqualToZero(),
+                              "VerifiableDuration should return it's given subject for isGreaterThanOrEqualToZero when it's positive");
+    }
+
+    @Test
+    void testIsGreaterThanOrEqualToZeroReturnsSubjectForZeroSubject() {
+        Duration subject = Duration.ZERO;
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isGreaterThanOrEqualToZero(),
+                              "VerifiableDuration should return it's given subject for isGreaterThanOrEqualToZero when it's zero");
+    }
+
+    @Test
+    void testIsGreaterThanOrEqualToZeroThrowsForNegativeSubject() {
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(Duration.ofMillis(-500));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                verifiable::isGreaterThanOrEqualToZero);
+    }
+
+    @Test
+    void testIsGreaterThanOrEqualToZeroThrowsForNullSubject() {
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(null);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                verifiable::isGreaterThanOrEqualToZero);
+    }
+
+    @Test
+    void testIsLessThanOrEqualToZeroReturnsSubjectForNegativeSubject() {
+        Duration subject = Duration.ofMinutes(-1);
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isLessThanOrEqualToZero(),
+                              "VerifiableDuration should return it's given subject for isLessThanOrEqualToZero when it's negative");
+    }
+
+    @Test
+    void testIsLessThanOrEqualToZeroReturnsSubjectForZeroSubject() {
+        Duration subject = Duration.ZERO;
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(subject);
+        Assertions.assertTrue(subject == verifiable.isLessThanOrEqualToZero(),
+                              "VerifiableDuration should return it's given subject for isLessThanOrEqualToZero when it's zero");
+    }
+
+    @Test
+    void testIsLessThanOrEqualToZeroThrowsForPositiveSubject() {
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(Duration.ofMillis(500));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                verifiable::isLessThanOrEqualToZero);
+    }
+
+    @Test
+    void testIsLessThanOrEqualToZeroThrowsForNullSubject() {
+        VerifiableDuration<IllegalArgumentException> verifiable = getVerifiableInstance(null);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                verifiable::isLessThanOrEqualToZero);
     }
 }

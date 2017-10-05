@@ -18,6 +18,8 @@ package com.redfin.validity.verifiers;
 
 import com.redfin.validity.FailedValidationExecutor;
 
+import java.util.function.Supplier;
+
 /**
  * Base class for verifiable objects that implement the Comparable interface and Number.
  *
@@ -39,12 +41,15 @@ public abstract class AbstractVerifiableComparableNumber<T extends Number & Comp
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public AbstractVerifiableComparableNumber(FailedValidationExecutor<X> failedValidationExecutor, T subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public AbstractVerifiableComparableNumber(FailedValidationExecutor<X> failedValidationExecutor,
+                                              T subject,
+                                              Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     /**
@@ -55,6 +60,7 @@ public abstract class AbstractVerifiableComparableNumber<T extends Number & Comp
 
     /**
      * @return the subject if it is comparable to zero.
+     *
      * @throws X if the subject is not comparable to zero.
      */
     public T isZero() throws X {
@@ -63,6 +69,7 @@ public abstract class AbstractVerifiableComparableNumber<T extends Number & Comp
 
     /**
      * @return the subject if it is not comparable to zero.
+     *
      * @throws X if the subject is comparable to zero.
      */
     public T isNotZero() throws X {
@@ -71,6 +78,7 @@ public abstract class AbstractVerifiableComparableNumber<T extends Number & Comp
 
     /**
      * @return the subject if it is greater than zero.
+     *
      * @throws X if the subject is less than or equal to zero.
      */
     public T isStrictlyPositive() throws X {
@@ -79,6 +87,7 @@ public abstract class AbstractVerifiableComparableNumber<T extends Number & Comp
 
     /**
      * @return the subject if it is less than zero.
+     *
      * @throws X if the subject is greater than or equal to zero.
      */
     public T isStrictlyNegative() throws X {

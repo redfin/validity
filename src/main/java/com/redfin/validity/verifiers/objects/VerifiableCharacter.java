@@ -19,6 +19,8 @@ package com.redfin.validity.verifiers.objects;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.verifiers.AbstractVerifiableComparable;
 
+import java.util.function.Supplier;
+
 /**
  * Concrete class for verifying Character subjects.
  *
@@ -39,16 +41,20 @@ public final class VerifiableCharacter<X extends Throwable>
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableCharacter(FailedValidationExecutor<X> failedValidationExecutor, Character subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableCharacter(FailedValidationExecutor<X> failedValidationExecutor,
+                               Character subject,
+                               Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     /**
      * @return the subject if it is upper case.
+     *
      * @throws X if the subject is null or not upper case.
      */
     public Character isUpperCase() throws X {
@@ -61,6 +67,7 @@ public final class VerifiableCharacter<X extends Throwable>
 
     /**
      * @return the subject if it is lower case.
+     *
      * @throws X if the subject is null or not lower case.
      */
     public Character isLowerCase() throws X {
@@ -73,6 +80,7 @@ public final class VerifiableCharacter<X extends Throwable>
 
     /**
      * @return the subject if it is a letter or digit case.
+     *
      * @throws X if the subject is null is not a letter or digit.
      */
     public Character isLetterOrDigit() throws X {
@@ -85,6 +93,7 @@ public final class VerifiableCharacter<X extends Throwable>
 
     /**
      * @return the subject if it is alphabetic.
+     *
      * @throws X if the subject is null or is not alphabetic.
      */
     public Character isAlphabetic() throws X {
@@ -97,6 +106,7 @@ public final class VerifiableCharacter<X extends Throwable>
 
     /**
      * @return the subject if it is a digit.
+     *
      * @throws X if the subject is null or is not a digit.
      */
     public Character isDigit() throws X {

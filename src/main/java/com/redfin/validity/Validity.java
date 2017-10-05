@@ -19,7 +19,7 @@ package com.redfin.validity;
 /**
  * The entry point for the Validity library.
  */
-public final class Validity  {
+public final class Validity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constants
@@ -39,9 +39,9 @@ public final class Validity  {
 
     static {
         VERIFY_FAILURE = new DefaultValidityFailedValidationExecutor<>(IllegalArgumentException::new);
-        NO_MESSAGE_VERIFY_INSTANCE = new ValidityVerifiableFactory(null, VERIFY_FAILURE);
+        NO_MESSAGE_VERIFY_INSTANCE = new ValidityVerifiableFactory(() -> null, VERIFY_FAILURE);
         EXPECT_FAILURE = new DefaultValidityFailedValidationExecutor<>(IllegalStateException::new);
-        NO_MESSAGE_EXPECT_INSTANCE = new ExpectVerifiableFactory(null, EXPECT_FAILURE);
+        NO_MESSAGE_EXPECT_INSTANCE = new ExpectVerifiableFactory(() -> null, EXPECT_FAILURE);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

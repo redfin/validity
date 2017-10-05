@@ -18,7 +18,9 @@ package com.redfin.validity.verifiers;
 
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
+
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Base class for all verifiable objects. Stores the values, disallows the use
@@ -36,7 +38,7 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     private final FailedValidationExecutor<X> failedValidationExecutor;
     private final T subject;
-    private final String message;
+    private final Supplier<String> messageSupplier;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Instance Methods
@@ -50,17 +52,23 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public AbstractVerifiableObject(FailedValidationExecutor<X> failedValidationExecutor, T subject, String message) {
+    public AbstractVerifiableObject(FailedValidationExecutor<X> failedValidationExecutor,
+                                    T subject,
+                                    Supplier<String> messageSupplier) {
         if (null == failedValidationExecutor) {
             throw new NullPointerException(ValidityUtils.nullArgumentMessage("failedValidationExecutor"));
         }
+        if (null == messageSupplier) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("messageSupplier"));
+        }
         this.failedValidationExecutor = failedValidationExecutor;
         this.subject = subject;
-        this.message = message;
+        this.messageSupplier = messageSupplier;
     }
 
     // --------------------------------------------------------------
@@ -82,10 +90,10 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     }
 
     /**
-     * @return the given message.
+     * @return the {@link Supplier} of the given message.
      */
-    protected final String getMessage() {
-        return message;
+    protected final Supplier<String> getMessageSupplier() {
+        return messageSupplier;
     }
 
     // --------------------------------------------------------------
@@ -94,6 +102,7 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     /**
      * @return the subject if it is null.
+     *
      * @throws X if the subject is not null.
      */
     public T isNull() throws X {
@@ -105,6 +114,7 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     /**
      * @return the subject if it is not null.
+     *
      * @throws X if the subject is null.
      */
     public T isNotNull() throws X {
@@ -116,7 +126,9 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is equal to other.
+     *
      * @throws X if the subject is null or if it is not equal to other.
      */
     public T isEqualTo(T other) throws X {
@@ -128,7 +140,9 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is not equal to other.
+     *
      * @throws X if the subject is null or if it is equal to other.
      */
     public T isNotEqualTo(T other) throws X {
@@ -145,7 +159,9 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
      *
      * @param expected the {@link Predicate} to use to test the subject.
      *                 May not be null.
+     *
      * @return the subject if it satisfies the predicate.
+     *
      * @throws X                    if the subject does not satisfy the predicate.
      * @throws NullPointerException if expected is null.
      */
@@ -161,11 +177,12 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
 
     /**
      * @param expected the String description of the expected value.
+     *
      * @throws NullPointerException if expected is null.
      * @throws X                    always, unless expected is null.
      */
     protected final void fail(String expected) throws X {
-        failedValidationExecutor.fail(expected, subject, message);
+        failedValidationExecutor.fail(expected, subject, messageSupplier);
     }
 
     // --------------------------------------------------------------

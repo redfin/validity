@@ -49,7 +49,7 @@ final class ValidityTest
 
     @Test
     void testValidateReturnsFactoryWithNullMessage() {
-        Assertions.assertNull(Validity.validate().getMessage(),
+        Assertions.assertNull(Validity.validate().getMessageSupplier().get(),
                               "Validity validate should return a factory with a null message.");
     }
 
@@ -67,7 +67,7 @@ final class ValidityTest
 
     @Test
     void testExpectReturnsFactoryWithNullMessage() {
-        Assertions.assertNull(Validity.expect().getMessage(),
+        Assertions.assertNull(Validity.expect().getMessageSupplier().get(),
                               "Validity expect should return a factory with a null message.");
     }
 }

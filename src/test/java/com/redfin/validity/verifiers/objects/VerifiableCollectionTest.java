@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 final class VerifiableCollectionTest
  implements AbstractVerifiableObjectContract<IllegalArgumentException, List<String>, VerifiableCollection<String, List<String>, IllegalArgumentException>> {
@@ -69,8 +70,10 @@ final class VerifiableCollectionTest
     }
 
     @Override
-    public VerifiableCollection<String, List<String>, IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, List<String> subject, String message) {
-        return new VerifiableCollection<>(failedValidationExecutor, subject, message);
+    public VerifiableCollection<String, List<String>, IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                                                      List<String> subject,
+                                                                                                      Supplier<String> messageSupplier) {
+        return new VerifiableCollection<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -16,6 +16,8 @@
 
 package com.redfin.validity;
 
+import java.util.function.Supplier;
+
 /**
  * The default implementation of the {@link AbstractVerifiableFactory} for the Validity library.
  */
@@ -26,23 +28,23 @@ public final class ValidityVerifiableFactory
      * Create a new {@link AbstractVerifiableFactory} instance with the given message and failed validation
      * executor.
      *
-     * @param message                  the String message to pre-pend the failure message with, if necessary.
-     *                                 May be null.
+     * @param messageSupplier          the {@link Supplier} of the String message to pre-pend the failure message with, if necessary.
+     *                                 May not be null.
      * @param failedValidationExecutor the {@link FailedValidationExecutor} to use in case
      *                                 of failed validation.
      *                                 May not be null.
      *
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @throws NullPointerException if messageSupplier or failedValidationExecutor are null.
      */
-    public ValidityVerifiableFactory(String message,
+    public ValidityVerifiableFactory(Supplier<String> messageSupplier,
                                      FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor) {
-        super(message, failedValidationExecutor);
+        super(messageSupplier, failedValidationExecutor);
     }
 
     @Override
-    protected ValidityVerifiableFactory getFactory(String message,
+    protected ValidityVerifiableFactory getFactory(Supplier<String> messageSupplier,
                                                    FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor) {
-        return new ValidityVerifiableFactory(message,
+        return new ValidityVerifiableFactory(messageSupplier,
                                              failedValidationExecutor);
     }
 }

@@ -54,7 +54,7 @@ interface FailedValidationExecutorContract<X extends Throwable> {
     @Test
     default void testValidationExecutorThrowsExpectedExceptionForNullExpected() {
         NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
-                                                                 () -> getFailedValidationExecutor().fail(null, "subject", "message"));
+                                                                 () -> getFailedValidationExecutor().fail(null, "subject", () -> "message"));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("expected"),
                                 exception.getMessage(),
                                 "FailedValidationExecutor should throw NullPointerException for null expected.");
@@ -63,18 +63,24 @@ interface FailedValidationExecutorContract<X extends Throwable> {
     @Test
     default void testValidationExecutorThrowsExpectedExceptionForNullSubject() {
         Assertions.assertThrows(getThrowableClass(),
-                                () -> getFailedValidationExecutor().fail("expected", null, "message"));
+                                () -> getFailedValidationExecutor().fail("expected", null, () -> "message"));
     }
 
     @Test
-    default void testValidationExecutorThrowsExpectedExceptionForNullMessage() {
-        Assertions.assertThrows(getThrowableClass(),
+    default void testValidationExecutorThrowsExpectedExceptionForNullMessageSupplier() {
+        Assertions.assertThrows(NullPointerException.class,
                                 () -> getFailedValidationExecutor().fail("expected", "subject", null));
+    }
+
+    @Test
+    default void testValidationExecutorThrowsExpectedExceptionForNullMessageFromSupplier() {
+        Assertions.assertThrows(getThrowableClass(),
+                                () -> getFailedValidationExecutor().fail("expected", "subject", () -> null));
     }
 
     @Test
     default void testValidationExecutorThrowsExpectedExceptionWithValidArguments() {
         Assertions.assertThrows(getThrowableClass(),
-                                () -> getFailedValidationExecutor().fail("expected", "subject", "message"));
+                                () -> getFailedValidationExecutor().fail("expected", "subject", () -> "message"));
     }
 }

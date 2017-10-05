@@ -18,15 +18,16 @@ package com.redfin.validity;
 
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * An implementation of the {@link FailedValidationExecutor} interface. This implementation
- * will throw {@link Throwable}s of type X when the {@link #fail(String, Object, String)} method
+ * will throw {@link Throwable}s of type X when the {@link #fail(String, Object, Supplier)} method
  * is called that have the Validity library stack frames removed so that the first line of
  * the stack trace is the line the actual validation call. The rest of the stack trace is
  * left alone.
  *
- * @param <X> the type of {@link Throwable} the {@link #fail(String, Object, String)} method
+ * @param <X> the type of {@link Throwable} the {@link #fail(String, Object, Supplier)} method
  *            will throw.
  */
 public final class DefaultValidityFailedValidationExecutor<X extends Throwable>
@@ -70,11 +71,17 @@ public final class DefaultValidityFailedValidationExecutor<X extends Throwable>
     }
 
     @Override
-    public <T> void fail(String expected, T subject, String message) throws X {
+    public <T> void fail(String expected,
+                         T subject,
+                         Supplier<String> messageSupplier) throws X {
         if (null == expected) {
             throw new NullPointerException(ValidityUtils.nullArgumentMessage("expected"));
         }
+        if (null == messageSupplier) {
+            throw new NullPointerException(ValidityUtils.nullArgumentMessage("messageSupplier"));
+        }
         String subjectDescription = ValidityUtils.describe(subject);
+        String message = messageSupplier.get();
         if (null == message) {
             message = DEFAULT_MESSAGE;
         }

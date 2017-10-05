@@ -19,7 +19,9 @@ package com.redfin.validity.verifiers.primitives;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiablePrimitive;
+
 import java.util.function.IntPredicate;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying primitive char subjects.
@@ -46,18 +48,23 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
      *                                 on validation failure.
      *                                 May not be null.
      * @param subject                  the subject to be validated.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiablePrimitiveChar(FailedValidationExecutor<X> failedValidationExecutor, char subject, String message) {
-        super(failedValidationExecutor, message);
+    public VerifiablePrimitiveChar(FailedValidationExecutor<X> failedValidationExecutor,
+                                   char subject,
+                                   Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, messageSupplier);
         this.subject = subject;
     }
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is equal to other.
+     *
      * @throws X if the subject is null or if it is not equal to other.
      */
     public char isEqualTo(char other) throws X {
@@ -69,7 +76,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param other the object to check for equality with against the subject.
+     *
      * @return the subject if it is not equal to other.
+     *
      * @throws X if the subject is null or if it is equal to other.
      */
     public char isNotEqualTo(char other) throws X {
@@ -81,7 +90,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is greater than other.
+     *
      * @throws X if the subject is null or not greater than other.
      */
     public char isGreaterThan(char other) throws X {
@@ -93,7 +104,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is greater than or equal to other.
+     *
      * @throws X if the subject is null or is not greater than or equal to other.
      */
     public char isGreaterThanOrEqualTo(char other) throws X {
@@ -105,7 +118,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is greater than or equal to other.
+     *
      * @throws X if the subject is null or is not greater than or equal to other.
      */
     public char isAtLeast(char other) throws X {
@@ -114,7 +129,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is less than other.
+     *
      * @throws X if the subject is null or is not less than other.
      */
     public char isLessThan(char other) throws X {
@@ -126,7 +143,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is less than or equal to other.
+     *
      * @throws X if the subject is null or is not less than or equal to to other.
      */
     public char isLessThanOrEqualTo(char other) throws X {
@@ -138,7 +157,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param other the object to compare the subject against.
+     *
      * @return the subject if it is less than or equal to other.
+     *
      * @throws X if the subject is null or is not less than or equal to other.
      */
     public char isAtMost(char other) throws X {
@@ -147,6 +168,7 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @return the subject if it is upper case.
+     *
      * @throws X if the subject is null or not upper case.
      */
     public Character isUpperCase() throws X {
@@ -158,6 +180,7 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @return the subject if it is lower case.
+     *
      * @throws X if the subject is null or not lower case.
      */
     public char isLowerCase() throws X {
@@ -169,6 +192,7 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @return the subject if it is a letter or digit case.
+     *
      * @throws X if the subject is null is not a letter or digit.
      */
     public char isLetterOrDigit() throws X {
@@ -180,6 +204,7 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @return the subject if it is alphabetic.
+     *
      * @throws X if the subject is null or is not alphabetic.
      */
     public char isAlphabetic() throws X {
@@ -191,6 +216,7 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @return the subject if it is a digit.
+     *
      * @throws X if the subject is null or is not a digit.
      */
     public char isDigit() throws X {
@@ -207,7 +233,9 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
      *
      * @param expected the {@link IntPredicate} to use to test the subject.
      *                 May not be null.
+     *
      * @return the subject if it satisfies the predicate.
+     *
      * @throws X                    if the subject does not satisfy the predicate.
      * @throws NullPointerException if expected is null.
      */
@@ -223,11 +251,12 @@ public final class VerifiablePrimitiveChar<X extends Throwable>
 
     /**
      * @param expected the String description of the expected value.
+     *
      * @throws NullPointerException if expected is null.
      * @throws X                    always, unless expected is null.
      */
     protected void fail(String expected) throws X {
-        getFailedValidationExecutor().fail(expected, subject, getMessage());
+        getFailedValidationExecutor().fail(expected, subject, getMessageSupplier());
     }
 
     @Override

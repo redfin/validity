@@ -20,6 +20,7 @@ import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiablePrimitive;
 import java.util.function.IntPredicate;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying primitive short subjects.
@@ -46,12 +47,15 @@ public final class VerifiablePrimitiveShort<X extends Throwable>
      *                                 on validation failure.
      *                                 May not be null.
      * @param subject                  the subject to be validated.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiablePrimitiveShort(FailedValidationExecutor<X> failedValidationExecutor, short subject, String message) {
-        super(failedValidationExecutor, message);
+    public VerifiablePrimitiveShort(FailedValidationExecutor<X> failedValidationExecutor,
+                                    short subject,
+                                    Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, messageSupplier);
         this.subject = subject;
     }
 
@@ -210,7 +214,7 @@ public final class VerifiablePrimitiveShort<X extends Throwable>
      * @throws X                    always, unless expected is null.
      */
     protected void fail(String expected) throws X {
-        getFailedValidationExecutor().fail(expected, subject, getMessage());
+        getFailedValidationExecutor().fail(expected, subject, getMessageSupplier());
     }
 
     @Override

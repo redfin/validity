@@ -20,6 +20,8 @@ import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.verifiers.AbstractVerifiableComparableNumberContract;
 
+import java.util.function.Supplier;
+
 final class VerifiableIntegerTest
  implements AbstractVerifiableComparableNumberContract<IllegalArgumentException, Integer, VerifiableInteger<IllegalArgumentException>> {
 
@@ -93,7 +95,9 @@ final class VerifiableIntegerTest
     }
 
     @Override
-    public VerifiableInteger<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Integer subject, String message) {
-        return new VerifiableInteger<>(failedValidationExecutor, subject, message);
+    public VerifiableInteger<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                             Integer subject,
+                                                                             Supplier<String> messageSupplier) {
+        return new VerifiableInteger<>(failedValidationExecutor, subject, messageSupplier);
     }
 }

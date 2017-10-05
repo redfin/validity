@@ -19,6 +19,8 @@ package com.redfin.validity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 final class ExpectVerifiableFactoryTest
  implements AbstractVerifiableFactoryContract<IllegalStateException, ExpectVerifiableFactory> {
 
@@ -26,17 +28,17 @@ final class ExpectVerifiableFactoryTest
     // Test requirements
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    private static final String VALID_MESSAGE = "hello";
+    private static final Supplier<String> VALID_MESSAGE_SUPPLIER = () -> "hello";
 
     private static final FailedValidationExecutor<IllegalStateException> VALIDATION_EXECUTOR = new FailedValidationExecutor<IllegalStateException>() {
         @Override
-        public <T> void fail(String expected, T subject, String message) throws IllegalStateException {
-            throw new IllegalArgumentException(expected + subject + message);
+        public <T> void fail(String expected, T subject, Supplier<String> messageSupplier) throws IllegalStateException {
+            throw new IllegalArgumentException(expected + subject + messageSupplier.get());
         }
     };
 
     private ExpectVerifiableFactory getInstance() {
-        return new ExpectVerifiableFactory(VALID_MESSAGE, VALIDATION_EXECUTOR);
+        return new ExpectVerifiableFactory(VALID_MESSAGE_SUPPLIER, VALIDATION_EXECUTOR);
     }
 
     @Override
@@ -60,16 +62,25 @@ final class ExpectVerifiableFactoryTest
     @Test
     void testCanInstantiateWithNullMessage() {
         try {
-            new ExpectVerifiableFactory(null, VALIDATION_EXECUTOR);
+            new ExpectVerifiableFactory(() -> null, VALIDATION_EXECUTOR);
         } catch (Throwable thrown) {
             throw new RuntimeException("Should be able to instantiate a ValidityVerifiableFactory with a null message", thrown);
         }
     }
 
     @Test
+    void testConstructorThrowsExceptionForNullMessageSupplier() {
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
+                                                                 () -> new ExpectVerifiableFactory(null, VALIDATION_EXECUTOR));
+        Assertions.assertEquals(ValidityUtils.nullArgumentMessage("messageSupplier"),
+                                exception.getMessage(),
+                                "Should not be able to instantiate a ValidityVerifiableFactory with a null message supplier.");
+    }
+
+    @Test
     void testConstructorThrowsExceptionForNullValidationExecutor() {
         NullPointerException exception = Assertions.assertThrows(NullPointerException.class,
-                                                                 () -> new ValidityVerifiableFactory(VALID_MESSAGE, null));
+                                                                 () -> new ExpectVerifiableFactory(VALID_MESSAGE_SUPPLIER, null));
         Assertions.assertEquals(ValidityUtils.nullArgumentMessage("failedValidationExecutor"),
                                 exception.getMessage(),
                                 "Should not be able to instantiate a ValidityVerifiableFactory with a null failed validation executor.");
@@ -77,7 +88,7 @@ final class ExpectVerifiableFactoryTest
 
     @Test
     void testReturnsGivenMessage() {
-        Assertions.assertTrue( VALID_MESSAGE.equals(getInstance().getMessage()),
+        Assertions.assertTrue( VALID_MESSAGE_SUPPLIER.get().equals(getInstance().getMessageSupplier().get()),
                                "A verifiable factory should return the same string message instance it is given");
     }
 
@@ -89,20 +100,21 @@ final class ExpectVerifiableFactoryTest
 
     @Test
     void testGetFactoryReturnsNonNUllInstance() {
-        Assertions.assertNotNull(getInstance().getFactory(VALID_MESSAGE, VALIDATION_EXECUTOR),
+        Assertions.assertNotNull(getInstance().getFactory(VALID_MESSAGE_SUPPLIER, VALIDATION_EXECUTOR),
                                  "The getFactory method of the verifiable factory should return a non-null instance.");
     }
 
     @Test
     void testGetFactoryReturnsGivenMessage() {
-        Assertions.assertTrue( VALID_MESSAGE.equals(getInstance().getFactory(VALID_MESSAGE, VALIDATION_EXECUTOR)
-                                                                 .getMessage()),
+        Assertions.assertTrue( VALID_MESSAGE_SUPPLIER.get().equals(getInstance().getFactory(VALID_MESSAGE_SUPPLIER, VALIDATION_EXECUTOR)
+                                                                                .getMessageSupplier()
+                                                                                .get()),
                                "A verifiable factory should return the same string message instance it is given");
     }
 
     @Test
     void testGetFactoryReturnsGivenExecutor() {
-        Assertions.assertTrue( VALIDATION_EXECUTOR.equals(getInstance().getFactory(VALID_MESSAGE, VALIDATION_EXECUTOR)
+        Assertions.assertTrue( VALIDATION_EXECUTOR.equals(getInstance().getFactory(VALID_MESSAGE_SUPPLIER, VALIDATION_EXECUTOR)
                                                                        .getFailedValidationExecutor()),
                                "A verifiable factory should return the same FailedValidationExecutor instance it is given");
     }

@@ -19,7 +19,9 @@ package com.redfin.validity.verifiers.objects;
 import com.redfin.validity.FailedValidationExecutor;
 import com.redfin.validity.ValidityUtils;
 import com.redfin.validity.verifiers.AbstractVerifiableObject;
+
 import java.lang.annotation.Annotation;
+import java.util.function.Supplier;
 
 /**
  * Concrete class for verifying class subjects.
@@ -38,17 +40,22 @@ public final class VerifiableClass<T, X extends Throwable>
      *                                 May not be null.
      * @param subject                  the subject to be validated.
      *                                 May be null.
-     * @param message                  the String custom message to pre-pend a failure with.
-     *                                 May be null.
-     * @throws NullPointerException if failedValidationExecutor is null.
+     * @param messageSupplier          the {@link Supplier} of the String custom message to pre-pend a failure with.
+     *                                 May not be null.
+     *
+     * @throws NullPointerException if failedValidationExecutor or messageSupplier are null.
      */
-    public VerifiableClass(FailedValidationExecutor<X> failedValidationExecutor, Class<T> subject, String message) {
-        super(failedValidationExecutor, subject, message);
+    public VerifiableClass(FailedValidationExecutor<X> failedValidationExecutor,
+                           Class<T> subject,
+                           Supplier<String> messageSupplier) {
+        super(failedValidationExecutor, subject, messageSupplier);
     }
 
     /**
      * @param clazz the class to check if the subject is assignable from.
+     *
      * @return the subject if it is assignable from clazz.
+     *
      * @throws X if the subject is null or is not assignable from clazz.
      */
     public Class<T> isAssignableFrom(Class<?> clazz) throws X {
@@ -61,7 +68,9 @@ public final class VerifiableClass<T, X extends Throwable>
 
     /**
      * @param clazz the annotation to check for on the subject.
+     *
      * @return the subject if it has the clazz annotation.
+     *
      * @throws X if the subject is null or does not have the clazz annotation.
      */
     public Class<T> hasAnnotation(Class<? extends Annotation> clazz) throws X {

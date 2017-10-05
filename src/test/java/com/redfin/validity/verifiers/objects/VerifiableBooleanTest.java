@@ -22,6 +22,8 @@ import com.redfin.validity.verifiers.AbstractVerifiableObjectContract;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Supplier;
+
 final class VerifiableBooleanTest
  implements AbstractVerifiableObjectContract<IllegalArgumentException, Boolean, VerifiableBoolean<IllegalArgumentException>> {
 
@@ -45,8 +47,10 @@ final class VerifiableBooleanTest
     }
 
     @Override
-    public VerifiableBoolean<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor, Boolean subject, String message) {
-        return new VerifiableBoolean<>(failedValidationExecutor, subject, message);
+    public VerifiableBoolean<IllegalArgumentException> getVerifiableInstance(FailedValidationExecutor<IllegalArgumentException> failedValidationExecutor,
+                                                                             Boolean subject,
+                                                                             Supplier<String> messageSupplier) {
+        return new VerifiableBoolean<>(failedValidationExecutor, subject, messageSupplier);
     }
 
     @Override

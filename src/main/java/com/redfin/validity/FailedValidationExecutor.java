@@ -16,6 +16,8 @@
 
 package com.redfin.validity;
 
+import java.util.function.Supplier;
+
 /**
  * A functional interface that defines the creation of a throwable from
  * the input of failed validation. After creating the throwable, it
@@ -29,15 +31,18 @@ public interface FailedValidationExecutor<X extends Throwable> {
      * Signals the {@link FailedValidationExecutor} that the validation of the subject
      * failed.
      *
-     * @param expected the String expected state.
-     *                 May not be null.
-     * @param subject  the test subject.
-     *                 May be null.
-     * @param message  the String custom message supplied by the validation user.
-     *                 May be null.
-     * @param <T>      the type of subject.
-     * @throws NullPointerException if expected is null.
+     * @param expected        the String expected state.
+     *                        May not be null.
+     * @param subject         the test subject.
+     *                        May be null.
+     * @param messageSupplier the {@link Supplier} of the String custom message supplied by the validation user.
+     *                        May not be null.
+     * @param <T>             the type of subject.
+     *
+     * @throws NullPointerException if expected or messageSupplier are null.
      * @throws X                    always, unless expected is null.
      */
-    <T> void fail(String expected, T subject, String message) throws X;
+    <T> void fail(String expected,
+                  T subject,
+                  Supplier<String> messageSupplier) throws X;
 }
