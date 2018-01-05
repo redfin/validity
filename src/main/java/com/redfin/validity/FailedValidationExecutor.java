@@ -31,7 +31,7 @@ public interface FailedValidationExecutor<X extends Throwable> {
      * Signals the {@link FailedValidationExecutor} that the validation of the subject
      * failed.
      *
-     * @param expected        the String expected state.
+     * @param expected        the String representation of the expected condition.
      *                        May not be null.
      * @param subject         the test subject.
      *                        May be null.

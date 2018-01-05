@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.redfin.external_package;
+package com.redfin.external;
 
 import com.redfin.validity.DefaultValidityFailedValidationExecutor;
 import com.redfin.validity.FailedValidationExecutor;

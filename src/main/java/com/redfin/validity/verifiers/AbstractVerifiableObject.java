@@ -125,6 +125,36 @@ public abstract class AbstractVerifiableObject<T, X extends Throwable> {
     }
 
     /**
+     * @param other the object to compare the subject to in regards to
+     *              reference equality.
+     *
+     * @return the subject if it is the same object as other.
+     *
+     * @throws X if the subject is null or is not the same instance as other.
+     */
+    public T is(T other) throws X {
+        if (subject != other) {
+            fail("t -> t == " + ValidityUtils.describe(other));
+        }
+        return subject;
+    }
+
+    /**
+     * @param other the object to compare the subject to in regards to
+     *              reference equality.
+     *
+     * @return the subject if it is not the same object as other.
+     *
+     * @throws X if the subject is the same instance as other.
+     */
+    public T isNot(T other) throws X {
+        if (subject == other) {
+            fail("t -> && t != " + ValidityUtils.describe(other));
+        }
+        return subject;
+    }
+
+    /**
      * @param other the object to check for equality with against the subject.
      *
      * @return the subject if it is equal to other.

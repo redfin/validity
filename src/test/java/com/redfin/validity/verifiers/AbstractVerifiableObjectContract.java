@@ -195,6 +195,55 @@ public interface AbstractVerifiableObjectContract<X extends Throwable, E, T exte
     }
 
     @Test
+    default void testIsReturnsSubjectForSameInstance() throws X {
+        E subject = getSubject();
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, () -> "message");
+        Assertions.assertTrue(subject == verifiable.is(subject),
+                              "An AbstractVerifiableObject should return subject for is with same subject.");
+    }
+
+    @Test
+    default void testIsReturnsNullForNullSubjectAndOther() throws X {
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), null, () -> "message");
+        Assertions.assertTrue(null == verifiable.is(null),
+                              "An AbstractVerifiableObject should return null for is with null other and subject.");
+    }
+
+    @Test
+    default void testIsThrowsForNonSameInstance() throws X {
+        E subject = getSubject();
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, () -> "message");
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> verifiable.is(getNonEqualSubject()),
+                                "An AbstractVerifiableObject should throw for non-same subject.");
+    }
+
+    @Test
+    default void testIsNotReturnsSubjectForNonSameInstance() throws X {
+        E subject = getSubject();
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, () -> "message");
+        Assertions.assertTrue(subject == verifiable.isNot(getNonEqualSubject()),
+                              "An AbstractVerifiableObject should return subject for isNot with non-same other.");
+    }
+
+    @Test
+    default void testIsNotThrowsForNullSubjectAndOther() throws X {
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), null, () -> "message");
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> verifiable.isNot(null),
+                                "An AbstractVerifiableObject should throw for isNot with null subject and other.");
+    }
+
+    @Test
+    default void testIsNotThrowsForSameInstance() throws X {
+        E subject = getSubject();
+        AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, () -> "message");
+        Assertions.assertThrows(IllegalArgumentException.class,
+                                () -> verifiable.isNot(subject),
+                                "An AbstractVerifiableObject should throw for isNot with same subject and other.");
+    }
+
+    @Test
     default void testIsEqualReturnsSubjectForSameInstance() throws X {
         E subject = getSubject();
         AbstractVerifiableObject<E, X> verifiable = getVerifiableInstance(getFailedValidationExecutor(), subject, () -> "message");
